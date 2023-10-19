@@ -1,0 +1,7 @@
+{
+    "message": "User login successful. Returns access and refresh tokens.",
+    "access_token": "AQXNnd2kXITHELmWblJigbHEuoFdfRhOwGA0QNnumBI8XOVSs0HtOHEU",
+    "expires_in": 86400,
+    "refresh_token": "AQWAft_WjYZKwuWXLC5hQlghgTam-tuT8CvFej9-XxGyqeER",
+    "refresh_token_expires_in": 525600
+}
