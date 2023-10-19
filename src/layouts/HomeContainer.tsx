@@ -7,7 +7,6 @@ import Footer from './Footer';
 const HomeContainer: React.FC = function () {
     return (
         <>
-            <div className='w-full h-full'>HomeContainer</div>
             <Navbar />
             <Outlet />
             <Footer />

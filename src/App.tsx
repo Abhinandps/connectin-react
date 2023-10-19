@@ -12,6 +12,7 @@ import ProtectedRoute from './layouts/ProtectedRoute'
 import PasswordForgot from './features/auth/components/PasswordForgot'
 import Verify from './features/auth/components/Verify'
 import ChangePassword from './features/auth/components/ChangePassword'
+import Navbar from './layouts/Navbar'
 
 
 function App() {

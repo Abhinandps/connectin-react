@@ -2,4 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    font-family: 'Poppins', sans-serif;
+}
 
+.container {
+    @apply 2xl:w-[1280px] mx-auto
+}
+
+/*
+
+*/

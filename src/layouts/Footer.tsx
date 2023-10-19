@@ -2,7 +2,7 @@ import React from "react"
 
 const Footer: React.FC = function () {
     return (
-        <div>
+        <div className="container">
             Footer (Guest Footer)
         </div>
     )

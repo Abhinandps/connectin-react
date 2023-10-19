@@ -15,6 +15,7 @@ interface AuthState {
     error: any | null;
 }
 
+
 const initialState: AuthState = {
     user: null,
     token: null,
@@ -22,11 +23,13 @@ const initialState: AuthState = {
     error: null
 }
 
+
 // Define the type for login data
 interface LoginData {
     email: string;
     password: string;
 }
+
 
 // Async thunk for logging in
 export const loginUser = createAsyncThunk(

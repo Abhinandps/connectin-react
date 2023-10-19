@@ -62,9 +62,8 @@ const Login: React.FC = function () {
     }
 
 
-
     return (
-        <div className='w-[300px] p-5 bg-white shadow-md rounded-lg'>
+        <div className='w-full'>
             <form onSubmit={handleSubmit}>
                 <MInputFiled
                     Label='Email or phone'
@@ -72,6 +71,7 @@ const Login: React.FC = function () {
                     onChange={v => onChange("email", v)}
                     value={email}
                     error=''
+                    globalError={error}
                 />
                 <MInputFiled
                     Label='Password'
@@ -80,12 +80,23 @@ const Login: React.FC = function () {
                     onChange={v => onChange("password", v)}
                     value={password}
                     error=''
+                    globalError={error}
                 />
-                <div className="text-red-600 font-bold text-xs my-2">{error}</div>
-                <div className='my-2'><Link className='text-blue-400 font-bold text-sm underline' to='/request-password-reset'>Forgot Password?</Link></div>
+                <div className={`text-danger font-regualr text-xs my-2`}>{error}</div>
+                <div className='my-5'><Link className='text-blue-500 font-bold text-sm ' to='/request-password-reset'>Forgot Password?</Link></div>
                 <Button
-                    title="Sign In"
+                    title="Sign in"
                 />
+                <div className='relative my-5'>
+                    <hr />
+                    <span className='bg-white px-3 absolute top-[-13px] left-[50%] translate-x-[-50%]'>or</span>
+                </div>
+                <Button
+                    title="New to ConnectIn? Join now"
+                    outlineOnly={true}
+                    type='button'
+                />
+
             </form>
         </div>
     )
