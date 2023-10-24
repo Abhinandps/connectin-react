@@ -6,10 +6,11 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.container {
-    @apply 2xl:w-[1280px] mx-auto
+.wrapper {
+    @apply xl:w-[1200px] mx-auto
 }
 
-/*
+.active {
+    @apply hover:text-primaryColor
+}
 
-*/

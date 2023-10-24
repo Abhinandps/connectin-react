@@ -16,6 +16,17 @@ interface verifyFormData {
 }
 
 
+interface label {
+    title: string;
+    label: string;
+}
+
+interface LoginProps {
+    style?: string;
+    label?: label;
+}
+
+
 const MInputFiled = React.memo(InputField)
 
 const PasswordForgot: React.FC = function () {
@@ -70,26 +81,31 @@ const PasswordForgot: React.FC = function () {
     }
 
     return (
-        <div className='w-full py-10   h-full flex items-center justify-center'>
-
-            <div className='w-[300px] p-5 bg-white shadow-md rounded-lg'>
-                Forgot Password
-                <form onSubmit={handleSubmit}>
-                    <MInputFiled
-                        Label='Email or phone'
-                        placeholder=''
-                        onChange={v => onChange("email", v)}
-                        value={email}
-                        error={errorData.email}
-                    />
-                    <Button
-                        title="Next"
-                    />
-                    <Button
-                        title="Back"
-                        type='button'
-                    />
-                </form>
+        <div className='md:bg-[white]'>
+            <div className='container h-full py-10 md:flex md:justify-center md:items-center'>
+                <div className='md:w-[400px] md:bg-white px-5 md:py-5 md:rounded-lg md:shadow-xl'>
+                    <form onSubmit={handleSubmit}>
+                        <h2 className='text-[1.8em] font-medium py-2'>Forgot Password</h2>
+                        <MInputFiled
+                            Label=''
+                            placeholder='Email or phone'
+                            onChange={v => onChange("email", v)}
+                            value={email}
+                            error={errorData.email}
+                        />
+                        <p className='text-xs py-5 leading-relaxed'>We’ll send a verification code to this email or phone number if it matches an existing ConnectIn account.</p>
+                        <Button
+                            title="Next"
+                        />
+                        <div className='py-1'></div>
+                        <Button
+                            title="Back"
+                            type='button'
+                            outlineOnly={true}
+                            onClick={()=>navigate('/sign-in')}
+                        />
+                    </form>
+                </div>
             </div>
         </div>
     )

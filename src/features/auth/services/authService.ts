@@ -51,7 +51,6 @@ export async function verifyRequestReset(email: string, otp: number) {
   }
 }
 
-
 export async function changePassword(email: string, newPassword: string, confirmNewPassword: string) {
   try {
     const response = await fetch('http://localhost:3000/auth/change-password', {
@@ -76,5 +75,7 @@ export async function changePassword(email: string, newPassword: string, confirm
     throw (error.message);
   }
 }
+
+
 
 

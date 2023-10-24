@@ -9,7 +9,7 @@ const EmailConfirmation = () => {
 
     const [loading, setLoading] = useState(true);
     const [confirmationError, setConfirmationError] = useState('');
-  
+
 
 
     useEffect(() => {
@@ -46,8 +46,8 @@ const EmailConfirmation = () => {
 
         confirmEmail();
 
-
     }, [token]);
+
 
     return (
         <div>
@@ -69,10 +69,10 @@ const EmailConfirmation = () => {
                             </>
                         )}
 
-
                     </div>
                 </>
             )}
+
         </div>
     );
 };

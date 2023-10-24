@@ -1,33 +1,27 @@
 import { useEffect } from "react";
 import Cookies from 'js-cookie'
 import { useDispatch } from "react-redux";
-import { getAccessToken, logout } from "../authSlice";
+import { fetchUserDetails, logout } from "../authSlice";
 
 
 
-function useRefreshToken() {
+function useFetchUserData() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        async function refreshAccessToken() {
-
-
-            const accessToken = Cookies.get('access_token');
+        async function fetchUserData() {
+            // const accessToken = Cookies.get('access_token');
             const refreshToken = Cookies.get('refresh_token');
             if (!refreshToken) {
                 dispatch(logout())
                 return;
             }
-
-            if (!accessToken) {
-                await dispatch(getAccessToken(refreshToken))
-            }
+            await dispatch(fetchUserDetails())
         }
-
-        refreshAccessToken();
+        fetchUserData();
     }, [dispatch]);
 
 }
 
 
-export default useRefreshToken
+export default useFetchUserData

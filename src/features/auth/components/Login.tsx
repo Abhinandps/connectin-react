@@ -13,9 +13,19 @@ interface FormData {
     password: string;
 }
 
+interface label {
+    title: string;
+    label: string;
+}
+
+interface LoginProps {
+    style?: string;
+    label?: label;
+}
+
 const MInputFiled = React.memo(InputField)
 
-const Login: React.FC = function () {
+const Login: React.FC<LoginProps> = function ({ style, label }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -48,7 +58,6 @@ const Login: React.FC = function () {
             const res = await dispatch(loginUser(formData));
 
             if (loginUser.fulfilled.match(res)) {
-                // console.log('User is logged in : ', res.payload?.user);
                 navigate('/')
 
             } else if (loginUser.rejected.match(res)) {
@@ -63,7 +72,15 @@ const Login: React.FC = function () {
 
 
     return (
-        <div className='w-full'>
+        <div className={`${style && style} rounded-lg`}>
+            {
+                label && (
+                    <div className='mb-5'>
+                        <h2 className='text-[1.8em] font-medium'>{label.title}</h2>
+                        <p className='text-xs my-1'>Stay updated on your professinal world</p>
+                    </div>
+                )
+            }
             <form onSubmit={handleSubmit}>
                 <MInputFiled
                     Label='Email or phone'
@@ -95,6 +112,7 @@ const Login: React.FC = function () {
                     title="New to ConnectIn? Join now"
                     outlineOnly={true}
                     type='button'
+                    onClick={() => navigate('/sign-up')}
                 />
 
             </form>

@@ -8,16 +8,19 @@ import SignUp from './pages/SignUp'
 import Feed from './pages/Feed'
 import './App.css'
 import EmailConfirmation from './layouts/EmailConfirmation'
-import ProtectedRoute from './layouts/ProtectedRoute'
 import PasswordForgot from './features/auth/components/PasswordForgot'
 import Verify from './features/auth/components/Verify'
 import ChangePassword from './features/auth/components/ChangePassword'
-import Navbar from './layouts/Navbar'
+import { useEffect } from 'react'
+import useFetchUserData from './features/auth/hooks/useFetchUserData'
+import EmailConfirmationSent from './layouts/EmailConfimationSent'
 
 
 function App() {
 
   useRefreshToken()
+
+  useFetchUserData()
 
   const { isAuthenticated } = useAuth();
 
@@ -27,10 +30,10 @@ function App() {
         {isAuthenticated ? (
           <>
             <Route path='/' element={<HomeContainer />}>
-              <Route index element={<ProtectedRoute>
-                <Feed />
-              </ProtectedRoute>} />
+              <Route index element={<Feed />} />
+              <Route path='mynetwork' element={<div>My netWork</div>} />
             </Route>
+            <Route path="email-confirmation/sent" element={<EmailConfirmationSent />} />
           </>
         ) : (
           <>
@@ -45,7 +48,7 @@ function App() {
             <Route path="email-confirmation/confirm" element={<EmailConfirmation />} />
           </>
         )}
-        <Route path='*' element={<SignIn />} />
+        <Route path='*' element={<div>404</div>} />
       </Routes>
     </Router >
   );

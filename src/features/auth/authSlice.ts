@@ -45,10 +45,17 @@ export const loginUser = createAsyncThunk(
                 credentials: 'include'
             });
 
+            const data = await response.json();
+
+            if (data.message && typeof data.message != typeof []) {
+                throw new Error(data.message)
+            }
+
+            
             if (!response.ok) {
                 throw new Error('Invalid username or password.')
             }
-            const data = await response.json();
+
 
             const user = {
                 userId: data?.user?.userId,
@@ -98,7 +105,37 @@ export const registerUser = createAsyncThunk(
     }
 );
 
+export const fetchUserDetails = createAsyncThunk(
+    'data/fetchUserData',
+    async (_token, thunkAPI) => {
+        try {
+            const response = await fetch('http://localhost:3000/auth/validate-token', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            });
 
+            if (!response.ok) {
+                throw new Error('validation failed');
+            }
+
+            const data = await response.json();
+
+            const user = {
+                userId: data?._id,
+                email: data?.email,
+                role: data?.role
+            }
+
+
+            return { user }
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
 
 // Async thunk for fetch access_token based on refresh_token
 export const getAccessToken = createAsyncThunk(
@@ -125,7 +162,6 @@ export const getAccessToken = createAsyncThunk(
         }
     }
 )
-
 
 const authSlice = createSlice({
     name: 'auth',
@@ -183,6 +219,14 @@ const authSlice = createSlice({
                 state.status = 'authenticated'
             })
             .addCase(registerUser.rejected, (state, action) => {
+                state.error = action.error.message;
+                state.status = 'failed';
+            })
+            .addCase(fetchUserDetails.fulfilled, (state, action) => {
+                state.user = action.payload.user;
+                state.status = 'authenticated'
+            })
+            .addCase(fetchUserDetails.rejected, (state, action) => {
                 state.error = action.error.message;
                 state.status = 'failed';
             })

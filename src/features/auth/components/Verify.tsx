@@ -73,25 +73,32 @@ const Verify: React.FC = function () {
     }
 
     return (
-        <div className='w-full py-10   h-full flex items-center justify-center'>
+        <div className='md:bg-[white]'>
+            <div className='container h-full py-10 md:flex md:justify-center md:items-center'>
 
-            <div className='w-[300px] p-5 bg-white shadow-md rounded-lg'>
-                Enter the 6 digit code
-                <form onSubmit={handleSubmit}>
-                    <MInputFiled
-                        Label='verification code'
-                        placeholder=''
-                        type='number'
-                        onChange={v => onChange("otp", v)}
-                        value={otp}
-                        error={errorData.otp}
-                    />
-                    <span onClick={() => { }}>Resend Code</span>
-                    <Button
-                        title="Submit"
-                    />
+                <div className='md:w-[400px] md:bg-white px-5 md:py-5 md:rounded-lg md:shadow-xl'>
 
-                </form>
+                    <h2 className='text-[1.8em] font-medium py-2'>Enter the 6-digit code</h2>
+                    <p className='text-xs py-1'>Check <span className='font-bold'>psabhinand333s@gmail.com</span> for a verification code.</p>
+                    <form onSubmit={handleSubmit}>
+                        <MInputFiled
+                            Label='verification code'
+                            placeholder=''
+                            type='number'
+                            onChange={v => onChange("otp", v)}
+                            value={otp}
+                            error={errorData.otp}
+                        />
+                        <div className=' mb-4'> <span className=' text-xs text-blue-500 hover:bg-blue-50 py-1 rounded-full px-1 cursor-pointer font-bold' onClick={() => { }}>Resend code</span> </div>
+                        <Button
+                            title="Submit"
+                        />
+
+                        <p className='text-xs py-5 text-slate-400 leading-relaxed font-normal'>
+                            If you don't see a code in your inbox, check your spam folder. If it's not there, the email address may not be confirmed, or it may not match an existing LinkedIn account.</p>
+
+                    </form>
+                </div>
             </div>
         </div>
     )

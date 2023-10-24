@@ -65,7 +65,7 @@ const Register: React.FC = function () {
             const res = await dispatch(registerUser(formData));
 
             if (registerUser.fulfilled.match(res)) {
-                navigate('/feed')
+                navigate('/email-confirmation/sent')
             } else if (registerUser.rejected.match(res)) {
                 const errors: any = res.payload
                 errors.split(',').forEach((error: string) => {
@@ -77,9 +77,8 @@ const Register: React.FC = function () {
     }
 
     return (
-        <div className='w-[300px] p-5 bg-white shadow-md rounded-lg'>Register Form
+        <div className='md:w-[400px] md:bg-white px-5 md:py-5 md:shadow-xl md:rounded-lg'>
             <form onSubmit={handleSubmit}>
-
                 <MInputFiled
                     Label='Email or phone'
                     placeholder=''
@@ -109,8 +108,22 @@ const Register: React.FC = function () {
                     value={lastName}
                     error={errorData.lastName}
                 />
+
+                <div className='text-xs text-center text-slate-500 leading-relaxed py-3'>
+                    By clicking Agree & Join, you agree to the ConnectIn <span className='font-bold text-blue-500'>User Agreement, Privacy Policy</span>, and <span className='font-bold text-blue-500'>Cookie Policy.</span>
+                </div>
                 <Button
-                    title="Sign Up"
+                    title="Agree & Join"
+                />
+                <div className='relative my-5'>
+                    <hr />
+                    <span className='bg-white px-3 absolute top-[-13px] left-[50%] translate-x-[-50%]'>or</span>
+                </div>
+                <Button
+                    title="Already on ConnectIn? Sign In"
+                    outlineOnly={true}
+                    type='button'
+                    onClick={() => navigate('/sign-in')}
                 />
             </form>
 

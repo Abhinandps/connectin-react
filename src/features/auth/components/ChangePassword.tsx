@@ -58,32 +58,37 @@ const ChangePassword: React.FC = function () {
     }
 
     return (
-        <div className='w-full py-10   h-full flex items-center justify-center'>
-            <div className='w-[300px] p-5 bg-white shadow-md rounded-lg'>
-                Enter new password
-                <form onSubmit={handleSubmit}>
-                    <MInputFiled
-                        Label='New Password'
-                        placeholder=''
-                        type='password'
-                        onChange={v => onChange("newPassword", v)}
-                        value={newPassword}
-                        error=''
-                    />
-                    <MInputFiled
-                        Label='Confrim New Password'
-                        placeholder=''
-                        type='password'
-                        onChange={v => onChange("confirmNewPassword", v)}
-                        value={confirmNewPassword}
-                        error=''
-                    />
-                    <div className="text-red-600 font-bold text-xs my-2">{error}</div>
-                    <Button
-                        title="Submit"
-                    />
+        <div className='md:bg-[white]'>
+            <div className='container h-full py-10 md:flex md:justify-center md:items-center'>
+                <div className='md:w-[400px] md:bg-white px-5 md:py-5 md:rounded-lg md:shadow-xl'>
+                    <form onSubmit={handleSubmit}>
 
-                </form>
+                        <h2 className='text-[1.6em] md:text-[1.8em] font-medium py-2'>Enter new password</h2>
+                        <MInputFiled
+                            Label='New Password'
+                            placeholder=''
+                            type='password'
+                            onChange={v => onChange("newPassword", v)}
+                            value={newPassword}
+                            error=''
+                            globalError={error}
+                        />
+                        <MInputFiled
+                            Label='Confrim New Password'
+                            placeholder=''
+                            type='password'
+                            onChange={v => onChange("confirmNewPassword", v)}
+                            value={confirmNewPassword}
+                            error=''
+                            globalError={error}
+                        />
+                        <div className={`text-danger font-regualr text-xs my-2`}>{error}</div>
+                        <Button
+                            title="Submit"
+                        />
+
+                    </form>
+                </div>
             </div>
         </div>
 
