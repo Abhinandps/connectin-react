@@ -88,7 +88,7 @@ const superAdminManageList = [
     {
         id: 'tab2',
         title: 'Users & Admin',
-        path: '/manage-users',
+        path: '/manage-admins',
     },
 ]
 

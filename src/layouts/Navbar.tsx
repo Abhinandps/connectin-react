@@ -8,6 +8,8 @@ import {
     TETabsItem,
 } from "tw-elements-react";
 import { contentAdminManageList, navdata, superAdminManageList, usersManageList } from "../utils/navigationData";
+import { logoutUser } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 
 const Navbar: React.FC = function () {
@@ -26,14 +28,14 @@ const Navbar: React.FC = function () {
     };
 
     return (
-        <div className="w-full border-b border-borderColor">
-            <div className="wrapper mx-auto flex  md:justify-start justify-start items-center px-5 ">
+        <div className={`w-full ${isAuthenticated && 'border-b border-borderColor'} `}>
+            <div className={`wrapper mx-auto flex  ${isAuthenticated ? 'md:justify-start' : 'md:justify-between py-3'} justify-start items-center px-5 `}>
                 <Logo isAuthenticated={isAuthenticated} />
                 <div>
                     {isAuthenticated ? (
                         <TETabs className="flex !flex-nowrap items-center justify-between !mb-0 ml-[50px] ">
 
-                            {/* Search  */}
+                            {/* FIXME: Search to seperate component */}
                             <div className="w-[50px] flex justify-center items-center cursor-pointer lg:mr-[200px] md:!pt-3 !pt-4">
                                 <input
                                     type="search"
@@ -80,7 +82,7 @@ const Navbar: React.FC = function () {
     );
 }
 
-
+// FIXME: navitem into seperate component
 const NavItem = React.memo(function ({ data, handleTabClick, activeTab }: { data: any, handleTabClick: any, activeTab: any }) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -129,9 +131,11 @@ interface PopupProps {
     handleIsOpen: (isOpen: boolean) => void;
 }
 
+// FIXME: popup into seperate component
 const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
 
     const { user } = useAuth()
+    const dispatch = useDispatch()
 
     const popupRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -142,12 +146,37 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
             }
         };
 
+
         document.addEventListener('mousedown', handler)
 
         return () => {
             document.removeEventListener('mousedown', handler)
         }
     }, [isOpen]);
+
+
+
+    // FIXME: fix the function also remove unwanted code
+    const handleLogout = async () => {
+        try {
+            // e.preventDefault();
+
+            // FIXME: fix the typeError of function
+            await dispatch(logoutUser());
+
+            // if (loginUser.fulfilled.match(res)) {
+            //     navigate('/')
+
+            // } else if (loginUser.rejected.match(res)) {
+            //     const error: any = res.payload
+            //     setError(error);
+            // }
+        } catch (error) {
+            // Handle errors if necessary
+            console.error('Logout error:', error);
+        }
+    }
+
 
     return (
         <>
@@ -212,7 +241,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
 
                     <div className="m-2">
                         <ul>
-                            <li>Sign Out</li>
+                            <li onClick={() => handleLogout()}>Sign Out</li>
                         </ul>
                     </div>
                 </div>

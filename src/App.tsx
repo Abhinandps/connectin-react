@@ -11,10 +11,22 @@ import EmailConfirmation from './layouts/EmailConfirmation'
 import PasswordForgot from './features/auth/components/PasswordForgot'
 import Verify from './features/auth/components/Verify'
 import ChangePassword from './features/auth/components/ChangePassword'
-import { useEffect } from 'react'
 import useFetchUserData from './features/auth/hooks/useFetchUserData'
 import EmailConfirmationSent from './layouts/EmailConfimationSent'
+import Authorization from './layouts/Authorization'
 
+/* TODO: 
+    - create usermanagement service
+    - can manage users by an admin (action, view , recruit)
+    - profile management ( upload images )
+
+  FIXME: pending
+    - modile otp not set
+    - resend email confirmation
+    - resend otp for password reset
+    - add design to confirmation page
+    - standard animation to every behaviour 
+*/
 
 function App() {
 
@@ -22,7 +34,7 @@ function App() {
 
   useFetchUserData()
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   return (
     <Router>
@@ -32,6 +44,11 @@ function App() {
             <Route path='/' element={<HomeContainer />}>
               <Route index element={<Feed />} />
               <Route path='mynetwork' element={<div>My netWork</div>} />
+              <Route path='/manage-admins' element={
+                <Authorization userRoles={user?.role} requiredRole="admin">
+                  <div>Manage Admins</div>
+                </Authorization>
+              } />
             </Route>
             <Route path="email-confirmation/sent" element={<EmailConfirmationSent />} />
           </>
@@ -48,6 +65,7 @@ function App() {
             <Route path="email-confirmation/confirm" element={<EmailConfirmation />} />
           </>
         )}
+        <Route path='unauthorized' element={<div>unauthorized</div>} />
         <Route path='*' element={<div>404</div>} />
       </Routes>
     </Router >
@@ -55,26 +73,3 @@ function App() {
 }
 
 export default App
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <Route
-            path="feed"
-            element={
-              <UserProtected>
-                <Route index element={<Feed />} />
-                <Route path=":id" element={<FeedDetail />} />
-              </UserProtected>
-            }
-          /> */}

@@ -51,7 +51,7 @@ export const loginUser = createAsyncThunk(
                 throw new Error(data.message)
             }
 
-            
+
             if (!response.ok) {
                 throw new Error('Invalid username or password.')
             }
@@ -69,6 +69,51 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+
+// Async thunk for logout 
+export const logoutUser = createAsyncThunk(
+    'auth/logoutUser',
+    async (_data, thunkAPI) => {
+        try {
+            console.log('hitted');
+            
+            const response = await fetch('http://localhost:3000/auth/logout', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+
+
+            if (data.message && typeof data.message != typeof []) {
+                throw new Error(data.message)
+            }
+
+
+            if (!response.ok) {
+                throw new Error('Invalid username or password.')
+            }
+
+
+            // const user = {
+            //     userId: data?.user?.userId,
+            //     email: data?.user?.email,
+            //     role: data?.user?.role
+            // }
+
+            // console.log(user,"user data", data,"response");
+
+            // return { user, token: data?.access_token };
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
 
 // Async thunk for registering
 export const registerUser = createAsyncThunk(
@@ -227,6 +272,15 @@ const authSlice = createSlice({
                 state.status = 'authenticated'
             })
             .addCase(fetchUserDetails.rejected, (state, action) => {
+                state.error = action.error.message;
+                state.status = 'failed';
+            })
+            .addCase(logoutUser.fulfilled, (state) => {
+                state.user = null;
+                state.token = null;
+                state.status = 'idle';
+            })
+            .addCase(logoutUser.rejected, (state, action) => {
                 state.error = action.error.message;
                 state.status = 'failed';
             })
