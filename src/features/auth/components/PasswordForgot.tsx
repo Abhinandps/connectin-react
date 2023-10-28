@@ -10,22 +10,6 @@ interface FormData {
     email: string;
 }
 
-interface verifyFormData {
-    email: string;
-    otp: string;
-}
-
-
-interface label {
-    title: string;
-    label: string;
-}
-
-interface LoginProps {
-    style?: string;
-    label?: label;
-}
-
 
 const MInputFiled = React.memo(InputField)
 

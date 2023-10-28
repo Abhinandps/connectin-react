@@ -5,7 +5,6 @@ import Button from '../../../components/Form/Button';
 
 import { loginUser } from '../authSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import PasswordForgot from './PasswordForgot';
 
 
 interface FormData {
@@ -25,10 +24,11 @@ interface LoginProps {
 
 const MInputFiled = React.memo(InputField)
 
+
 const Login: React.FC<LoginProps> = function ({ style, label }) {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState<FormData>(
         {
@@ -53,19 +53,15 @@ const Login: React.FC<LoginProps> = function ({ style, label }) {
         try {
             e.preventDefault();
             setError("")
-
             // Dispatch the loginUser action with loginData as the argument
             const res = await dispatch(loginUser(formData));
-
             if (loginUser.fulfilled.match(res)) {
                 navigate('/')
-
             } else if (loginUser.rejected.match(res)) {
                 const error: any = res.payload
                 setError(error);
             }
         } catch (error) {
-            // Handle errors if necessary
             console.error('Login error:', error);
         }
     }
@@ -90,6 +86,7 @@ const Login: React.FC<LoginProps> = function ({ style, label }) {
                     error=''
                     globalError={error}
                 />
+
                 <MInputFiled
                     Label='Password'
                     placeholder=''
@@ -99,8 +96,10 @@ const Login: React.FC<LoginProps> = function ({ style, label }) {
                     error=''
                     globalError={error}
                 />
+
                 <div className={`text-danger font-regualr text-xs my-2`}>{error}</div>
                 <div className='my-5'><Link className='text-blue-500 font-bold text-sm ' to='/request-password-reset'>Forgot Password?</Link></div>
+
                 <Button
                     title="Sign in"
                 />
@@ -108,6 +107,7 @@ const Login: React.FC<LoginProps> = function ({ style, label }) {
                     <hr />
                     <span className='bg-white px-3 absolute top-[-13px] left-[50%] translate-x-[-50%]'>or</span>
                 </div>
+
                 <Button
                     title="New to ConnectIn? Join now"
                     outlineOnly={true}
@@ -119,5 +119,7 @@ const Login: React.FC<LoginProps> = function ({ style, label }) {
         </div>
     )
 }
+
+
 
 export default Login;

@@ -3,7 +3,7 @@ import InputField from '../../../components/Form/InputField';
 import Button from '../../../components/Form/Button';
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import { changePassword, verifyRequestReset } from '../services/authService';
+import { changePassword } from '../services/authService';
 
 
 interface FormData {

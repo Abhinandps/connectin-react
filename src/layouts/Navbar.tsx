@@ -29,41 +29,14 @@ const Navbar: React.FC = function () {
 
     return (
         <div className={`w-full ${isAuthenticated && 'border-b border-borderColor'} `}>
-            <div className={`wrapper mx-auto flex  ${isAuthenticated ? 'md:justify-start' : 'md:justify-between py-3'} justify-start items-center px-5 `}>
+            <div className={`wrapper mx-auto flex  ${isAuthenticated ? 'md:justify-between' : 'md:justify-between py-3'} justify-start items-center px-5 `}>
                 <Logo isAuthenticated={isAuthenticated} />
+
                 <div>
                     {isAuthenticated ? (
                         <TETabs className="flex !flex-nowrap items-center justify-between !mb-0 ml-[50px] ">
 
-                            {/* FIXME: Search to seperate component */}
-                            <div className="w-[50px] flex justify-center items-center cursor-pointer lg:mr-[200px] md:!pt-3 !pt-4">
-                                <input
-                                    type="search"
-                                    className="relative bg-[#edf3f8] m-0 lg:block hidden flex-auto lg:flex-row rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.25rem] text-sm font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primaryColor dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primaryColor"
-                                    placeholder="Search"
-                                    aria-label="Search"
-                                />
 
-                                <div className="hidden lg:flex w-full justify-center flex-wrap items-stretch gap-1">
-                                    {/* <!--Search icon--> */}
-                                    <span
-                                        className="text-[1.8em] input-group-text flex  items-center whitespace-nowrap rounded text-center font-normal text-neutral-700 dark:text-neutral-200"
-                                        id="basic-addon2">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                            className="h-5 w-5">
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                                                clipRule="evenodd" />
-                                        </svg>
-                                    </span>
-
-                                    <span className="hidden lg:inline-block md:block text-xs text-secondaryColor hover:text-primaryColor">Search</span>
-                                </div>
-                            </div>
 
                             {/* Navigation list  */}
                             {navdata && navdata.map((data) => (
@@ -136,6 +109,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
 
     const { user } = useAuth()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const popupRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -162,15 +136,15 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
             // e.preventDefault();
 
             // FIXME: fix the typeError of function
-            await dispatch(logoutUser());
+            const res = await dispatch(logoutUser());
 
-            // if (loginUser.fulfilled.match(res)) {
-            //     navigate('/')
+            if (logoutUser.fulfilled.match(res)) {
+                navigate('/')
 
-            // } else if (loginUser.rejected.match(res)) {
-            //     const error: any = res.payload
-            //     setError(error);
-            // }
+            } else if (logoutUser.rejected.match(res)) {
+                // const error: any = res.payload
+                // setError(error);
+            }
         } catch (error) {
             // Handle errors if necessary
             console.error('Logout error:', error);
@@ -181,7 +155,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
     return (
         <>
             {isOpen && (
-                <div className="absolute top-[65px] right-0 z-40 bg-white  py-2 border w-[300px] border-borderColor rounded-md shadow-md"
+                <div className="absolute top-[65px] right-0 z-[777] bg-white  py-2 border w-[300px] border-borderColor rounded-md shadow-md"
                     ref={popupRef}
                 >
                     <div className="border-b border-borderColor pb-3">
@@ -258,12 +232,42 @@ interface logoProps {
 export const Logo: React.FC<logoProps> = function ({ isAuthenticated }) {
     const navigate = useNavigate()
     return (
-        <div className="md:w-16 me-2 h-7 relative cursor-pointer" onClick={() => navigate('/')}>
+        <div className="md:w-16 me-2 h-7 flex relative cursor-pointer" onClick={() => navigate('/')}>
             {
                 isAuthenticated ? (
                     <>
                         <div className="w-9 h-9 left-0 top-[1px] absolute bg-primaryColor bg-opacity-90 rounded-sm" />
                         <div className="tracking-tighter left-[5px] top-1 absolute text-white text-opacity-90 text-3xl font-bold font-['Poppins']">in</div>
+
+                        {/* FIXME: Search to seperate component */}
+                        <div className="flex justify-center items-center cursor-pointer lg:ms-[45px] md:!pt-3 !pt-4">
+                            <input
+                                type="search"
+                                className="relative bg-[#edf3f8] m-0 lg:block hidden flex-auto lg:flex-row rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.25rem] text-sm font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primaryColor dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primaryColor"
+                                placeholder="Search"
+                                aria-label="Search"
+                            />
+
+                            <div className="hidden lg:flex w-full justify-center flex-wrap items-stretch gap-1">
+                                {/* <!--Search icon--> */}
+                                <span
+                                    className="text-[1.8em] input-group-text flex  items-center whitespace-nowrap rounded text-center font-normal text-neutral-700 dark:text-neutral-200"
+                                    id="basic-addon2">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        className="h-5 w-5">
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                                            clipRule="evenodd" />
+                                    </svg>
+                                </span>
+
+                                <span className="hidden lg:inline-block md:block text-xs text-secondaryColor hover:text-primaryColor">Search</span>
+                            </div>
+                        </div>
                     </>
                 ) : (
                     <>

@@ -14,18 +14,24 @@ import ChangePassword from './features/auth/components/ChangePassword'
 import useFetchUserData from './features/auth/hooks/useFetchUserData'
 import EmailConfirmationSent from './layouts/EmailConfimationSent'
 import Authorization from './layouts/Authorization'
+import ManageAdmin from './features/admin-moderator-user/components/admin/ManageAdmins'
+import ManageMember from './features/admin-moderator-user/components/admin/ManageUsers'
+import ManageUsersAndAdmins from './pages/ManageUsersAndAdmins'
+
 
 /* TODO: 
-    - create usermanagement service
-    - can manage users by an admin (action, view , recruit)
-    - profile management ( upload images )
+    - [] create usermanagement service
+    - [] can manage users by an admin (action, view , recruit)
+    - [] moderator page view ( content , post, message ) latest reports
+    - [] profile management ( upload images )
 
   FIXME: pending
-    - modile otp not set
+    - mobile otp not set
     - resend email confirmation
     - resend otp for password reset
     - add design to confirmation page
     - standard animation to every behaviour 
+    - 404 page | unauthorized page design
 */
 
 function App() {
@@ -46,7 +52,12 @@ function App() {
               <Route path='mynetwork' element={<div>My netWork</div>} />
               <Route path='/manage-admins' element={
                 <Authorization userRoles={user?.role} requiredRole="admin">
-                  <div>Manage Admins</div>
+                  <ManageUsersAndAdmins isAdmin />
+                </Authorization>
+              } />
+              <Route path='/manage-users' element={
+                <Authorization userRoles={user?.role} requiredRole="admin">
+                  <ManageUsersAndAdmins />
                 </Authorization>
               } />
             </Route>

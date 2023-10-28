@@ -87,7 +87,7 @@ export const logoutUser = createAsyncThunk(
 
             const data = await response.json();
 
-            console.log(data);
+            // console.log(data);
 
 
             if (data.message && typeof data.message != typeof []) {
@@ -212,7 +212,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loginStart: (state) => {
+        loginStart: (state) => { 
             state.status = 'loading';
             state.error = null;
         },
