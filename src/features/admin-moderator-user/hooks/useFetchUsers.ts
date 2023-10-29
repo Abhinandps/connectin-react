@@ -21,6 +21,7 @@ function useFetchUsers(url: string) {
                 setLoading(false)
 
             } catch (error: any) {
+                // setUsers([])
                 setError(error)
                 setLoading(false)
             }

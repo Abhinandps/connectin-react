@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { TEModal, TEModalDialog, TEModalContent, TEModalHeader, TEModalBody } from "tw-elements-react";
+import { TEModal, TEModalDialog, TEModalContent, TEModalHeader, TEModalBody, TEModalFooter } from "tw-elements-react";
 import SearchInput from "./SearchInput";
 import apiCall from "../../../services/apiCall";
 
@@ -32,9 +32,9 @@ const Modal = ({ isOpen, handleCloseModal, setRequestId, title, setLoading }: an
 
     const handleChangeToAdmin = async (requestId: string) => {
         try {
-            const response = await apiCall({ url: `/users/${requestId}/add-admin`, method: 'POST', data: requestId })
+            const response = await apiCall({ url: `/users/${requestId}/add-admin`, method: "POST" })
 
-            if (response.status === 200) {
+            if (response.message === 'success') {
                 setLoading((prev: boolean) => !prev)
                 setRequestId(requestId);
                 handleCloseModal()
@@ -84,9 +84,9 @@ const Modal = ({ isOpen, handleCloseModal, setRequestId, title, setLoading }: an
 
                         </TEModalBody>
 
-                        {/* <TEModalFooter>
+                        <TEModalFooter>
                             <button onClick={handleCloseModal}>Close</button>
-                        </TEModalFooter> */}
+                        </TEModalFooter>
 
                     </TEModalContent>
                 </TEModalDialog>

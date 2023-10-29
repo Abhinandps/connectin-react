@@ -21,10 +21,8 @@ const AdminTable = (props: IAdminTableProps) => {
     const removeContentAdmin = async (requestId: string) => {
         try {
             const response = await apiCall({ url: `/users/${requestId}/remove-admin`, method: 'POST' })
-            console.log(response,"res");
-            
 
-            if (response.status === 200) {
+            if (response.message === 'success') {
                 setUsers((users) => users.filter((user: any) => user._id !== requestId));
                 setLoading(true);
                 setRequestId(requestId)
