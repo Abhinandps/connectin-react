@@ -4,6 +4,7 @@ import storageSession from 'reduxjs-toolkit-persist/lib/storage/session'
 import { persistReducer, persistStore } from 'redux-persist';
 
 import authSlice from './features/auth/authSlice';
+import postSlice from './features/post/postSlice';
 
 
 // const rootPersistConfig = {
@@ -19,12 +20,20 @@ const userPersistConfig = {
 }
 
 
+const postPersistConfig = {
+    key: 'post',
+    version: 1,
+    storage: storageSession,
+}
 
 const persistedReducer = persistReducer(userPersistConfig, authSlice)
+const persistedPostReducer = persistReducer(postPersistConfig, postSlice);
+
 
 export const store = configureStore({
     reducer: {
-        auth: persistedReducer
+        auth: persistedReducer,
+        post: persistedPostReducer
     },
 })
 

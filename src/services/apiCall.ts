@@ -17,11 +17,12 @@ const apiCall = async ({ url, method = "GET", data, isFile = false }: ApiCallPro
             }
             : {},
         body: isFile ? data : data ? JSON.stringify(data) : undefined,
+        credentials: 'include'
     });
 
 
     const response = await res.json();
-    
+
     return response;
 };
 

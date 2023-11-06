@@ -57,7 +57,7 @@ const usersManageList = [
     {
         id: 'tab1',
         title: 'Posts & Activity',
-        path: '/',
+        path: '/recent-activity/all',
     },
     {
         id: 'tab2',
@@ -70,7 +70,7 @@ const contentAdminManageList = [
     {
         id: 'tab1',
         title: 'Posts & Activity',
-        path: '/',
+        path: '/recent-activity/all',
     },
     {
         id: 'tab2',
@@ -83,7 +83,7 @@ const superAdminManageList = [
     {
         id: 'tab1',
         title: 'Posts & Activity',
-        path: '/',
+        path: '/recent-activity/all',
     },
     {
         id: 'tab2',

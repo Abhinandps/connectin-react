@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { useAuth } from './features/auth/hooks/useAuth'
 import useRefreshToken from './features/auth/hooks/useRefreshToken'
@@ -14,12 +15,15 @@ import ChangePassword from './features/auth/components/ChangePassword'
 import useFetchUserData from './features/auth/hooks/useFetchUserData'
 import EmailConfirmationSent from './layouts/EmailConfimationSent'
 import Authorization from './layouts/Authorization'
-import ManageAdmin from './features/admin-moderator-user/components/admin/ManageAdmins'
-import ManageMember from './features/admin-moderator-user/components/admin/ManageUsers'
 import ManageUsersAndAdmins from './pages/ManageUsersAndAdmins'
+import { useDispatch } from 'react-redux'
+import { fetchUserFeed } from './features/post/postSlice'
+import PostsAndActivity from './pages/PostsAndActivity'
 
 
 /* TODO: 
+    - [] Post creation, Like and comment, Report a post, Post recommendations
+
     - [] create usermanagement service
     - [] can manage users by an admin (action, view , recruit)
     - [] moderator page view ( content , post, message ) latest reports
@@ -39,6 +43,14 @@ function App() {
   useRefreshToken()
 
   useFetchUserData()
+
+  const dispath = useDispatch()
+
+  // useEffect(() => {
+  //   (() => {
+  //     dispath(fetchUserFeed())
+  //   })()
+  // }, [])
 
   const { isAuthenticated, user } = useAuth();
 
@@ -60,7 +72,14 @@ function App() {
                   <ManageUsersAndAdmins />
                 </Authorization>
               } />
+
+              <Route path='recent-activity/all' element={<PostsAndActivity />} />
+
             </Route>
+
+
+
+
             <Route path="email-confirmation/sent" element={<EmailConfirmationSent />} />
           </>
         ) : (

@@ -1,5 +1,5 @@
 import React from "react"
-import { Logo } from "./Navbar";
+import { Logo } from "./NavigationLayout";
 
 const Footer: React.FC = function () {
     return (

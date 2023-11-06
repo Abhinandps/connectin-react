@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
+
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { addCommentToPost, deleteCommentFromPost, deletePost, enableCommenting, fetchPostData, fetchUserPosts, likePost, toggleCommentOptions, togglePostOptions, updatePost } from '../features/post/postSlice';
 import FeedContainer from '../layouts/FeedContainer';
-import { addCommentToPost, createPost, deleteCommentFromPost, enableCommenting, fetchUserFeed, likePost, toggleCommentOptions } from '../features/post/postSlice';
+import { TERipple } from 'tw-elements-react';
+import { FormLayout } from './Feed';
+import InputField from '../components/Form/InputField';
+import Button from '../components/Form/Button';
 
-
-const Feed: React.FC = function () {
-    const { user } = useAuth()
+const PostsAndActivity = () => {
     const [content, setContent] = useState('')
-
-    const { feed, userLikedPosts } = useSelector((state: any) => state.post)
+    const { posts, userLikedPosts, postToEdit } = useSelector((state: any) => state.post)
     const [showModalLg, setShowModalLg] = useState(false);
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchUserFeed());
+        dispatch(fetchUserPosts());
     }, [dispatch]);
 
 
@@ -30,8 +33,17 @@ const Feed: React.FC = function () {
         setContent('')
     }
 
+    const handlePostEdit = (postId: any) => {
+        dispatch(fetchPostData({ postId }))
+        setShowModalLg(true)
+    }
+
     const handleDeleteComment = (postId: any, commentId: any) => {
         dispatch(deleteCommentFromPost({ postId, commentId }))
+    }
+
+    const handleDeletePost = (postId: any) => {
+        dispatch(deletePost({ postId }))
     }
 
 
@@ -62,38 +74,17 @@ const Feed: React.FC = function () {
             </div>
 
             {/* Feed  */}
-            <div className='md:mt-0 lg:w-[655px] md:w-[500px] min-h-screen'>
+            <div className='md:mt-0 lg:w-[660px] md:w-[520px] min-h-screen bg-white px-5'>
                 {/* add post  */}
-                <div className='bg-white flex flex-col h-[115px] justify-center items-center w-full border border-borderColor rounded-lg'>
-                    <div className='flex w-full justify-between items-center py-3 px-3 gap-2'>
-                        <img className='w-[45px] h-[45px] rounded-full' src="https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645719137?e=1703116800&v=beta&t=emx0qOZ_uF1VpGQGbBT_cLE9uE_Q7D5vov-PgRQXy1I" alt="" />
-                        <input type="text" className='w-full border border-[#727272] h-[50px] rounded-full text-sm px-4' placeholder='Start a Post' />
-                    </div>
-                    <div className='flex justify-between w-full px-14 py-3 cursor-pointer'>
-                        <div className='flex gap-2 ' onClick={() => setShowModalLg(true)}>
-                            <i>📸</i>
-                            <p className='text-sm text-slate-500'>Media</p>
-                        </div>
-
-                        <div className='flex gap-2 '>
-                            <i>🔖</i>
-                            <p className='text-sm text-slate-500'>Job</p>
-                        </div>
-
-                        <div className='flex gap-2 '>
-                            <i>📝</i>
-                            <p className='text-sm text-slate-500'>Write Article</p>
-                        </div>
+                <div className='bg-white flex flex-col h-[115px] justify-center items-center w-full'>
+                    <h2 className='w-full font-bold text-lg py-2'>All activity</h2>
+                    <div className='text-sm text-secondaryColor flex gap-2 w-full'>
+                        <TERipple rippleColor='light'><button className='bg-green-800 p-2 px-3 text-white rounded-full'>Posts</button></TERipple>
+                        <TERipple rippleColor='light'><button className='border border-borderColor px-3 rounded-full p-2'>Comments</button></TERipple>
+                        <TERipple rippleColor='light'><button className='border border-borderColor p-2 px-3 rounded-full'>Likes</button></TERipple>
                     </div>
                 </div>
-
-                {/* filter */}
-                <div className='my-5 relative'>
-                    <hr />
-                    <button className='absolute top-[-7px] right-0 md:bg-background px-2 text-xs text-color'>Sort By: <span className='font-bold text-primaryColor'>Top 🔽</span> </button>
-                </div>
-
-                {feed && feed?.map((post: any) => {
+                {posts && posts?.map((post: any) => {
 
                     // const likedUsers = post.likes.map((u: any) => (u.creator.userId))
 
@@ -102,11 +93,11 @@ const Feed: React.FC = function () {
                         isLiked: userLikedPosts.includes(post._id)
                     };
                     const { userId, firstName, lastName, profileImage, headline } = post.creator
-                    const { _id, title, contentBody, attachments, isLiked, isCommenting, comments } = postWithIsLiked
+                    const { _id, title, contentBody, attachments, isLiked, isCommenting, comments, isPostOptions } = postWithIsLiked
 
 
                     return (
-                        < div key={_id} className='bg-white rounded-lg border  border-borderColor py-3 min-h-[500px] px-5' >
+                        < div key={_id} className='bg-white rounded-lg border  border-borderColor py-3 min-h-[500px] px-5 relative' >
 
                             {/* header  */}
                             <div className='flex items-center gap-2 py-2'>
@@ -122,8 +113,9 @@ const Feed: React.FC = function () {
                             <div className=''>
                                 <p className='font-light text-[12px] py-2 ' >{title}</p>
                                 <p className='font-light leading-6 text-[12px] py-2 ' >
-                                    {/* <ContentWithTags contentBody={contentBody} /> */}
-                                    {contentBody}</p>
+                                {/* <ContentWithTags contentBody={contentBody} /> */}
+                                    {contentBody}
+                                    </p>
                             </div>
 
 
@@ -202,6 +194,7 @@ const Feed: React.FC = function () {
                                                         >⚫ ⚫ ⚫</div>
 
                                                         {
+
                                                             isCommentOptions && (
                                                                 <div className='rounded-md bg-white shadow-md w-[150px] min-h-[50px] absolute top-10 right-5'>
                                                                     <button
@@ -223,6 +216,29 @@ const Feed: React.FC = function () {
                                 )
                             }
 
+                            <div className='text-[4px] absolute top-5 right-5 z-[200] text-pirmaryColor cursor-pointer p-1'
+                                onClick={() => dispatch(togglePostOptions({ postId: _id }))}
+                            >⚫ ⚫ ⚫</div>
+
+                            {
+                                isPostOptions && (
+                                    <div className='rounded-md bg-white shadow-md min-w-[60%] min-h-[50px] font-medium absolute top-10 right-5 border border-borderColor'>
+                                        <button
+                                            // onClick={() => handleDeleteComment(_id, comment._id)}
+                                            className='hover:bg-secondary-50 w-full  py-2 px-5 text-[13px] text-left my-1 text-secondaryColor hover:text-primaryColor'>📁 &nbsp; Save</button>
+                                        <button
+                                            onClick={() => handlePostEdit(_id)}
+                                            className='hover:bg-secondary-50 w-full py-2 px-5 text-[13px] text-left my-1 text-secondaryColor hover:text-primaryColor'>🖋  &nbsp;  &nbsp; Edit</button>
+                                        <button
+                                            onClick={() => handleDeletePost(_id)}
+                                            className='hover:bg-secondary-50 w-full py-2 px-5 text-[13px] text-left my-1 text-secondaryColor hover:text-primaryColor'>❌ &nbsp; Delete</button>
+                                        <button
+                                            // onClick={() => handleDeleteComment(_id, comment._id)}
+                                            className='hover:bg-secondary-50 w-full py-2 px-5 text-[13px] text-left my-1 text-secondaryColor hover:text-primaryColor'>🔴 &nbsp; Report</button>
+                                    </div>
+                                )
+                            }
+
                         </div>
 
 
@@ -239,189 +255,31 @@ const Feed: React.FC = function () {
                 <div className='bg-white w-full h-[200px] border border-borderColor rounded-lg'></div>
             </div>
 
-            <Editor showModalLg={showModalLg} setShowModalLg={setShowModalLg} />
+            <AddContents
+                showModalLg={showModalLg}
+                setShowModalLg={setShowModalLg}
+                postData={postToEdit}
+            />
 
         </FeedContainer >
 
     )
 }
 
-export default Feed;
+export default PostsAndActivity
 
 
 
 
 
-export const ContentWithTags = ({ contentBody }:any) => {
-    // Regular expression to find #tags in the text
-    const tagRegex = /#(\w+)/g;
-
-    // Split the contentBody into parts separated by #tags
-    const parts = contentBody.split(tagRegex);
-    
-    
-
-    return (
-        <p className="font-light leading-6 text-[12px] py-2">
-            {parts.map((part:any, index:any) => {
-                
-                
-                console.log(part,tagRegex);
-                // if (part.match(tagRegex)) {
-                    // console.log(tagRegex);
-                    
-                    // If it's a #tag, render it as a clickable link
-                    const tag = part.replace('#', '');
-                    return (
-                        <a key={index} href={`/tags/${tag}`} className="text-blue-800 font-medium underline">
-                            #{tag}
-                        </a>
-                    );
-                // } else {
-                    // If it's not a #tag, render it as plain text
-                    // return <span key={index}>{part}</span>;
-                // }
-            })}
-        </p>
-    );
-};
-
-
-// post content user actions 
-
-const Action = ({ title, postId, isLiked, onclick }: any) => {
-    return (
-
-        <TERipple rippleColor="light" className='w-full'>
-            <button
-                onClick={() => onclick(postId)}
-                className={`${isLiked ? 'text-primaryColor' : 'text-secondaryColor hover:text-primaryColor'}  w-full transition delay-75 ease-in-out rounded-md hover:bg-secondary-200 p-3 my-2 mx-2 text-sm font-medium  `}>
-                {title}
-            </button>
-        </TERipple>
-
-    )
-}
-
-
-
-interface EditorProps
-    extends React.InputHTMLAttributes<HTMLInputElement> {
-    showModalLg: boolean;
-    setShowModalLg: (value: boolean) => void;
-}
-
-import {
-    TEModal,
-    TEModalDialog,
-    TEModalContent,
-    TEModalHeader,
-    TEModalBody,
-    TERipple,
-} from "tw-elements-react";
-import { FileUpload } from '../components/Form/FileUpload';
-import Button from '../components/Form/Button';
-import InputField from '../components/Form/InputField';
-import apiCall from '../services/apiCall';
-import { useNavigate } from 'react-router-dom';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { useAuth } from '../features/auth/hooks/useAuth';
-
-
-
-
-
-
-const Editor: React.FC<EditorProps> = function ({ showModalLg, setShowModalLg }) {
-
-    // page 1
-    const [data, setData] = useState({
-        currentPage: 1,
-        attachments: null
-    })
-
-
-    const { attachments }: any = data;
-
-
-
-
-    const onChange = (key: string, value: any) => {
-        setData(prev => ({
-            ...prev,
-            [key]: value
-        }))
-    }
-
-
-    // FIXME: url 
-
-    const submit = async (e: any) => {
-        try {
-            e.preventDefault();
-
-            const res = await fetch(`http://localhost:3000/posts/utils/upload-files`, {
-                method: "POST",
-                body: attachments
-            });
-
-            if (res.ok) {
-                const data = await res.json()
-                onChange('attachments', data)
-                onChange("currentPage", 2)
-            }
-
-        } catch (err) { }
-    }
-
-
-
-    const goBack = () => {
-        onChange("currentPage", 1)
-    }
-
-    if (data.currentPage === 2) return (
-        <AddContents
-            {...data}
-            goBack={goBack}
-            showModalLg={showModalLg} setShowModalLg={setShowModalLg}
-        />
-    )
-
-    return (
-        <FormLayout title='Editor' showModalLg={showModalLg} setShowModalLg={setShowModalLg} >
-            <form onSubmit={submit} encType='multipart/form-data'>
-                <img src="" alt="image" />
-                <h2>Select files to begin</h2>
-                <p>Share images or a single video in your post.</p>
-                <FileUpload
-                    Label="Select Files"
-                    value={attachments}
-                    onChange={v => onChange("attachments", v)}
-                    error={''}
-                    multiple
-                />
-                <Button
-                    title='Next'
-                />
-            </form>
-        </FormLayout >
-    );
-}
-
-
-
-
-
-
-const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg, attachments }) => {
+const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg, postData }) => {
+    console.log(postData);
 
     const dispatch = useDispatch()
     const emptyFormData = {
-        title: "",
+        title: postData?.title || "",
         contentType: "text",
-        contentBody: "",
-        attachments
+        contentBody: postData?.contentBody || "",
     }
     // page 2 
     const [formData, setFormData] = useState(
@@ -443,11 +301,11 @@ const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg, attac
         try {
             e.preventDefault();
 
-            const createPostAction = await dispatch(createPost(formData));
+            // dispatch(updatePost({ postId: postData._id, formData }));
 
-            if (createPost.fulfilled.match(createPostAction)) {
-                setShowModalLg(false)
-            }
+            // if (updatePost.fulfilled.match(createPostAction)) {
+            //     setShowModalLg(false)
+            // }
 
         } catch (err) { }
     }
@@ -478,6 +336,8 @@ const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg, attac
                     outline={false}
                 />
 
+                <img src={postData?.attachments[0]} alt="" className='w-full ' />
+
                 <Button
                     title='prev'
                     onClick={goBack}
@@ -491,59 +351,18 @@ const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg, attac
     )
 }
 
+// post content user actions 
 
-
-
-
-
-
-
-// Form Layout 
-
-export const FormLayout: React.FC<EditorProps> = ({ showModalLg, setShowModalLg, children, title }) => {
+const Action = ({ title, postId, isLiked, onclick }: any) => {
     return (
-        <div>
-            <TEModal show={showModalLg} setShow={setShowModalLg}>
-                <TEModalDialog size="lg">
-                    <TEModalContent>
-                        <TEModalHeader>
-                            {/* <!--Modal title--> */}
-                            <h5 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">
-                                {title}
-                            </h5>
-                            {/* <!--Close button--> */}
-                            <button
-                                type="button"
-                                className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                                onClick={() => setShowModalLg(false)}
-                                aria-label="Close"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="h-6 w-6"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </TEModalHeader>
-                        {/* <!--Modal body--> */}
-                        <TEModalBody>
-                            {children}
-                        </TEModalBody>
-                    </TEModalContent>
-                </TEModalDialog>
-            </TEModal>
 
-        </div>
+        <TERipple rippleColor="light" className='w-full'>
+            <button
+                onClick={() => onclick(postId)}
+                className={`${isLiked ? 'text-primaryColor' : 'text-secondaryColor hover:text-primaryColor'}  w-full transition delay-75 ease-in-out rounded-md hover:bg-secondary-200 p-3 my-2 mx-2 text-sm font-medium  `}>
+                {title}
+            </button>
+        </TERipple>
+
     )
 }
-
-
