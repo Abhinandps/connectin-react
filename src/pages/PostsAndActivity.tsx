@@ -7,8 +7,10 @@ import { TERipple } from 'tw-elements-react';
 import { FormLayout } from './Feed';
 import InputField from '../components/Form/InputField';
 import Button from '../components/Form/Button';
+import { useAuth } from '../features/auth/hooks/useAuth';
 
 const PostsAndActivity = () => {
+    const { user } = useAuth()
     const [content, setContent] = useState('')
     const { posts, userLikedPosts, postToEdit } = useSelector((state: any) => state.post)
     const [showModalLg, setShowModalLg] = useState(false);
@@ -16,7 +18,7 @@ const PostsAndActivity = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchUserPosts());
+        dispatch(fetchUserPosts(user.userId));
     }, [dispatch]);
 
 
@@ -113,9 +115,9 @@ const PostsAndActivity = () => {
                             <div className=''>
                                 <p className='font-light text-[12px] py-2 ' >{title}</p>
                                 <p className='font-light leading-6 text-[12px] py-2 ' >
-                                {/* <ContentWithTags contentBody={contentBody} /> */}
+                                    {/* <ContentWithTags contentBody={contentBody} /> */}
                                     {contentBody}
-                                    </p>
+                                </p>
                             </div>
 
 

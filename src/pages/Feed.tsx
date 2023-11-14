@@ -8,6 +8,7 @@ const Feed: React.FC = function () {
     const [content, setContent] = useState('')
 
     const { feed, userLikedPosts } = useSelector((state: any) => state.post)
+    console.log(feed)
     const [showModalLg, setShowModalLg] = useState(false);
 
     const dispatch = useDispatch()
@@ -33,10 +34,6 @@ const Feed: React.FC = function () {
     const handleDeleteComment = (postId: any, commentId: any) => {
         dispatch(deleteCommentFromPost({ postId, commentId }))
     }
-
-
-
-
 
 
     return (
@@ -93,7 +90,7 @@ const Feed: React.FC = function () {
                     <button className='absolute top-[-7px] right-0 md:bg-background px-2 text-xs text-color'>Sort By: <span className='font-bold text-primaryColor'>Top 🔽</span> </button>
                 </div>
 
-                {feed && feed?.map((post: any) => {
+                {feed && (feed).map((post: any) => {
 
                     // const likedUsers = post.likes.map((u: any) => (u.creator.userId))
 
@@ -101,6 +98,8 @@ const Feed: React.FC = function () {
                         ...post,
                         isLiked: userLikedPosts.includes(post._id)
                     };
+
+                    console.log(post, 'test')
                     const { userId, firstName, lastName, profileImage, headline } = post.creator
                     const { _id, title, contentBody, attachments, isLiked, isCommenting, comments } = postWithIsLiked
 
@@ -236,7 +235,15 @@ const Feed: React.FC = function () {
 
             {/* extra  */}
             <div className='lg:block md:hidden sm:hidden xs:hidden hidden w-[300px] max-h-[500px]'>
-                <div className='bg-white w-full h-[200px] border border-borderColor rounded-lg'></div>
+                <div className='bg-white w-full h-[250px] border border-borderColor rounded-lg p-5 flex flex-col items-center justify-center'>
+                    <p className='text-xs leading-relaxed text-secondaryColor font-light'>Abhinand, unlock your full potential with ConnectIn Premium</p>
+                    <div className='my-3 flex items-center gap-2 justify-center'>
+                        <img className='w-[65px] h-[65px] rounded-full' src="https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645719137?e=1703116800&v=beta&t=emx0qOZ_uF1VpGQGbBT_cLE9uE_Q7D5vov-PgRQXy1I" alt="" />
+                        <img className='w-[65px] h-[65px]' src="https://media.licdn.com/dms/image/C4E0EAQElWt4fvMOIcQ/rightRail-logo-shrink_200_200/0/1631008652608?e=1700571600&v=beta&t=jMdf9xG-vjNF0JF5vVvXBb8bOtH-dfy7ZRlhWSP_ptk" alt="" />
+                    </div>
+                    <p className='text-xs leading-relaxed  text-secondaryColor font-light'>See who's viewd your profile</p>
+                    <Link to={'/premium'} className='p-2  text-xs font-medium px-3 border-2 mt-2 border-blue-400 rounded-full  text-blue-400'>Subscribe</Link>
+                </div>
             </div>
 
             <Editor showModalLg={showModalLg} setShowModalLg={setShowModalLg} />
@@ -252,34 +259,34 @@ export default Feed;
 
 
 
-export const ContentWithTags = ({ contentBody }:any) => {
+export const ContentWithTags = ({ contentBody }: any) => {
     // Regular expression to find #tags in the text
     const tagRegex = /#(\w+)/g;
 
     // Split the contentBody into parts separated by #tags
     const parts = contentBody.split(tagRegex);
-    
-    
+
+
 
     return (
         <p className="font-light leading-6 text-[12px] py-2">
-            {parts.map((part:any, index:any) => {
-                
-                
-                console.log(part,tagRegex);
+            {parts.map((part: any, index: any) => {
+
+
+                console.log(part, tagRegex);
                 // if (part.match(tagRegex)) {
-                    // console.log(tagRegex);
-                    
-                    // If it's a #tag, render it as a clickable link
-                    const tag = part.replace('#', '');
-                    return (
-                        <a key={index} href={`/tags/${tag}`} className="text-blue-800 font-medium underline">
-                            #{tag}
-                        </a>
-                    );
+                // console.log(tagRegex);
+
+                // If it's a #tag, render it as a clickable link
+                const tag = part.replace('#', '');
+                return (
+                    <a key={index} href={`/tags/${tag}`} className="text-blue-800 font-medium underline">
+                        #{tag}
+                    </a>
+                );
                 // } else {
-                    // If it's not a #tag, render it as plain text
-                    // return <span key={index}>{part}</span>;
+                // If it's not a #tag, render it as plain text
+                // return <span key={index}>{part}</span>;
                 // }
             })}
         </p>
@@ -323,7 +330,7 @@ import { FileUpload } from '../components/Form/FileUpload';
 import Button from '../components/Form/Button';
 import InputField from '../components/Form/InputField';
 import apiCall from '../services/apiCall';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../features/auth/hooks/useAuth';
 

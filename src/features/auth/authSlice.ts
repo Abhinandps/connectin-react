@@ -56,6 +56,8 @@ export const loginUser = createAsyncThunk(
                 throw new Error('Invalid username or password.')
             }
 
+           
+
 
             const user = {
                 userId: data?.user?.userId,
@@ -154,7 +156,7 @@ export const fetchUserDetails = createAsyncThunk(
     'data/fetchUserData',
     async (_token, thunkAPI) => {
         try {
-            const response = await fetch('http://localhost:3000/auth/validate-token', {
+            const response = await fetch('http://localhost:3000/validate-token', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -250,6 +252,7 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginUser.fulfilled, (state, action) => {
+                console.log(action.payload,'payload')
                 state.user = action.payload.user;
                 state.token = action.payload.token;
                 state.status = 'authenticated'

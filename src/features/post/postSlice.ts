@@ -37,7 +37,7 @@ export const updatePost = createAsyncThunk(
     async (form, thunkAPI) => {
         const { postId, formData }: any = form
         console.log(form);
-        
+
         try {
             const res = await apiCall({
                 url: `/posts/edit/${postId}`,
@@ -54,7 +54,6 @@ export const updatePost = createAsyncThunk(
         }
     }
 )
-
 
 export const fetchUserPosts = createAsyncThunk(
     'data/fetchUserPosts',
@@ -73,7 +72,6 @@ export const fetchUserPosts = createAsyncThunk(
         }
     }
 )
-
 
 // Asynx thunk of fetch user feed
 
@@ -115,7 +113,7 @@ export const addCommentToPost = createAsyncThunk(
                 throw new Error('Forbidden resource');
             }
 
-            return { ...res, postId }
+            return { ...res.data, postId }
 
         } catch (err: any) {
             console.log(err.message);
@@ -124,7 +122,6 @@ export const addCommentToPost = createAsyncThunk(
         }
     }
 )
-
 
 export const deleteCommentFromPost = createAsyncThunk(
     'data/deleteComment',
@@ -154,7 +151,6 @@ export const deleteCommentFromPost = createAsyncThunk(
         }
     }
 )
-
 
 export const deletePost = createAsyncThunk(
     'data/deletePost',
@@ -200,9 +196,6 @@ export const likePost = createAsyncThunk(
         }
     }
 )
-
-
-
 
 const postSlice = createSlice({
     name: 'post',
@@ -328,7 +321,7 @@ const postSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchUserPosts.fulfilled, (state, action) => {
-                let py = action.payload.res
+                let py = action.payload.res.data
                 const PostsWithFlags = py.map((post: any) => {
                     const postWithFlags = {
                         ...post,
@@ -350,7 +343,8 @@ const postSlice = createSlice({
                 state.posts = PostsWithFlags;
             })
             .addCase(fetchUserFeed.fulfilled, (state, action) => {
-                let py = action.payload.res
+                let py = action.payload.res.data
+
                 const feedWithFlags = py.map((post: any) => {
                     const postWithFlags = {
                         ...post,
@@ -358,16 +352,21 @@ const postSlice = createSlice({
                         isPostOptions: false
                     };
 
-                    const commentsWithFlags = post.comments.map((c) => ({
+                    const commentsWithFlags = (post.comments || []).map((c: any) => ({
                         ...c,
                         isCommentOptions: false,
                     }))
+
+
 
                     return {
                         ...postWithFlags,
                         comments: commentsWithFlags
                     }
                 });
+
+                console.log(feedWithFlags, '');
+
 
                 state.feed = feedWithFlags;
             })
@@ -378,6 +377,7 @@ const postSlice = createSlice({
             })
             .addCase(likePost.fulfilled, (state, action) => {
                 let postId = action.payload.id
+                console.log(postId)
                 const likedPostInFeed = state.feed.find((post: any) => post._id === postId)
 
                 if (likedPostInFeed) {
@@ -398,9 +398,9 @@ const postSlice = createSlice({
                     }
                 }
             })
-    
+
             .addCase(createPost.fulfilled, (state, action) => {
-                const newPost = action.payload.res;
+                const newPost = action.payload.res.data;
 
                 // Update the feed
                 const updatedFeed = [newPost, ...state.feed];
@@ -417,7 +417,9 @@ const postSlice = createSlice({
             })
             .addCase(addCommentToPost.fulfilled, (state, action) => {
                 let py = action.payload
+               
                 const { postId, ...comment } = py
+             
                 const updatedFeed = state.feed.map((post: any) => {
                     if (post._id === postId) {
                         const updatedComments = [...post.comments, comment]
@@ -449,7 +451,7 @@ const postSlice = createSlice({
 
             })
             .addCase(deleteCommentFromPost.fulfilled, (state, action) => {
-                let { commentId, postId } = action.payload.res
+                let { commentId, postId } = action.payload.res.data
 
                 const updatedFeed = state.feed.map((post: any) => {
                     if (post._id === postId) {
@@ -495,7 +497,6 @@ const postSlice = createSlice({
             })
     }
 })
-
 
 export const { enableCommenting, toggleCommentOptions, togglePostOptions, fetchPostData } = postSlice.actions
 
