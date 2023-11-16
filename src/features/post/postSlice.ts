@@ -82,6 +82,8 @@ export const fetchUserFeed = createAsyncThunk(
             const res = await apiCall({
                 url: `/users/user/feed`
             })
+            console.log(res);
+            
             if (res.statusCode === 403) {
                 // Handle the "Forbidden" error
                 throw new Error('Forbidden resource');

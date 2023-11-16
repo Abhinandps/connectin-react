@@ -131,6 +131,8 @@ const Feed: React.FC = function () {
                                 <img src={attachments[0]} alt="" className='h-[400px] w-full object-cover' />
                             </div>
 
+
+
                             {/* user actions  */}
                             <div className='flex justify-between border-t mt-6'>
 
@@ -380,7 +382,6 @@ const Editor: React.FC<EditorProps> = function ({ showModalLg, setShowModalLg })
 
         } catch (err) { }
     }
-
 
 
     const goBack = () => {

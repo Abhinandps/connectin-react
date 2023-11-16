@@ -5,7 +5,7 @@ import Popup from '../NavBar/PopUp';
 
 const NavItem = React.memo(function ({ data, handleTabClick, activeTab }: { data: any, handleTabClick: any, activeTab: any }) {
     const [isOpen, setIsOpen] = useState(false);
-    
+
     return (
         <>
             <TETabsItem key={data?.id} onClick={() => data.modal ? setIsOpen(!isOpen) : handleTabClick(data.id, data.path)}
@@ -33,7 +33,7 @@ const NavItem = React.memo(function ({ data, handleTabClick, activeTab }: { data
                 {
                     data.modal && isOpen ? (
 
-                        <Popup handleIsOpen={setIsOpen} isOpen={isOpen} />
+                        <Popup  handleIsOpen={setIsOpen} isOpen={isOpen} />
 
                     ) : null
                 }

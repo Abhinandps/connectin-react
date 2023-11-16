@@ -1,7 +1,21 @@
-{
-    "message": "User login successful. Returns access and refresh tokens.",
-    "access_token": "AQXNnd2kXITHELmWblJigbHEuoFdfRhOwGA0QNnumBI8XOVSs0HtOHEU",
-    "expires_in": 86400,
-    "refresh_token": "AQWAft_WjYZKwuWXLC5hQlghgTam-tuT8CvFej9-XxGyqeER",
-    "refresh_token_expires_in": 525600
-}
+[
+    {
+        "label": "monthly",
+        "price": 199,
+        "features": [
+            "You can post Jobs",
+            "See who viewd your profile"
+        ],
+        "isActive": false
+    },
+    {
+        "label": "yearly",
+        "price": 2280,
+        "features": [
+            "You can post Jobs",
+            "See who viewd your profile",
+            "Cancel anytime"
+        ],
+        "isActive": false
+    }
+]

@@ -7,16 +7,21 @@ import ProfileInfo from './ProfileInfo';
 import AccountInfo from './AccountInfo';
 import ManageInfo from './ManageInfo';
 import SignOut from './SignOut';
+import useUserData from '../../hooks/useUserData';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
 
 interface PopupProps {
     isOpen: boolean;
     handleIsOpen: (isOpen: boolean) => void;
+
 }
 
 const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
 
     const { user } = useAuth()
+    const { userData, loading, error }: any = useUserData(user.userId)
+    console.log(userData, 'data')
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -62,13 +67,22 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
                 <div className="absolute top-[65px] right-0 z-[777] bg-white  py-2 border w-[300px] border-borderColor rounded-md shadow-md"
                     ref={popupRef}
                 >
-                    <ProfileInfo />
+                    {
+                        loading ? (
+                            <div className="grid place-content-center h-full">
+                                <LoadingSpinner />
+                            </div>
+                        ) : (
+                            <>
+                                <ProfileInfo data={userData} />
 
-                    <AccountInfo />
+                                <AccountInfo />
 
-                    <ManageInfo user={user} />
+                                <ManageInfo user={user} />
 
-                    <SignOut handleLogout={handleLogout} />
+                                <SignOut handleLogout={handleLogout} /></>
+                        )
+                    }
                 </div>
             )}
         </>

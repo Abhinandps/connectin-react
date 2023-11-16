@@ -5,10 +5,12 @@ import { useAuth } from '../../features/auth/hooks/useAuth';
 import { Logo } from './Logo';
 import { TETabs } from 'tw-elements-react';
 import NavItem from '../ui/NavItem';
+import useUserData from '../../hooks/useUserData';
 
 const NavBar = () => {
 
     const { isAuthenticated } = useAuth()
+  
 
     const navigate = useNavigate()
 
@@ -31,9 +33,13 @@ const NavBar = () => {
 
                         {/* Navigation list  */}
                         {navdata && navdata.map((data) => (
-                            <NavItem key={data.id} data={data} handleTabClick={handleTabClick} activeTab={activeTab} />
+                            <NavItem
+                                key={data.id}
+                                data={data}
+                                handleTabClick={handleTabClick}
+                                activeTab={activeTab} />
                         ))}
-                        
+
                     </TETabs>
                 ) : (
                     <TETabs className="flex !flex-nowrap items-center justify-between gap-5 !mb-0 lg:ml-0 ml-[50px] ">

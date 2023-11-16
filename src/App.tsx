@@ -19,6 +19,7 @@ import ManageUsersAndAdmins from './pages/ManageUsersAndAdmins'
 import { useDispatch } from 'react-redux'
 import { fetchUserFeed } from './features/post/postSlice'
 import PostsAndActivity from './pages/PostsAndActivity'
+import Subscription, { Completion } from './pages/Subscription'
 
 
 /* TODO: 
@@ -61,6 +62,8 @@ function App() {
           <>
             <Route path='/' element={<HomeContainer />}>
               <Route index element={<Feed />} />
+              <Route path='/premium' element={<Subscription />} />
+              <Route path='/completion' element={<Completion />} />
               <Route path='mynetwork' element={<div>My netWork</div>} />
               <Route path='/manage-admins' element={
                 <Authorization userRoles={user?.role} requiredRole="admin">
