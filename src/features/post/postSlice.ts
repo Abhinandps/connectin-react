@@ -503,3 +503,5 @@ const postSlice = createSlice({
 export const { enableCommenting, toggleCommentOptions, togglePostOptions, fetchPostData } = postSlice.actions
 
 export default postSlice.reducer;
+
+

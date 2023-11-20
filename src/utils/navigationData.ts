@@ -13,14 +13,14 @@ const navdata = [
         id: 'tab2',
         title: 'My Network',
         icon: IoHomeSharp,
-        path: 'mynetwork'
+        path: 'mynetwork',
+        disabled: true
     },
     {
         id: 'tab3',
         title: 'Jobs',
         icon: IoHomeSharp,
         path: 'jobs',
-        disabled: true
     },
     {
         id: 'tab4',
@@ -48,7 +48,6 @@ const navdata = [
         title: 'Post a Job',
         icon: IoHomeSharp,
         path: 'add-job',
-        disabled: true
     },
 ]
 

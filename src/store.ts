@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 
 import authSlice from './features/auth/authSlice';
 import postSlice from './features/post/postSlice';
+import jobslice from './features/job/jobslice';
 
 
 // const rootPersistConfig = {
@@ -19,7 +20,6 @@ const userPersistConfig = {
     storage: storageSession,
 }
 
-
 const postPersistConfig = {
     key: 'post',
     version: 1,
@@ -29,11 +29,11 @@ const postPersistConfig = {
 const persistedReducer = persistReducer(userPersistConfig, authSlice)
 const persistedPostReducer = persistReducer(postPersistConfig, postSlice);
 
-
 export const store = configureStore({
     reducer: {
         auth: persistedReducer,
-        post: persistedPostReducer
+        post: persistedPostReducer,
+        job : jobslice
     },
 })
 

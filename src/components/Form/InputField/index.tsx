@@ -9,9 +9,10 @@ interface InputFieldProps {
     error: string;
     globalError?: string | null;
     outline?: boolean
+    ref?: any
 }
 
-const InputField: React.FC<InputFieldProps> = function ({ Label, placeholder, type = "text", onChange, value, error, globalError, outline = true }) {
+const InputField: React.FC<InputFieldProps> = function ({ Label, placeholder, type = "text", onChange, value, error, globalError, outline = true, ref }) {
     return (
         <div className='mt-[1em]'>
             <label className={`${error || globalError ? 'text-danger' : 'text-black/[.62] '} block text-sm font-semibold leading-6 mb-2 `}>{Label}</label>
@@ -22,6 +23,7 @@ const InputField: React.FC<InputFieldProps> = function ({ Label, placeholder, ty
                 placeholder={placeholder}
                 onChange={e => onChange && onChange(e.target.value)}
                 disabled={!onChange}
+                ref={ref}
             />
             <p className='text-danger font-medium text-xs mt-3'>{error}</p>
         </div>

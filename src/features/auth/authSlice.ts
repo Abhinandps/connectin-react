@@ -1,5 +1,6 @@
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import apiCall from '../../services/apiCall';
 
 
 export type User = {
@@ -56,7 +57,7 @@ export const loginUser = createAsyncThunk(
                 throw new Error('Invalid username or password.')
             }
 
-           
+
 
 
             const user = {
@@ -78,7 +79,7 @@ export const logoutUser = createAsyncThunk(
     async (_data, thunkAPI) => {
         try {
             console.log('hitted');
-            
+
             const response = await fetch('http://localhost:3000/auth/logout', {
                 method: 'GET',
                 headers: {
@@ -189,21 +190,20 @@ export const getAccessToken = createAsyncThunk(
     'data/getAccessToken',
     async (_token, thunkAPI) => {
         try {
-            const response = await fetch('http://localhost:3000/auth/refresh', {
+            const response = await apiCall({
+                url: '/auth/refresh',
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include'
-            });
+                data: {}
+            })
 
             if (!response.ok) {
                 throw new Error('validation failed');
             }
 
-            const data = await response.json();
+            // const data = await response.json();
+            console.log(response, 'response')
 
-            return { token: data.access_token };
+            // return { token: data.access_token };
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.message);
         }
@@ -214,7 +214,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loginStart: (state) => { 
+        loginStart: (state) => {
             state.status = 'loading';
             state.error = null;
         },
@@ -252,7 +252,7 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginUser.fulfilled, (state, action) => {
-                console.log(action.payload,'payload')
+                console.log(action.payload, 'payload')
                 state.user = action.payload.user;
                 state.token = action.payload.token;
                 state.status = 'authenticated'

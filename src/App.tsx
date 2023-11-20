@@ -20,6 +20,8 @@ import { useDispatch } from 'react-redux'
 import { fetchUserFeed } from './features/post/postSlice'
 import PostsAndActivity from './pages/PostsAndActivity'
 import Subscription, { Completion } from './pages/Subscription'
+import Jobs, { AllJobs, CreateJob, ManagedJobs } from './pages/Jobs'
+import ProtectedAddJob from './layouts/ProtectedAddJob'
 
 
 /* TODO: 
@@ -47,11 +49,11 @@ function App() {
 
   const dispath = useDispatch()
 
-  // useEffect(() => {
-  //   (() => {
-  //     dispath(fetchUserFeed())
-  //   })()
-  // }, [])
+  useEffect(() => {
+    (() => {
+      dispath(fetchUserFeed())
+    })()
+  }, [])
 
   const { isAuthenticated, user } = useAuth();
 
@@ -62,6 +64,11 @@ function App() {
           <>
             <Route path='/' element={<HomeContainer />}>
               <Route index element={<Feed />} />
+              <Route path='/jobs' element={<Jobs />}>
+                <Route index element={<AllJobs />} />
+                <Route path='posted-jobs' element={<ManagedJobs />} />
+              </Route>
+              <Route path='/add-job' element={<ProtectedAddJob element={<CreateJob />} />} />
               <Route path='/premium' element={<Subscription />} />
               <Route path='/completion' element={<Completion />} />
               <Route path='mynetwork' element={<div>My netWork</div>} />

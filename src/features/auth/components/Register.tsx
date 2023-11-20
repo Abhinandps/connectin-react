@@ -76,6 +76,7 @@ const Register: React.FC = function () {
         } catch (error) { }
     }
 
+    
     return (
         <div className='md:w-[400px] md:bg-white px-5 md:py-5 md:shadow-xl md:rounded-lg'>
             <form onSubmit={handleSubmit}>
