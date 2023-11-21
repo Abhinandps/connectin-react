@@ -4,7 +4,7 @@ import storageSession from 'reduxjs-toolkit-persist/lib/storage/session'
 import { persistReducer, persistStore } from 'redux-persist';
 
 import authSlice from './features/auth/authSlice';
-import postSlice from './features/post/postSlice';
+import postSlice from './features/post/store/postSlice';
 import jobslice from './features/job/jobslice';
 
 

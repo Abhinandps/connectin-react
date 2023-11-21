@@ -17,7 +17,7 @@ import EmailConfirmationSent from './layouts/EmailConfimationSent'
 import Authorization from './layouts/Authorization'
 import ManageUsersAndAdmins from './pages/ManageUsersAndAdmins'
 import { useDispatch } from 'react-redux'
-import { fetchUserFeed } from './features/post/postSlice'
+import { fetchUserFeed } from './features/post/store/thunks'
 import PostsAndActivity from './pages/PostsAndActivity'
 import Subscription, { Completion } from './pages/Subscription'
 import Jobs, { AllJobs, CreateJob, ManagedJobs } from './pages/Jobs'
@@ -47,13 +47,13 @@ function App() {
 
   useFetchUserData()
 
-  const dispath = useDispatch()
+  // const dispath = useDispatch()
 
-  useEffect(() => {
-    (() => {
-      dispath(fetchUserFeed())
-    })()
-  }, [])
+  // useEffect(() => {
+  //   (() => {
+  //     dispath(fetchUserFeed())
+  //   })()
+  // }, [])
 
   const { isAuthenticated, user } = useAuth();
 
