@@ -30,6 +30,7 @@ import Network from './features/user/components/Network'
 import Following from './features/user/components/Following'
 import Followers from './features/user/components/Followers'
 import Hashtag from './features/user/components/Hashtag'
+import Profile from './pages/Profile'
 
 
 /* TODO: 
@@ -100,6 +101,7 @@ function App() {
               } />
 
               <Route path='recent-activity/all' element={<PostsAndActivity />} />
+              <Route path='in/:id' element={<Profile />} />
 
             </Route>
 

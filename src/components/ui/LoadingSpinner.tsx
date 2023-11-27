@@ -1,12 +1,12 @@
 import { RotatingLines } from "react-loader-spinner";
 
-function LoadingSpinner() {
+function LoadingSpinner({width='46'}) {
     return (
         <RotatingLines
             strokeColor="grey"
             strokeWidth="2"
             animationDuration="0.75"
-            width="46"
+            width={width}
             visible={true}
         />
     );

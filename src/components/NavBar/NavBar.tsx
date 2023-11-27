@@ -10,7 +10,6 @@ import useUserData from '../../hooks/useUserData';
 const NavBar = () => {
 
     const { isAuthenticated } = useAuth()
-  
 
     const navigate = useNavigate()
 
