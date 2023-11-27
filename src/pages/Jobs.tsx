@@ -7,6 +7,7 @@ import Select from "../components/Form/Select";
 import { useCallback, useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { createJobs, fetchManagedJobs } from "../features/job/jobslice";
+import { CiSaveDown2 } from "react-icons/ci";
 
 
 const Jobs = () => {
@@ -16,13 +17,13 @@ const Jobs = () => {
         <FeedContainer>
 
             {/* settings */}
-            <div className='md:w-[255px] sm:w-full relative md:min-h-[20vh] rounded-t-lg '>
+            <div className='lg:w-[370px] md:w-[255px] sm:w-full relative md:min-h-[20vh] rounded-t-lg '>
 
                 <div className='bg-white min-h-[30vh] border-b border-l border-r border-borderColor rounded-b-lg py-3'>
 
                     <Link to={'#'} className="flex items-center justify-start gap-3 px-3 py-2 hover:bg-slate-50 text-secondaryColor hover:text-primaryColor">
                         <div className="text-xl font-bold rounded-lg text-secondaryColor  w-[20px] flex justify-center items-center">
-                            ⬇
+                        <CiSaveDown2/>
                         </div>
                         <p className="text-sm font-medium">My Jobs</p>
                     </Link>
@@ -51,21 +52,8 @@ const Jobs = () => {
 
             </div>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 w-full">
                 <Outlet />
-            </div>
-
-            {/* extra  */}
-            <div className='lg:block md:hidden sm:hidden xs:hidden hidden w-[300px] max-h-[500px] opacity-0'>
-                <div className='bg-white w-full h-[250px] border border-borderColor rounded-lg p-5 flex flex-col items-center justify-center'>
-                    {/* <p className='text-xs leading-relaxed text-secondaryColor font-light'>Abhinand, unlock your full potential with ConnectIn Premium</p>
-                    <div className='my-3 flex items-center gap-2 justify-center'>
-                        <img className='w-[65px] h-[65px] rounded-full' src="https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645719137?e=1703116800&v=beta&t=emx0qOZ_uF1VpGQGbBT_cLE9uE_Q7D5vov-PgRQXy1I" alt="" />
-                        <img className='w-[65px] h-[65px]' src="https://media.licdn.com/dms/image/C4E0EAQElWt4fvMOIcQ/rightRail-logo-shrink_200_200/0/1631008652608?e=1700571600&v=beta&t=jMdf9xG-vjNF0JF5vVvXBb8bOtH-dfy7ZRlhWSP_ptk" alt="" />
-                    </div>
-                    <p className='text-xs leading-relaxed  text-secondaryColor font-light'>See who's viewd your profile</p>
-                    <Link to={'/premium'} className='p-2  text-xs font-medium px-3 border-2 mt-2 border-blue-400 rounded-full  text-blue-400'>Subscribe</Link> */}
-                </div>
             </div>
 
         </FeedContainer >
@@ -103,8 +91,8 @@ export function AllJobs() {
 
 export function JobContainer({ children, title, label }: any) {
     return (
-        < div className='bg-white rounded-lg border border-borderColor py-3 max-h-[500px]' >
-            <div className="px-4 py-5">
+        < div className='bg-white rounded-lg border border-borderColor py-3 min-h-[100px]' >
+            <div className="px-4 py-5]">
                 <h1 className="text-lg font-medium text-primaryColor leading-relaxed">{title}</h1>
                 <p className="text-secondaryColor text-xs">{label}</p>
             </div>
@@ -140,8 +128,9 @@ export function ManagedJobs() {
 export function JobCard({ jobTitle, jobType, workPlaceType, employeeLocation, company, createdAt }) {
 
     return (
-        <div className="flex justify-start items-start mx-5 mt-1 py-3 lg:w-[555px] md:w-[500px] relative border-b border-borderColor">
+        <div className="flex justify-start items-start mx-5 mt-1 py-3 relative border-b border-borderColor">
             <div className="bg-primaryColor text-white w-[60px] h-[60px] flex justify-center items-center text-3xl font-bold rounded-lg uppercase">{company[0] + company.split('').slice(company.length - 1).join('')}</div>
+           
             <div className="ml-5">
                 <h1 className="text-blue-500 font-semibold">{jobTitle} (All levels) </h1>
                 <p className="text-sm capitalize">{company}</p>
@@ -152,8 +141,9 @@ export function JobCard({ jobTitle, jobType, workPlaceType, employeeLocation, co
                 </div>
                 <p className="py-3 text-xs font-semibold text-green-700"><TimeAgo createdAt={createdAt} /></p>
             </div>
+
             <div className="absolute top-5 text-xl font-bold right-10 w-[50px] h-[50px] flex items-center justify-center rounded-lg text-secondaryColor hover:bg-slate-100 transition-all cursor-pointer hover:shadow-sm">
-                ⬇
+                <CiSaveDown2 className='text-3xl font-bold text-secondaryColor' />
             </div>
         </div>
     )

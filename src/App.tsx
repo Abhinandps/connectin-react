@@ -22,6 +22,14 @@ import PostsAndActivity from './pages/PostsAndActivity'
 import Subscription, { Completion } from './pages/Subscription'
 import Jobs, { AllJobs, CreateJob, ManagedJobs } from './pages/Jobs'
 import ProtectedAddJob from './layouts/ProtectedAddJob'
+import Mynetwork from './pages/Mynetwork'
+import Invitations from './features/user/components/Row'
+import Main from './features/user/components/Main'
+import Connections from './features/user/components/Connections'
+import Network from './features/user/components/Network'
+import Following from './features/user/components/Following'
+import Followers from './features/user/components/Followers'
+import Hashtag from './features/user/components/Hashtag'
 
 
 /* TODO: 
@@ -71,7 +79,15 @@ function App() {
               <Route path='/add-job' element={<ProtectedAddJob element={<CreateJob />} />} />
               <Route path='/premium' element={<Subscription />} />
               <Route path='/completion' element={<Completion />} />
-              <Route path='mynetwork' element={<div>My netWork</div>} />
+              <Route path='/mynetwork' element={<Mynetwork />}>
+                <Route index element={<Main />} />
+                <Route path='connections' element={<Connections />} />
+                <Route path='network-manager' element={<Network />} >
+                  <Route index element={<Following />} />
+                  <Route path='followers' element={<Followers />} />
+                </Route>
+                <Route path='hashtags' element={<Hashtag />} />
+              </Route>
               <Route path='/manage-admins' element={
                 <Authorization userRoles={user?.role} requiredRole="admin">
                   <ManageUsersAndAdmins isAdmin />

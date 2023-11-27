@@ -68,7 +68,9 @@ const Register: React.FC = function () {
                 navigate('/email-confirmation/sent')
             } else if (registerUser.rejected.match(res)) {
                 const errors: any = res.payload
-                errors.split(',').forEach((error: string) => {
+                const errorArray = errors.split(',')
+                const formattedErrors = errorArray.map(error => error.trim().replace(/^data\./, ''));
+                formattedErrors.forEach((error: string) => {
                     const inputFieldName = error.split(" ")[0];
                     onError(inputFieldName, error.toLowerCase())
                 });
@@ -76,7 +78,7 @@ const Register: React.FC = function () {
         } catch (error) { }
     }
 
-    
+
     return (
         <div className='md:w-[400px] md:bg-white px-5 md:py-5 md:shadow-xl md:rounded-lg'>
             <form onSubmit={handleSubmit}>

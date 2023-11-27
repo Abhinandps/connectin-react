@@ -1,5 +1,9 @@
 import { IoHomeSharp } from 'react-icons/io5'
 import { BiSolidDownArrow } from 'react-icons/bi'
+import { RiGroupFill } from "react-icons/ri";
+import { PiBagSimpleFill } from "react-icons/pi";
+import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
+import { IoNotifications } from "react-icons/io5";
 
 
 const navdata = [
@@ -12,27 +16,26 @@ const navdata = [
     {
         id: 'tab2',
         title: 'My Network',
-        icon: IoHomeSharp,
+        icon: RiGroupFill,
         path: 'mynetwork',
-        disabled: true
     },
     {
         id: 'tab3',
         title: 'Jobs',
-        icon: IoHomeSharp,
+        icon: PiBagSimpleFill,
         path: 'jobs',
     },
     {
         id: 'tab4',
         title: 'Messaging',
-        icon: IoHomeSharp,
+        icon: IoChatbubbleEllipsesSharp,
         path: 'messaging',
         disabled: true
     },
     {
         id: 'tab5',
         title: 'Notification',
-        icon: IoHomeSharp,
+        icon: IoNotifications,
         path: 'notification',
         disabled: true
     },

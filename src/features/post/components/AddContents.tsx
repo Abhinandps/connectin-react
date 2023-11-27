@@ -7,6 +7,7 @@ import Button from "../../../components/Form/Button";
 
 
 export const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg, attachments, postData }) => {
+    console.log(attachments)
 
     const dispatch = useDispatch()
     const emptyFormData = {
@@ -15,7 +16,7 @@ export const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg
         contentBody: postData?.contentBody || "",
         attachments: postData?.attachments || attachments
     }
-    console.log(postData.attachments)
+    
     // page 2 
     const [formData, setFormData] = useState(
         emptyFormData,
