@@ -18,6 +18,7 @@ const navdata = [
         title: 'My Network',
         icon: RiGroupFill,
         path: 'mynetwork',
+        isNotify: false,
     },
     {
         id: 'tab3',

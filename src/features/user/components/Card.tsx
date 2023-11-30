@@ -1,7 +1,8 @@
 import { GiLinkedRings } from "react-icons/gi"
 import { FaUserPlus } from "react-icons/fa6";
+import LoadingSpinner from "../../../components/ui/LoadingSpinner";
 
-function Card({ minimalistData }: any) {
+function Card({ minimalistData, isLoading, onRequestSent }: any) {
     return (
         minimalistData ? (
             <div className="w-full sm:mx-0 transition flex  border-b border-borderColor pb-5">
@@ -31,7 +32,8 @@ function Card({ minimalistData }: any) {
                         <GiLinkedRings className='text-primaryColor text-xs' /> Ana Fara and 79 others
                     </p>
                     <div className="mt-3">
-                        <Button icon={<FaUserPlus />} title="Connect" Border />
+                        {isLoading ? <LoadingSpinner /> : <Button onRequestSent={onRequestSent} icon={<FaUserPlus />} title="Connect" Border />}
+
                     </div>
                 </div>
 
@@ -48,11 +50,14 @@ interface BProps {
     title: string;
     Border?: boolean
     icon?: any
+    onRequestSent?: any
 }
 
-function Button({ title, Border, icon }: BProps) {
+function Button({ title, Border, icon, onRequestSent }: BProps) {
     return (
         <button className={`flex items-center gap-1 px-4 py-2 hover:bg-sky-50 transition text-sm bg-transparent ${Border ? 'border-2 border-blue-500 text-blue-500' : 'text-secondaryColor'
-            } font-bold rounded-full `}>{icon}{title}</button>
+            } font-bold rounded-full `}
+            onClick={() => onRequestSent()}
+        >{icon}{title}</button>
     )
 }

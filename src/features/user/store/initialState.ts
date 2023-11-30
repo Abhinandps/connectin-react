@@ -1,5 +1,7 @@
+import { InvitationData } from "./networkslice"
+
 type NETWORK = {
-    invitations: [],
+    invitations: InvitationData[],
     connections: [],
     following: [],
     followers: [],

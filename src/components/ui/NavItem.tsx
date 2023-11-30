@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { TETabsItem } from 'tw-elements-react';
 import Popup from '../NavBar/PopUp';
+import { useSelector } from 'react-redux';
 
 
-const NavItem = React.memo(function ({ data, handleTabClick, activeTab }: { data: any, handleTabClick: any, activeTab: any }) {
+const NavItem = React.memo(function ({ data, handleTabClick, activeTab, isNewInvites, unviewedInvitations }: { data: any, handleTabClick: any, activeTab: any, isNewInvites: boolean, unviewedInvitations: any }) {
+
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -33,10 +35,13 @@ const NavItem = React.memo(function ({ data, handleTabClick, activeTab }: { data
                 {
                     data.modal && isOpen ? (
 
-                        <Popup  handleIsOpen={setIsOpen} isOpen={isOpen} />
+                        <Popup handleIsOpen={setIsOpen} isOpen={isOpen} />
 
                     ) : null
                 }
+
+                {isNewInvites && <div className='absolute top-1 xs:right-3 md:right-4 transition delay-75 bg-red-600 w-[20px] border-2 shadow-sm border-borderColor h-[20px] flex items-center justify-center text-white rounded-full text-[10px] font-medium'>{unviewedInvitations.length}</div>}
+
             </TETabsItem>
         </>
     )

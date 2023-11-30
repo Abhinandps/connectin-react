@@ -1,8 +1,12 @@
 import { Link, Outlet } from "react-router-dom"
 import FeedContainer from "../layouts/FeedContainer"
 import { FaHashtag } from "react-icons/fa";
+import { useSelector } from "react-redux";
+
 
 function Mynetwork() {
+    const Connections = useSelector((state: any) => state.user.connections)
+    
     return (
         <FeedContainer>
             {/* settings */}
@@ -19,7 +23,7 @@ function Mynetwork() {
                             </div>
                             <p className="text-sm font-medium">Connections</p>
                         </div>
-                        <p className="text-md font-normal">369</p>
+                        <p className="text-md font-normal">{Connections?.length > 0 && Connections?.length}</p>
                     </Link>
 
                     <Link to={'network-manager'} className="flex items-center justify-start gap-2 px-4 py-2 hover:bg-slate-50 text-secondaryColor  hover:text-primaryColor">

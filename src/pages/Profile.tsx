@@ -6,25 +6,23 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import apiCall from "../services/apiCall";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import { useDispatch } from "react-redux";
+import { sendConnectionRequest } from "../features/user/store/thunks";
 
 function Profile() {
-    
-
+    const dispatch = useDispatch()
     const { id } = useParams();
     const [profile, setProfile] = useState<any>();
     const [moreprofileData, setProfileMoreProfile] = useState<any>();
-    const [isLoading, setIsLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         (async () => {
-            setIsLoading(true);
             const res = await apiCall({ url: `/users/user/${id}`, method: 'POST' })
             const result = await apiCall({ url: `/users/${id}` })
             setProfile(res.data)
             setProfileMoreProfile(result.data)
-            setIsLoading(false);
         })()
     }, [id])
-
 
 
     const FollowStatusFinder = (status: string): { status: string; icon: JSX.Element } => {
@@ -40,6 +38,7 @@ function Profile() {
         return { status: '', icon: <></> }; // default or handle other cases
     };
 
+
     const ConnectoinStatusFinder = (status: string): { status: string; icon: JSX.Element } => {
         if (status === 'connected') {
             return { status: 'message', icon: <FaEnvelope /> };
@@ -54,6 +53,19 @@ function Profile() {
     };
 
 
+    const sendRequest = (userId: string) => {
+        setLoading(true)
+        setTimeout(() => {
+            dispatch(sendConnectionRequest(userId))
+            setProfile((prev: any) => {
+                return {
+                    ...prev,
+                    connectionStatus: 'pending'
+                };
+            });
+            setLoading(false)
+        }, 1000)
+    }
 
 
 
@@ -75,14 +87,18 @@ function Profile() {
 
                     <div className="flex gap-3 my-2">
                         <Button
+                            userId={profile?.userId}
+                            onRequestSent={sendRequest} isLoading={loading}
                             icon={ConnectoinStatusFinder(profile?.connectionStatus).icon || ''}
                             title={ConnectoinStatusFinder(profile?.connectionStatus).status || ''}
+                            color={ConnectoinStatusFinder(profile?.connectionStatus).color || ''}
                             Border
                         >
-                            {isLoading ? <LoadingSpinner width="25" /> : null}
+                            {/* {isLoading ? <LoadingSpinner width="25" /> : null} */}
                         </Button>
+
                         <Button icon={FollowStatusFinder(profile?.followStatus).icon || ''} title={FollowStatusFinder(profile?.followStatus).status || ''} fill >
-                            {isLoading ? <LoadingSpinner width="25" /> : null}
+                            {/* {isLoading ? <LoadingSpinner width="25" /> : null} */}
                         </Button>
                     </div>
 
@@ -98,7 +114,7 @@ function Profile() {
                 <div className='bg-white w-full border border-borderColor rounded-lg p-3'>
                     <h2 className="text-primaryColor text-sm font-medium">People You may know</h2>
                     <div className="my-3">
-                        <Card minimalistData />
+                        <Card onRequestSent={sendConnectionRequest} isLoading={loading} minimalistData />
                     </div>
                 </div>
             </div >
@@ -111,16 +127,32 @@ export default Profile
 
 
 interface BProps {
+    userId?: string
     title: string;
     Border?: boolean
     icon?: any
     fill?: any
     children?: any
+    color?: string
+    onRequestSent?: any
+    isLoading?: any
 }
 
-function Button({ title, Border, icon, fill, children }: BProps) {
+function Button({ title, Border, icon, fill, children, color, onRequestSent, isLoading, userId }: BProps) {
     return (
-        <button className={`flex items-center gap-1 px-4 py-2 transition text-sm ${fill ? 'bg-blue-500 text-white' : 'hover:bg-sky-50 bg-transparent'}  ${Border ? 'border-2 border-blue-500 text-blue-500' : 'text-secondaryColor'
-            } font-bold rounded-full `}>  {icon}{title}{children}</button>
+        <button className={`flex items-center  gap-1 px-4 py-2  transition-all text-sm ${fill ? 'bg-blue-500 text-white' : 'hover:bg-sky-50 bg-transparent'}  ${Border ? 'border-2 border-blue-500 text-blue-500' : 'text-secondaryColor'
+            } font-bold rounded-full `}
+            onClick={() => onRequestSent && onRequestSent(userId)}
+        >
+            {
+                isLoading ?
+                    <div className="min-w-[76px] flex justify-center">
+                        <LoadingSpinner width="20" />
+                    </div> :
+                    <>
+                        {icon}{title}{children}
+                    </>
+            }
+        </button>
     )
 }

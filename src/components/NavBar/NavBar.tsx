@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { navdata } from '../../utils/navigationData';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../features/auth/hooks/useAuth';
@@ -6,8 +6,35 @@ import { Logo } from './Logo';
 import { TETabs } from 'tw-elements-react';
 import NavItem from '../ui/NavItem';
 import useUserData from '../../hooks/useUserData';
+import { io } from 'socket.io-client';
+import { useDispatch, useSelector } from 'react-redux';
+import { InvitationData, reciveInvitation } from '../../features/user/store/networkslice';
 
 const NavBar = () => {
+
+
+    const unviewedInvitations = useSelector((state: any) => state.user.invitations.filter((user: InvitationData) => !user.viewed))
+
+    const { user } = useAuth()
+
+    const dispatch = useDispatch()
+
+    const socket = io('http://localhost:3000', {
+        query: { userId: user?.userId }, reconnection: true,
+        reconnectionDelay: 1000
+    });
+
+
+    useEffect(() => {
+        socket.on('onEmitUser', (data: InvitationData) => {
+            // console.log('Received notification:', data);
+            dispatch(reciveInvitation(data))
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, [socket, dispatch]);
 
     const { isAuthenticated } = useAuth()
 
@@ -33,6 +60,8 @@ const NavBar = () => {
                         {/* Navigation list  */}
                         {navdata && navdata.map((data) => (
                             <NavItem
+                                isNewInvites={(data?.id === 'tab2' && unviewedInvitations.length > 0)}
+                                unviewedInvitations={unviewedInvitations}
                                 key={data.id}
                                 data={data}
                                 handleTabClick={handleTabClick}

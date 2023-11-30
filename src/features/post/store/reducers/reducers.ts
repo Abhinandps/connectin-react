@@ -120,3 +120,4 @@ export const fetchPostDataReducer = (state, action) => {
         postToEdit: postData
     }
 }
+
