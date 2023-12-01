@@ -31,6 +31,20 @@ export const fetchManagedJobs = createAsyncThunk(
     async (_unknown, thunkAPI) => {
         try {
             const res = await apiCall({
+                url: '/jobs/posted-jobs'
+            })
+            return { res }
+        } catch (err: any) {
+            return thunkAPI.rejectWithValue(err.message)
+        }
+    }
+)
+
+export const fetchRecentJobs = createAsyncThunk(
+    'fetchRecentJobs',
+    async (_unknown, thunkAPI) => {
+        try {
+            const res = await apiCall({
                 url: '/jobs/'
             })
             return { res }
@@ -41,17 +55,38 @@ export const fetchManagedJobs = createAsyncThunk(
 )
 
 
-
 export const createJobs = createAsyncThunk(
     'createJobs',
     async (data: any, thunkAPI) => {
         try {
-            const res = await fetch(`http://localhost:3006/api/v1/jobs/create`, {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                body: data ? JSON.stringify(data) : undefined,
-                credentials: 'include'
-            });
+            console.log(data)
+            const res = await apiCall({
+                url: '/jobs/create',
+                method: "POST",
+                data,
+            })
+
+            console.log(res)
+
+            return { res }
+        } catch (err) {
+            console.log(err)
+            return thunkAPI.rejectWithValue(err.message)
+        }
+    }
+)
+
+
+export const updateJob = createAsyncThunk(
+    'updateJob',
+    async (data: any, thunkAPI) => {
+        try {
+            const { jobId, body } = data
+            const res = await apiCall({
+                url: `${jobId}`,
+                method: "PUT",
+                data: body
+            })
 
             const response = await res.json();
 
@@ -63,7 +98,6 @@ export const createJobs = createAsyncThunk(
     }
 )
 
-
 const jobSlice = createSlice({
     name: 'job',
     initialState,
@@ -71,16 +105,25 @@ const jobSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(createJobs.fulfilled, (state, action) => {
-                const py = action.payload.response
+                const py = action.payload.res
                 if (py.message) {
                     state.managedJobs.error = py.message
                 }
             })
             .addCase(createJobs.rejected, (state, action) => {
+
             })
             .addCase(fetchManagedJobs.fulfilled, (state, action) => {
                 const py = action.payload.res.data
                 state.managedJobs.list = py
+            })
+            .addCase(updateJob.fulfilled, (state, action) => {
+                const py = action.payload.response
+                console.log(py)
+            })
+            .addCase(fetchRecentJobs.fulfilled, (state, action) => {
+                const py = action.payload.res.data
+                state.recentJobs.list = py
             })
     }
 })

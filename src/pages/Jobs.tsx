@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import FeedContainer from "../layouts/FeedContainer";
 import InputField from "../components/Form/InputField";
 import Button from "../components/Form/Button";
@@ -6,8 +6,12 @@ import Select from "../components/Form/Select";
 
 import { useCallback, useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { createJobs, fetchManagedJobs } from "../features/job/jobslice";
+import { createJobs, fetchManagedJobs, fetchRecentJobs, updateJob } from "../features/job/jobslice";
 import { CiSaveDown2 } from "react-icons/ci";
+import { FaArrowLeft } from "react-icons/fa";
+import { FaCirclePlus } from "react-icons/fa6";
+import { AiFillEdit } from "react-icons/ai";
+import { IoRemoveCircleSharp } from "react-icons/io5";
 
 
 const Jobs = () => {
@@ -23,7 +27,7 @@ const Jobs = () => {
 
                     <Link to={'#'} className="flex items-center justify-start gap-3 px-3 py-2 hover:bg-slate-50 text-secondaryColor hover:text-primaryColor">
                         <div className="text-xl font-bold rounded-lg text-secondaryColor  w-[20px] flex justify-center items-center">
-                        <CiSaveDown2/>
+                            <CiSaveDown2 />
                         </div>
                         <p className="text-sm font-medium">My Jobs</p>
                     </Link>
@@ -67,11 +71,14 @@ export default Jobs
 
 export function AllJobs() {
 
-    const { managedJobs } = useSelector((state: any) => state.job)
+    const { managedJobs, recentJobs } = useSelector((state: any) => state.job)
     const dispatch = useDispatch()
+    const { user } = useAuth()
 
+    console.log(recentJobs, 'recentJobs')
     useEffect(() => {
         dispatch(fetchManagedJobs())
+        dispatch(fetchRecentJobs())
     }, [dispatch])
 
     return (
@@ -79,8 +86,8 @@ export function AllJobs() {
             <JobContainer title='Recommended for you' label='Based on your profile and search history' />
 
             <JobContainer title='More recent jobs for you' label='Based on your profile and search history'  >
-                {managedJobs.list.map((job) => (
-                    <JobCard {...job} />
+                {recentJobs.list.map((job) => (
+                    !job?.isDraft && (< JobCard {...job} publicProp={true} />)
                 ))}
             </JobContainer>
         </>
@@ -102,8 +109,11 @@ export function JobContainer({ children, title, label }: any) {
 }
 
 
+
+
 export function ManagedJobs() {
     const dispatch = useDispatch()
+    const { user } = useAuth()
 
     useEffect(() => {
         dispatch(fetchManagedJobs())
@@ -111,13 +121,12 @@ export function ManagedJobs() {
 
     const { managedJobs } = useSelector((state: any) => state.job)
 
-    console.log(managedJobs, 'managed')
 
 
     return (
         <JobContainer title='Manage Posted Jobs'>
             {managedJobs.list.map((job) => (
-                <JobCard {...job} />
+                user?.userId === job?.userId && (< JobCard {...job} />)
             ))}
         </JobContainer>
     )
@@ -125,38 +134,104 @@ export function ManagedJobs() {
 
 
 
-export function JobCard({ jobTitle, jobType, workPlaceType, employeeLocation, company, createdAt }) {
+export function JobCard({ jobTitle, jobType, workPlaceType, employeeLocation, company, createdAt, updatedAt, isDraft, _id, userId, publicProp }: any) {
+
+    const navigate = useNavigate()
+
+    const { user } = useAuth()
+
+    const handleJobEdit = (jobId: string) => {
+        navigate(`/add-job?jobId=${jobId}`)
+    }
 
     return (
         <div className="flex justify-start items-start mx-5 mt-1 py-3 relative border-b border-borderColor">
             <div className="bg-primaryColor text-white w-[60px] h-[60px] flex justify-center items-center text-3xl font-bold rounded-lg uppercase">{company[0] + company.split('').slice(company.length - 1).join('')}</div>
-           
+
             <div className="ml-5">
-                <h1 className="text-blue-500 font-semibold">{jobTitle} (All levels) </h1>
+                <h1 className="text-blue-500 font-semibold">{jobTitle}  </h1>
                 <p className="text-sm capitalize">{company}</p>
                 <span className="text-sm text-secondaryColor">{employeeLocation} ({workPlaceType})</span>
-                <div className="flex items-center gap-2">
-                    <img className="w-[30px] h-[30px] rounded-full" src="https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645719137?e=1703116800&v=beta&t=emx0qOZ_uF1VpGQGbBT_cLE9uE_Q7D5vov-PgRQXy1I" alt="profile" />
-                    <p className="text-xs text-secondaryColor">Your profile matches this job</p>
-                </div>
-                <p className="py-3 text-xs font-semibold text-green-700"><TimeAgo createdAt={createdAt} /></p>
+
+                {
+                    !isDraft && (
+                        <div className="flex items-center gap-2">
+                            <img className="w-[30px] h-[30px] rounded-full" src="https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645719137?e=1703116800&v=beta&t=emx0qOZ_uF1VpGQGbBT_cLE9uE_Q7D5vov-PgRQXy1I" alt="profile" />
+                            <p className="text-xs text-secondaryColor">Your profile matches this job</p>
+                        </div>
+                    )
+                }
+
+                {isDraft ? (
+                    <p className="my-2 text-xs bg-green-700 text-center font-light py-1 text-white rounded-full ">Drafted Job</p>
+                ) : (
+                    <p className="py-3 text-xs font-semibold text-green-700"><TimeAgo createdAt={updatedAt} /></p>
+                )}
             </div>
 
-            <div className="absolute top-5 text-xl font-bold right-10 w-[50px] h-[50px] flex items-center justify-center rounded-lg text-secondaryColor hover:bg-slate-100 transition-all cursor-pointer hover:shadow-sm">
-                <CiSaveDown2 className='text-3xl font-bold text-secondaryColor' />
-            </div>
-        </div>
+
+            {
+                isDraft ? (
+
+                    <div className="absolute top-0 text-xl font-bold right-10 w-[100px] h-[100px] flex items-center justify-center rounded-lg text-secondaryColor transition-all cursor-pointer ">
+                        <AiFillEdit className='text-3xl font-bold text-secondaryColor mr-5' onClick={() => handleJobEdit(_id)} />
+                        <IoRemoveCircleSharp className='text-3xl font-bold text-red-700' />
+                    </div>
+
+                ) : (
+                    <>
+                        <div className="absolute top-0 text-xl font-bold right-10 w-[100px] h-[100px] flex items-center justify-center rounded-lg text-secondaryColor transition-all cursor-pointer ">
+                            <CiSaveDown2 className='text-3xl font-bold text-secondaryColor' />
+                            {user?.userId === userId && !publicProp && (
+                                <>
+                                    <AiFillEdit className='text-3xl font-bold text-secondaryColor mx-2' onClick={() => handleJobEdit(_id)} />
+                                    <IoRemoveCircleSharp className='text-3xl font-bold text-red-700' />
+                                </>
+                            )}
+                        </div>
+                    </>
+
+                )
+            }
+
+
+
+
+        </div >
     )
 }
 
+import { IoIosClose } from "react-icons/io";
 
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css'
+import apiCall from "../services/apiCall";
+import { useAuth } from "../features/auth/hooks/useAuth";
 
 export function CreateJob() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+
+    const jobId = queryParams.get('jobId');
+
+
     const { managedJobs } = useSelector((state: any) => state.job)
+
+    const [page, setPage] = useState({
+        currentPage: jobId ? 2 : 1
+    })
+
+    const onPageChange = (key: string, value: any) => {
+        setPage(prev => ({
+            ...prev,
+            [key]: value
+        }))
+    }
 
     // const autoCompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
     // const inputRef = useRef<HTMLInputElement | null>(null);
@@ -188,7 +263,9 @@ export function CreateJob() {
     }, [managedJobs.error])
 
 
-    const [formData, setFormData] = useState<any>(
+
+
+    const [formData, setFormData] = useState(
         {
             jobTitle: "",
             company: "",
@@ -198,10 +275,50 @@ export function CreateJob() {
         }
     );
 
+    const [description, setDescription] = useState('')
+
+
+    const [skill, setSkill] = useState('')
+
+    const [jobDetails, setJobDetails] = useState({
+        jobId: '',
+        description: description,
+        skills: [] as string[],
+    })
+
+    useEffect(() => {
+        setJobDetails((prevJobDetails) => ({
+            ...prevJobDetails,
+            description: description,
+        }));
+    }, [description]);
+
+
+
+    // job id from params
+
+    useEffect(() => {
+        (async () => {
+            const res = await apiCall({
+                url: `/jobs/${jobId}`
+            })
+            console.log(res)
+
+            setJobDetails((prevJobDetails) => ({
+                ...prevJobDetails,
+                jobId: res?.data._id,
+                description: res?.data.description,
+                skills: res?.data.skills
+            }));
+        })()
+    }, [jobId])
+
+
     const { jobTitle, company, workPlaceType
         , employeeLocation
         , jobType
     } = formData
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -214,12 +331,29 @@ export function CreateJob() {
         })
         const res = await dispatch(createJobs(formData))
         if (createJobs.fulfilled.match(res)) {
-            if (res.payload.response.data) {
-                navigate('/jobs/posted-jobs')
+
+            if (res.payload.res.data) {
+                console.log(res.payload.res.data, 'creation data')
+                const data = res.payload.res.data
+                setJobDetails((prevJobDetails) => ({
+                    ...prevJobDetails,
+                    jobId: data?._id,
+                    description: data?.description,
+                    skills: data?.skills
+                }));
+                onPageChange('currentPage', 2)
             }
+
+            if (res.payload.res.message) {
+                const errorArray = res.payload.res.message;
+                const formattedErrors = errorArray.map((error: string) => error.trim().replace(/^data\./, ''));
+                formattedErrors.forEach((error: string) => {
+                    const inputFieldName = error.split(" ")[0];
+                    onError(inputFieldName, error.toLowerCase())
+                });
+            }
+
         }
-
-
 
     }
 
@@ -238,6 +372,7 @@ export function CreateJob() {
         })
     }, [formData])
 
+
     const onError = useCallback((key: string, value: string | number) => {
         setErrorData(prev => ({
             ...prev,
@@ -245,10 +380,149 @@ export function CreateJob() {
         }))
     }, [formData])
 
+    const goBack = () => {
+        onPageChange("currentPage", 1)
+    }
+
+
+    const handleAddSkills = () => {
+        setJobDetails((prevJobDetails) => ({
+            ...prevJobDetails,
+            skills: [...prevJobDetails.skills, skill],
+        }))
+
+        setSkill('')
+    }
+
+
+    const handleRemoveSkills = (index: number) => {
+        setJobDetails((prevJobDetails) => ({
+            ...prevJobDetails,
+            skills: [...prevJobDetails.skills.filter((_skill, pos) => pos !== index)]
+        }))
+    }
+
+
+
+    const handleUpdate = async (e: React.FormEvent) => {
+        try {
+            e.preventDefault()
+            setJobDetails((prevJobDetails) => ({
+                ...prevJobDetails,
+                description: '',
+                skills: []
+            }))
+
+            setSkill('')
+            setDescription('')
+
+            console.log(jobDetails.description, jobDetails.skills)
+
+            const res = await apiCall({
+                url: `/jobs/${jobId}/update`,
+                method: 'PUT',
+                data: jobDetails
+            })
+
+            console.log(res)
+        } catch (err) {
+
+        }
+    }
+
+    const handleSaveToDraft = async (e) => {
+        try {
+            e.preventDefault()
+            setJobDetails((prevJobDetails) => ({
+                ...prevJobDetails,
+                description: '',
+                skills: []
+            }))
+
+            setSkill('')
+            setDescription('')
+
+            const res = await apiCall({
+                url: `/jobs/${jobId}/draft`,
+                method: 'PUT',
+                data: jobDetails
+            })
+
+        } catch (err) {
+
+        }
+    }
+
+
+    if (page.currentPage === 2) return (
+        <FeedContainer>
+
+
+            <div className="flex justify-center items-center w-full min-h-[80vh]">
+                <div className="bg-white w-full h-full border border-borderColor rounded-lg px-4 py-3">
+                    <div className="flex gap-4 items-center border-b pb-3">
+                        <FaArrowLeft className='text-primaryColor cursor-pointer' />
+                        <h2 className="text-primaryColor text-md font-medium">2 of 2 : Job Details</h2>
+                    </div>
+
+                    <div className="py-3">
+                        <h2 className="text-sm">Add a Job Description</h2>
+                        <p className="text-[11px] py-1">Description <span className="text-blue-500">*</span></p>
+                    </div>
+
+                    <div>
+                        <ReactQuill theme="snow" value={description || jobDetails?.description} onChange={setDescription} />
+
+                    </div>
+
+                    <div className="py-3">
+                        <h2 className="text-sm">Add Skills</h2>
+                        <p className="text-[11px] py-1">Add skill keywords to make your job more visible to the right candidates</p>
+
+                        <form onSubmit={handleUpdate}>
+                            <div className="flex gap-2 items-center py-5 flex-wrap">
+                                <input type="text"
+                                    placeholder="Add Skills"
+                                    className="border-2 text-center border-green-600 rounded-full placeholder:text-green-600 px-2 py-1 
+                                    text-green-700 font-bold w-32
+                                    placeholder:text-sm placeholder:font-bold
+                                    outline-none
+                                    "
+                                    value={skill}
+                                    onChange={(e) => setSkill(e.target.value)}
+                                />
+
+                                <FaCirclePlus className={`text-green-700 text-3xl hover:shadow-lg hover:text-green-600 hover:shadow-success-300 cursor-pointer transition-all bg-transparent rounded-full ${skill.length > 0 ? 'opacity-1' : 'opacity-0'} duration-100`}
+                                    onClick={handleAddSkills}
+                                />
+
+                                {jobDetails?.skills.map((skill, index) => (
+                                    <div key={index} className="text-center bg-green-700 rounded-full  px-2 py-1 text-white
+                                    font-bold min-w-32 flex items-center gap-1">
+                                        {skill}
+                                        <IoIosClose className="text-2xl cursor-pointer " onClick={() => handleRemoveSkills(index)} />
+                                    </div>
+                                ))}
+
+                            </div>
+
+                            <Button title="Save as draft" type='button' onClick={handleSaveToDraft} outlineOnly />
+                            <Button title="Post a Job" />
+                        </form>
+
+                    </div>
+                </div>
+                <div className="w-full">
+                    <div className="text-center text-xs">preview...</div>
+                </div>
+            </div>
+        </FeedContainer>
+    )
+
     return (
         <FeedContainer>
             <div className="bg-white md:w-[500px] sm:w-full px-16 py-10 border border-borderColor rounded-lg shadow-sm">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} >
                     <h1 className="text-2xl font-bold text-primaryColor">Post a job </h1>
 
                     <InputField
