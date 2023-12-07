@@ -9,6 +9,7 @@ import jobslice from './features/job/jobslice';
 import socketMiddleware from './middleware/socketMiddleware';
 import SocketClient from './api/ServiceClient';
 import networkslice from './features/user/store/networkslice';
+import notificationSlice from './features/common/notificationSlice';
 
 
 // const rootPersistConfig = {
@@ -36,16 +37,24 @@ const networksPersistConfig = {
     storage: storageSession,
 }
 
+const notificationPersistConfig = {
+    key: 'notification',
+    version: 1,
+    storage: storageSession,
+}
+
 const persistedReducer = persistReducer(userPersistConfig, authSlice)
 const persistedPostReducer = persistReducer(postPersistConfig, postSlice);
 const persistedNetworksReducer = persistReducer(networksPersistConfig, networkslice)
+const persistedNotificationReducer = persistReducer(notificationPersistConfig, notificationSlice)
 
 export const store = configureStore({
     reducer: {
         auth: persistedReducer,
         post: persistedPostReducer,
         job: jobslice,
-        user: persistedNetworksReducer
+        user: persistedNetworksReducer,
+        notifications: persistedNotificationReducer
     },
 })
 

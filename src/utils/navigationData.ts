@@ -37,8 +37,7 @@ const navdata = [
         id: 'tab5',
         title: 'Notification',
         icon: IoNotifications,
-        path: 'notification',
-        disabled: true
+        path: 'notifications',
     },
     {
         id: 'tab6',

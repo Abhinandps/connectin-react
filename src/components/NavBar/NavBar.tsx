@@ -9,13 +9,22 @@ import useUserData from '../../hooks/useUserData';
 import { io } from 'socket.io-client';
 import { useDispatch, useSelector } from 'react-redux';
 import { InvitationData, reciveInvitation } from '../../features/user/store/networkslice';
+import { addNotification } from '../../features/common/notificationSlice';
+import Chat from '../../pages/Chat';
 
 const NavBar = () => {
 
 
     const unviewedInvitations = useSelector((state: any) => state.user.invitations.filter((user: InvitationData) => !user.viewed))
+    const unviewedNotifications = useSelector((state: any) => state.notifications.notifications.filter((notification: any) => !notification.viewed))
+    // console.log(unviewedNotifications)
+
+
 
     const { user } = useAuth()
+    const [onlineUsers, setOnlineUsers] = useState([]);
+    const [sendMessage, setSendMessage] = useState(null);
+    const [receivedMessage, setReceivedMessage] = useState(null);
 
     const dispatch = useDispatch()
 
@@ -31,10 +40,50 @@ const NavBar = () => {
             dispatch(reciveInvitation(data))
         });
 
+        socket.on('onScheduleToUser', (data: InvitationData) => {
+            console.log('Received notification:', data);
+            dispatch(addNotification(data))
+        });
+
+        socket.on("get-users", (users) => {
+            // setOnlineUsers();
+        });
+
+        if (sendMessage !== null) {
+            socket.emit("send-message", sendMessage);
+        }
+
+        socket.on("recieve-message", (data) => {
+            setReceivedMessage(data);
+            setSendMessage(null)
+        })
+
         return () => {
             socket.disconnect();
         };
-    }, [socket, dispatch]);
+    }, [socket, dispatch, sendMessage]);
+
+
+
+    // Send Message to socket server
+    // useEffect(() => {
+    //     if (sendMessage !== null) {
+    //         socket.emit("send-message", sendMessage);
+    //     }
+    // }, [sendMessage]);
+
+
+    // Get the message from socket server
+    // useEffect(() => {
+    //     socket.current.on("recieve-message", (data) => {
+    //         console.log(data)
+    //         setReceivedMessage(data);
+    //     }
+
+    //     );
+    // }, []);
+
+    // console.log(onlineUsers)
 
     const { isAuthenticated } = useAuth()
 
@@ -49,6 +98,8 @@ const NavBar = () => {
         setActiveTab(value);
         navigate(path)
     };
+
+
     return (
         <>
             <Logo isAuthenticated={isAuthenticated} />
@@ -61,7 +112,9 @@ const NavBar = () => {
                         {navdata && navdata.map((data) => (
                             <NavItem
                                 isNewInvites={(data?.id === 'tab2' && unviewedInvitations.length > 0)}
+                                isNewNotifications={(data?.id === 'tab5' && unviewedNotifications.length > 0)}
                                 unviewedInvitations={unviewedInvitations}
+                                unviewedNotifications={unviewedNotifications}
                                 key={data.id}
                                 data={data}
                                 handleTabClick={handleTabClick}
@@ -76,6 +129,15 @@ const NavBar = () => {
                     </TETabs>
                 )}
             </div>
+            {
+                isAuthenticated &&
+                <Chat
+                    onlineUsers={undefined}
+                    setSendMessage={setSendMessage}
+                    receivedMessage={receivedMessage}
+                />
+            }
+
         </>
     )
 }

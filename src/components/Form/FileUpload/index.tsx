@@ -8,7 +8,7 @@ interface FileUploadProps {
     onChange: (value: string) => void;
     value: string;
     error: string;
-    multiple: any
+    multiple?: any
 }
 
 

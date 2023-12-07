@@ -20,7 +20,7 @@ import { useDispatch } from 'react-redux'
 import { fetchUserFeed } from './features/post/store/thunks'
 import PostsAndActivity from './pages/PostsAndActivity'
 import Subscription, { Completion } from './pages/Subscription'
-import Jobs, { AllJobs, CreateJob, ManagedJobs } from './pages/Jobs'
+import Jobs, { AllJobs, CreateJob, JobDetails, ManagedJobs } from './pages/Jobs'
 import ProtectedAddJob from './layouts/ProtectedAddJob'
 import Mynetwork from './pages/Mynetwork'
 import Invitations from './features/user/components/Row'
@@ -31,6 +31,8 @@ import Following from './features/user/components/Following'
 import Followers from './features/user/components/Followers'
 import Hashtag from './features/user/components/Hashtag'
 import Profile from './pages/Profile'
+import JobView, { Applicants, ApplicationSetting } from './pages/JobView'
+import Notifications from './pages/Notifications'
 
 
 /* TODO: 
@@ -76,7 +78,11 @@ function App() {
               <Route path='/jobs' element={<Jobs />}>
                 <Route index element={<AllJobs />} />
                 <Route path='posted-jobs' element={<ManagedJobs />} />
+                <Route path='view' element={<JobView />} />
+                <Route path='settings' element={<ApplicationSetting />} />
+                <Route path='applicants' element={<ProtectedAddJob element={<Applicants />} />} />
               </Route>
+              <Route path='/notifications' element={<Notifications />} />
               <Route path='/add-job' element={<ProtectedAddJob element={<CreateJob />} />} />
               <Route path='/premium' element={<Subscription />} />
               <Route path='/completion' element={<Completion />} />

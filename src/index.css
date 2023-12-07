@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
     font-family: 'Poppins', sans-serif;
 }
@@ -12,5 +13,19 @@ body {
 
 .active {
     @apply hover:text-primaryColor
+}
+
+
+ul {
+    list-style-type: disc;
+}
+
+ol {
+    list-style-type: decimal;
+}
+
+
+.hide-scrollbar::-webkit-scrollbar {
+    width: 0;
 }
 

@@ -20,7 +20,7 @@ function Connections() {
     }, [dispatch])
 
 
-    const removeConnection = (userId:string) => {
+    const removeConnection = (userId: string) => {
         console.log(userId)
     }
 
@@ -29,7 +29,7 @@ function Connections() {
         <>
             <Row title={`Connections`} >
                 {
-                    isLoading ? (<div className='flex justify-center'><LoadingSpinner /></div>) : Connections.map((user: any) => (
+                    isLoading ? (<div className='flex justify-center'><LoadingSpinner /></div>) : Connections && Connections.map((user: any) => (
                         <List
                             user={user}
                             connected

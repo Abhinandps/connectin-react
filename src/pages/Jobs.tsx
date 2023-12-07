@@ -16,7 +16,6 @@ import { IoRemoveCircleSharp } from "react-icons/io5";
 
 const Jobs = () => {
 
-
     return (
         <FeedContainer>
 
@@ -32,7 +31,7 @@ const Jobs = () => {
                         <p className="text-sm font-medium">My Jobs</p>
                     </Link>
 
-                    <Link to={'#'} className="flex items-center justify-start gap-3 px-3 py-2 hover:bg-slate-50 text-secondaryColor  hover:text-primaryColor">
+                    <Link to={'settings'} className="flex items-center justify-start gap-3 px-3 py-2 hover:bg-slate-50 text-secondaryColor  hover:text-primaryColor">
                         <div className="text-xl font-bold rounded-lg   w-[20px] flex justify-center items-center ">
                             ⚙
                         </div>
@@ -51,6 +50,18 @@ const Jobs = () => {
                         </div>
                         <p className="text-sm font-medium">Manage Job Posts</p>
                     </Link>
+                    <Link to={'/jobs/applicants'} className="flex items-center justify-start gap-3 px-3 py-2 hover:bg-slate-50 text-secondaryColor  hover:text-primaryColor">
+                        <div className="text-xl font-bold rounded-lg   w-[20px] flex justify-center items-center ">
+                            🗄
+                        </div>
+                        <p className="text-sm font-medium">Job Applicants</p>
+                    </Link>
+                    <Link to={'/jobs/scheduled-interviews'} className="flex items-center justify-start gap-3 px-3 py-2 hover:bg-slate-50 text-secondaryColor  hover:text-primaryColor">
+                        <div className="text-xl font-bold rounded-lg   w-[20px] flex justify-center items-center ">
+                            📅
+                        </div>
+                        <p className="text-sm font-medium">Scheduled Interviews</p>
+                    </Link>
 
                 </div>
 
@@ -63,8 +74,6 @@ const Jobs = () => {
         </FeedContainer >
     )
 }
-
-
 
 export default Jobs
 
@@ -94,8 +103,6 @@ export function AllJobs() {
     )
 }
 
-
-
 export function JobContainer({ children, title, label }: any) {
     return (
         < div className='bg-white rounded-lg border border-borderColor py-3 min-h-[100px]' >
@@ -107,8 +114,6 @@ export function JobContainer({ children, title, label }: any) {
         </div >
     )
 }
-
-
 
 
 export function ManagedJobs() {
@@ -132,8 +137,6 @@ export function ManagedJobs() {
     )
 }
 
-
-
 export function JobCard({ jobTitle, jobType, workPlaceType, employeeLocation, company, createdAt, updatedAt, isDraft, _id, userId, publicProp }: any) {
 
     const navigate = useNavigate()
@@ -149,7 +152,9 @@ export function JobCard({ jobTitle, jobType, workPlaceType, employeeLocation, co
             <div className="bg-primaryColor text-white w-[60px] h-[60px] flex justify-center items-center text-3xl font-bold rounded-lg uppercase">{company[0] + company.split('').slice(company.length - 1).join('')}</div>
 
             <div className="ml-5">
-                <h1 className="text-blue-500 font-semibold">{jobTitle}  </h1>
+                <h1 className="text-blue-500 font-semibold capitalize hover:underline hover:cursor-pointer"
+                    onClick={() => navigate(`/jobs/view?jobId=${_id}`)}
+                >{jobTitle}  </h1>
                 <p className="text-sm capitalize">{company}</p>
                 <span className="text-sm text-secondaryColor">{employeeLocation} ({workPlaceType})</span>
 
@@ -194,10 +199,66 @@ export function JobCard({ jobTitle, jobType, workPlaceType, employeeLocation, co
                 )
             }
 
-
-
-
         </div >
+    )
+}
+
+
+export function JobDetails({ jobTitle, jobType, workPlaceType, description, skills, employeeLocation, company, createdAt, updatedAt, isDraft, isReadOnly, setShowModalLg, isApplied }: any) {
+
+    return (
+        <div className="bg-white p-5 rounded-md shadow-md relative">
+            <div className=" flex items-center gap-3 ">
+                <p className="absolute right-10 text-xs bg-yellow-200 px-2 rounded-md">{isDraft && 'Drafted'}</p>
+                <div className="bg-primaryColor text-white w-[50px] h-[50px] flex justify-center items-center text-2xl font-bold rounded-lg uppercase">{company && company[0] + company.split('').slice(company.length - 1).join('')}
+                </div>
+                <div>
+                    <h1 className="text-blue-500 text-lg capitalize font-semibold">{jobTitle}  </h1>
+                </div>
+            </div>
+            <div className="text-left ms-16 flex gap-2">
+                <p className="text-sm capitalize">{company}</p>
+                <span className="text-sm text-secondaryColor ">{employeeLocation} ({workPlaceType})</span>
+                <span className="text-sm rounded-md bg-green-100 px-2 text-secondaryColor">{jobType}</span>
+            </div>
+
+            <div className="text-left mt-5 font-medium">
+                <h2 className="text-lg mb-3">About the Job</h2>
+                <p className="capitalize">Job Title: {jobTitle}</p>
+
+                <p> Location: {employeeLocation} ({workPlaceType})</p>
+
+                <p>Experience: 0-4+ Years</p>
+            </div>
+
+            {
+                !isReadOnly && !isApplied && (
+                    <div className="w-[150px] my-3">
+                        <Button title="Easy Apply" onClick={() => setShowModalLg(true)} />
+                    </div>
+                )
+            }
+
+            {isApplied && (
+                <div className="w-[150px] my-3">
+                    <button className="bg-green-900/80 uppercase px-3 py-2 rounded-full text-sm font-bold text-white">Applied 🥇</button>
+                </div>
+            )}
+
+            <div className="block py-3" dangerouslySetInnerHTML={{ __html: description }} />
+
+            <h2 className="text-lg mb-3">Required Skills</h2>
+            <div className="flex gap-2">
+
+                {skills && skills.map((skill: string, index: number) => (
+                    <div key={index} className="w-fit text-center bg-green-700 rounded-full  px-2 py-1 text-white font-bold min-w-32 flex items-center gap-1 ">
+                        {skill}
+                    </div>
+                ))}
+            </div>
+
+
+        </div>
     )
 }
 
@@ -306,6 +367,12 @@ export function CreateJob() {
 
             setJobDetails((prevJobDetails) => ({
                 ...prevJobDetails,
+                jobTitle: res?.data.jobTitle,
+                company: res?.data.company,
+                workPlaceType: res?.data.workPlaceType,
+                employeeLocation: res?.data.employeeLocation,
+                jobType: res?.data.jobType,
+                isDraft: res?.data.isDraft,
                 jobId: res?.data._id,
                 description: res?.data.description,
                 skills: res?.data.skills
@@ -458,7 +525,7 @@ export function CreateJob() {
         <FeedContainer>
 
 
-            <div className="flex justify-center items-center w-full min-h-[80vh]">
+            <div className="flex justify-center items-start w-full min-h-[80vh]">
                 <div className="bg-white w-full h-full border border-borderColor rounded-lg px-4 py-3">
                     <div className="flex gap-4 items-center border-b pb-3">
                         <FaArrowLeft className='text-primaryColor cursor-pointer' />
@@ -512,8 +579,13 @@ export function CreateJob() {
 
                     </div>
                 </div>
-                <div className="w-full">
-                    <div className="text-center text-xs">preview...</div>
+                <div className="w-full mx-5">
+                    <div className="text-xs">
+                        {/* preview... */}
+                        <JobDetails {...jobDetails} isReadOnly={true} />
+
+
+                    </div>
                 </div>
             </div>
         </FeedContainer>
@@ -612,7 +684,6 @@ export function CreateJob() {
     )
 }
 
-
 export function TimeAgo({ createdAt }: any) {
     function timeAgo(createdAt: any) {
         const currentDate = new Date();
@@ -642,7 +713,6 @@ export function TimeAgo({ createdAt }: any) {
 
     return <>{timeAgo(createdAt)}</>
 }
-
 
 
 
