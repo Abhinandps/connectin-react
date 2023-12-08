@@ -83,23 +83,118 @@ export function AllJobs() {
     const { managedJobs, recentJobs } = useSelector((state: any) => state.job)
     const dispatch = useDispatch()
     const { user } = useAuth()
+    const accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_ACCESS_TOKEN
+
+    const [searchterm, setSearchTerm] = useState(null);
+    const [suggestions, setSuggestions] = useState([]);
+    const [select, setSelect] = useState(null)
 
     console.log(recentJobs, 'recentJobs')
     useEffect(() => {
         dispatch(fetchManagedJobs())
-        dispatch(fetchRecentJobs())
+        dispatch(fetchRecentJobs({}))
     }, [dispatch])
+
+
+    const handleSearch = (searchterm: any) => {
+        if (!searchterm) return
+        dispatch(fetchRecentJobs({ searchterm }))
+    }
+
+    useEffect(() => {
+        if (!select) return
+        dispatch(fetchRecentJobs({ select }))
+        setSelect(null)
+    }, [select])
+
+
+
+    const handleSearchChange = async (query) => {
+
+        try {
+            const response = await axios.get(
+                `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json`,
+                {
+                    params: {
+                        access_token: accessToken,
+                    },
+                }
+            );
+            console.log(response.data.features)
+
+            setSuggestions(response.data.features);
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
+        }
+    };
 
     return (
         <>
             <JobContainer title='Recommended for you' label='Based on your profile and search history' />
 
             <JobContainer title='More recent jobs for you' label='Based on your profile and search history'  >
+                <Filter select={select} setSelect={setSelect} handleSearch={handleSearch} searchterm={searchterm} setSearchTerm={setSearchTerm} suggestions={suggestions} handleSearchChange={handleSearchChange} setSuggestions={setSuggestions} />
                 {recentJobs.list.map((job) => (
                     !job?.isDraft && (< JobCard {...job} publicProp={true} />)
                 ))}
             </JobContainer>
         </>
+    )
+}
+
+
+export function Filter({ select, setSelect, handleSearchChange, suggestions, setSearchTerm, searchterm, setSuggestions, handleSearch }) {
+
+    return (
+        <div className="h-[60px] flex justify-between items-center px-5 border-b border-borderColor pb-2 ">
+            <div className="flex gap-2 relative">
+                <input
+                    type="search"
+                    className="relative bg-[#edf3f8] m-0 lg:block  flex-auto lg:flex-row rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.25rem] text-sm font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primaryColor dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primaryColor w-[200px] focus:w-[400px] "
+                    value={searchterm}
+                    placeholder="Search by City, state or zip code"
+                    aria-label="Search"
+                    onChange={(e) => handleSearchChange(e.target.value)}
+                />
+                {suggestions.length > 0 && (
+                    <ul className="absolute top-10 bg-white border border-borderColor z-30 w-full py-2 rounded-md shadow-md">
+                        {suggestions.map((location) => (
+                            <li
+                                className="text-sm font-light capitalize py-2 px-4  text-secondaryColor hover:bg-blue-100 cursor-pointer"
+                                key={location?.id}
+                                onClick={() => {
+                                    setSearchTerm(location?.place_name);
+                                    setSuggestions([])
+                                }}
+                            >
+                                {location?.place_name}
+
+                            </li>
+                        ))}
+                    </ul>
+                )}
+                <button
+                    onClick={() => {
+                        handleSearch(searchterm); setSearchTerm(null)
+                    }}
+                    className="bg-green-800 px-2 rounded-full text-white text-sm r">search</button>
+            </div>
+            <select name="" id="" className='border cursor-pointer border-green-800 text-green-800 px-3 rounded-full p-1'
+                onChange={(e) => setSelect(e.target.value)}
+                value={select}
+            >
+                <option value="Remote">
+                    Remote
+                </option>
+                <option value="Hybrid">
+                    Hybrid
+                </option>
+                <option value="On-site">
+                    On-site
+                </option>
+            </select>
+
+        </div>
     )
 }
 
@@ -268,6 +363,8 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
 import apiCall from "../services/apiCall";
 import { useAuth } from "../features/auth/hooks/useAuth";
+import axios from "axios";
+import { TERipple } from "tw-elements-react";
 
 export function CreateJob() {
 
@@ -336,6 +433,8 @@ export function CreateJob() {
         }
     );
 
+
+
     const [description, setDescription] = useState('')
 
 
@@ -346,6 +445,9 @@ export function CreateJob() {
         description: description,
         skills: [] as string[],
     })
+
+    const accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_ACCESS_TOKEN
+
 
     useEffect(() => {
         setJobDetails((prevJobDetails) => ({
@@ -386,6 +488,30 @@ export function CreateJob() {
         , jobType
     } = formData
 
+    const [suggestions, setSuggestions] = useState([]);
+
+
+    const handleSearchChange = async (query) => {
+        // onChange("employeeLocation", query)
+
+        try {
+            const response = await axios.get(
+                `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json`,
+                {
+                    params: {
+                        access_token: accessToken,
+                    },
+                }
+            );
+            console.log(response.data.features)
+
+            setSuggestions(response.data.features);
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
+        }
+    };
+
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -396,7 +522,12 @@ export function CreateJob() {
             employeeLocation: "",
             jobType: ""
         })
-        const res = await dispatch(createJobs(formData))
+        const { employeeLocation, ...rest } = formData
+        const newFormData = {
+            ...rest,
+            employeeLocation: employeeLocation?.name
+        }
+        const res = await dispatch(createJobs(newFormData))
         if (createJobs.fulfilled.match(res)) {
 
             if (res.payload.res.data) {
@@ -521,6 +652,9 @@ export function CreateJob() {
     }
 
 
+
+
+
     if (page.currentPage === 2) return (
         <FeedContainer>
 
@@ -593,8 +727,8 @@ export function CreateJob() {
 
     return (
         <FeedContainer>
-            <div className="bg-white md:w-[500px] sm:w-full px-16 py-10 border border-borderColor rounded-lg shadow-sm">
-                <form onSubmit={handleSubmit} >
+            <div className="bg-white md:w-[500px] sm:w-full px-16 py-10 border border-borderColor rounded-lg shadow-sm ">
+                <form onSubmit={handleSubmit} className="relative" >
                     <h1 className="text-2xl font-bold text-primaryColor">Post a job </h1>
 
                     <InputField
@@ -642,10 +776,25 @@ export function CreateJob() {
                     <InputField
                         Label={"Employee location"}
                         placeholder={""}
-                        value={employeeLocation}
+                        value={employeeLocation.name}
                         error={errorData.employeeLocation}
                         onChange={v => onChange("employeeLocation", v)}
+                        handleSearchChange={v => handleSearchChange(v)}
                     />
+                    {suggestions.length > 0 && (
+                        <ul className="absolute bg-white border border-borderColor z-30 w-full py-2 rounded-md shadow-md">
+                            {suggestions.map((location) => (
+                                <li
+                                    className="text-sm font-light capitalize py-2 px-4  text-secondaryColor hover:bg-blue-100 cursor-pointer"
+                                    key={location?.id}
+                                    onClick={() => { onChange('employeeLocation', { name: location?.place_name, id: location?.id }); setSuggestions([]) }}
+                                >
+                                    {location?.place_name}
+
+                                </li>
+                            ))}
+                        </ul>
+                    )}
 
                     <Select
                         Label={"Job type"}

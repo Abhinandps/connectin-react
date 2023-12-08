@@ -42,10 +42,12 @@ export const fetchManagedJobs = createAsyncThunk(
 
 export const fetchRecentJobs = createAsyncThunk(
     'fetchRecentJobs',
-    async (_unknown, thunkAPI) => {
+    async ({ searchterm, select }: { searchterm?: string; select?: string }, thunkAPI) => {
         try {
+            console.log(`/jobs/${searchterm ? `?s=${searchterm}` : ''}${select ? `?select=${select}` : ''}`)
             const res = await apiCall({
-                url: '/jobs/'
+                url: `/jobs/${searchterm ? `?s=${searchterm}` : ''}${select ? `?select=${select}` : ''}`
+
             })
             return { res }
         } catch (err: any) {

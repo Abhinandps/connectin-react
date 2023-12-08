@@ -10,9 +10,10 @@ interface InputFieldProps {
     globalError?: string | null;
     outline?: boolean
     ref?: any
+    handleSearchChange?: any
 }
 
-const InputField: React.FC<InputFieldProps> = function ({ Label, placeholder, type = "text", onChange, value, error, globalError, outline = true, ref }) {
+const InputField: React.FC<InputFieldProps> = function ({ Label, placeholder, type = "text", onChange, value, error, globalError, outline = true, ref, handleSearchChange }) {
     return (
         <div className='mt-[1em]'>
             <label className={`${error || globalError ? 'text-danger' : 'text-black/[.62] '} block text-sm font-semibold leading-6 mb-2 `}>{Label}</label>
@@ -21,7 +22,14 @@ const InputField: React.FC<InputFieldProps> = function ({ Label, placeholder, ty
                 value={value}
                 type={type}
                 placeholder={placeholder}
-                onChange={e => onChange && onChange(e.target.value)}
+                onChange={e => {
+                    if (onChange) {
+                        onChange(e.target.value);
+                    }
+                    if (handleSearchChange) {
+                        handleSearchChange(e.target.value);
+                    }
+                }}
                 disabled={!onChange}
                 ref={ref}
             />
