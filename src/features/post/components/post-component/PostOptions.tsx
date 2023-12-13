@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { togglePostOptions } from '../../store/postSlice'
 
+
 function PostOptions({ _id, handlePostEdit, handleDeletePost, isPostOptions }: any) {
     const dispatch = useDispatch()
     return (

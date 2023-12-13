@@ -13,7 +13,7 @@ const Home: React.FC = function () {
                     </div>
                 </div>
                 <div className='py-5'>
-                    <img src="https://static.licdn.com/aero-v1/sc/h/dxf91zhqd2z6b0bwg85ktm5s4" alt="" />
+                    <img src="https://res.cloudinary.com/ds7fy5acd/image/upload/v1702224453/image_folder/rvgbuzxywleu3cs6obha.svg" alt="" />
                 </div>
             </div>
         </>

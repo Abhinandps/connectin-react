@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import FeedContainer from '../layouts/FeedContainer';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Editor } from '../features/post/components/Editor';
 import PostItem from '../features/post/components/PostItem';
-import { fetchUserFeed } from '../features/post/store/thunks';
+import { fetchUserFeed, fetchUserLikedPosts } from '../features/post/store/thunks';
 import { LeftPanel } from '../layouts/LeftPanel';
 import ProfileAnalytics from '../features/common/components/ProfileAnalytics';
 import { MainView } from '../layouts/MainVIew';
 import { RightPanel } from '../layouts/RightPanel';
+import { fetchOnePostData } from '../features/post/store/postSlice';
 
 
 const Feed: React.FC = function () {
 
     const { feed, userLikedPosts } = useSelector((state: any) => state.post)
     const [showModalLg, setShowModalLg] = useState(false);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const postId = queryParams.get('postId');
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchUserFeed());
+        dispatch(fetchUserLikedPosts())
+        dispatch(fetchUserFeed(postId));
     }, [dispatch]);
+
+
 
 
     return (

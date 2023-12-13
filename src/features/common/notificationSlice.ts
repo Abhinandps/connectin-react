@@ -11,20 +11,45 @@ const notificationSlice = createSlice({
     reducers: {
         addNotification: (state, action) => {
             let py: any = action.payload.notification
-            const updatedNotifications = [...state.notifications, { ...py, viewed: false }];
+            const updatedNotifications = [{ ...py, viewed: false }, ...state.notifications];
             return {
                 ...state,
                 notifications: updatedNotifications
             }
         },
-        // removeNotification: (state, action) => {
-        //   state.notifications = state.notifications.filter((notification) => notification.id !== action.payload);
-        // },
+        changeNotificationStatus: (state, action) => {
+            let py: any = action.payload;
+            const indexToChange = action.payload;
+
+            const updatedNotifications = state.notifications.map((notification: any, index) => {
+                if (index === indexToChange) {
+                    return { ...notification, viewed: true }
+                }
+                return notification
+            })
+
+            return {
+                ...state,
+                notifications: updatedNotifications
+            }
+        },
+        removeNotification: (state, action) => {
+            const indexToRemove = action.payload;
+
+            const updatedNotifications = [...state.notifications];
+
+            updatedNotifications.splice(indexToRemove, 1);
+
+            return {
+                ...state,
+                notifications: updatedNotifications
+            };
+        },
     },
 });
 
 
-export const { addNotification } = notificationSlice.actions;
+export const { addNotification, changeNotificationStatus } = notificationSlice.actions;
 
 export default notificationSlice.reducer;
 

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useState } from 'react'
-import { createPost } from "../store/thunks";
+import { createPost, updatePost } from "../store/thunks";
 import { FormLayout } from "../../../components/ui/Modal";
 import InputField from "../../../components/Form/InputField";
 import Button from "../../../components/Form/Button";
@@ -9,14 +9,17 @@ import Button from "../../../components/Form/Button";
 export const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg, attachments, postData }) => {
     console.log(attachments)
 
+    console.log(postData, 'Post Data')
+
     const dispatch = useDispatch()
+
     const emptyFormData = {
         title: postData?.title || "",
         contentType: "text",
         contentBody: postData?.contentBody || "",
         attachments: postData?.attachments || attachments
     }
-    
+
     // page 2 
     const [formData, setFormData] = useState(
         emptyFormData,
@@ -37,11 +40,21 @@ export const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg
         try {
             e.preventDefault();
 
-            const createPostAction = await dispatch(createPost(formData));
+            if (!postData?._id) {
+                const createPostAction = await dispatch(createPost(formData));
 
-            if (createPost.fulfilled.match(createPostAction)) {
-                setShowModalLg(false)
+                if (createPost.fulfilled.match(createPostAction)) {
+                    setShowModalLg(false)
+                }
+                return
             }
+
+            const form = {
+                postId: postData?._id,
+                formData
+            }
+
+            const editPostAction = dispatch(updatePost(form))
 
         } catch (err) { }
     }

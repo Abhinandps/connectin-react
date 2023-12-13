@@ -15,6 +15,7 @@ function Profile() {
     const [profile, setProfile] = useState<any>();
     const [moreprofileData, setProfileMoreProfile] = useState<any>();
     const [loading, setLoading] = useState(false)
+    
     useEffect(() => {
         (async () => {
             const res = await apiCall({ url: `/users/user/${id}`, method: 'POST' })
@@ -73,7 +74,7 @@ function Profile() {
         <FeedContainer>
             <div className="relative w-full">
                 <div className='h-[200px] '>
-                    <img className='w-full h-full object-cover rounded-t-lg' src="https://media.licdn.com/dms/image/D5616AQHktpTLduijkQ/profile-displaybackgroundimage-shrink_200_800/0/1693821120930?e=1703116800&v=beta&t=9vZRAGoIwVBs2xvunIYtWdwy-_MubfoQNF0pRv2v3bE" alt="" />
+                    <img className='w-full h-full object-cover rounded-t-lg' src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y292ZXIlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D" alt="" />
                 </div>
                 <div className='absolute w-[140px] h-[140px] top-[120px] left-24 translate-x-[-50%] border-4 rounded-full border-white'>
                     <img className='w-full h-full rounded-full' src="https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645754255?e=1706140800&v=beta&t=SihjLc7kCa9AUn4epgBF8b7VAo1shsRQgH8hEIZlOfk" alt="" />

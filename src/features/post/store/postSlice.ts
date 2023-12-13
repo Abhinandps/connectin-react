@@ -4,12 +4,13 @@ import { initialState } from './initialState'
 
 import {
     enableCommentingReducer,
+    fetchOnePostFromFeedReducer,
     fetchPostDataReducer,
     toggleCommentOptionsReducer,
     togglePostOptionsReducer
 } from './reducers'
-import { addCommentToPostFullfilledReducer, createPostFullfilledReducer, deleteCommentFromPostFullfilledReducer, fetchUserFeedFullfilledReducer, fetchUserFeedRejectedReducer, fetchUserPostsFullfilledReducer, likePostFullfilledReducer } from './reducers/extraReducers'
-import { addCommentToPost, createPost, deleteCommentFromPost, deletePost, fetchUserFeed, fetchUserPosts, likePost } from './thunks'
+import { addCommentToPostFullfilledReducer, createPostFullfilledReducer, deleteCommentFromPostFullfilledReducer, fetchUserFeedFullfilledReducer, fetchUserFeedRejectedReducer, fetchUserLikesPostIdsFullfilledReducer, fetchUserPostsFullfilledReducer, likePostFullfilledReducer } from './reducers/extraReducers'
+import { addCommentToPost, createPost, deleteCommentFromPost, deletePost, fetchUserFeed, fetchUserLikedPosts, fetchUserPosts, likePost } from './thunks'
 
 
 const postSlice = createSlice({
@@ -19,12 +20,14 @@ const postSlice = createSlice({
         enableCommenting: enableCommentingReducer,
         toggleCommentOptions: toggleCommentOptionsReducer,
         togglePostOptions: togglePostOptionsReducer,
-        fetchPostData: fetchPostDataReducer
+        fetchPostData: fetchPostDataReducer,
+        fetchOnePostData: fetchOnePostFromFeedReducer
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchUserPosts.fulfilled, fetchUserPostsFullfilledReducer)
             .addCase(fetchUserFeed.fulfilled, fetchUserFeedFullfilledReducer)
+            .addCase(fetchUserLikedPosts.fulfilled, fetchUserLikesPostIdsFullfilledReducer)
             .addCase(fetchUserFeed.rejected, fetchUserFeedRejectedReducer)
             .addCase(likePost.fulfilled, likePostFullfilledReducer)
             .addCase(createPost.fulfilled, createPostFullfilledReducer)
@@ -34,7 +37,7 @@ const postSlice = createSlice({
     }
 })
 
-export const { enableCommenting, toggleCommentOptions, togglePostOptions, fetchPostData } = postSlice.actions
+export const { enableCommenting, toggleCommentOptions, togglePostOptions, fetchPostData, fetchOnePostData } = postSlice.actions
 
 export default postSlice.reducer;
 

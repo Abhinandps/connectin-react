@@ -24,6 +24,11 @@ export const fetchUserPostsFullfilledReducer = (state, action) => {
     state.posts = PostsWithFlags;
 }
 
+export const fetchUserLikesPostIdsFullfilledReducer = (state, action) => {
+    let py = action.payload.res
+    state.userLikedPosts = py
+}
+
 
 export const fetchUserFeedFullfilledReducer = (state, action) => {
     let py = action.payload.res.data

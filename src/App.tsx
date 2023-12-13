@@ -33,6 +33,8 @@ import Hashtag from './features/user/components/Hashtag'
 import Profile from './pages/Profile'
 import JobView, { Applicants, ApplicationSetting } from './pages/JobView'
 import Notifications from './pages/Notifications'
+import ScheduledInterviews from './features/common/components/ScheduledInterviews'
+import MyInterviews from './features/common/components/MyInterviews'
 
 
 /* TODO: 
@@ -77,10 +79,12 @@ function App() {
               <Route index element={<Feed />} />
               <Route path='/jobs' element={<Jobs />}>
                 <Route index element={<AllJobs />} />
-                <Route path='posted-jobs' element={<ManagedJobs />} />
+                <Route path='posted-jobs' element={<ProtectedAddJob element={<ManagedJobs />} />} />
                 <Route path='view' element={<JobView />} />
                 <Route path='settings' element={<ApplicationSetting />} />
                 <Route path='applicants' element={<ProtectedAddJob element={<Applicants />} />} />
+                <Route path='my-interviews' element={<ProtectedAddJob element={<MyInterviews />} />} />
+                <Route path='scheduled-interviews' element={<ScheduledInterviews />} />
               </Route>
               <Route path='/notifications' element={<Notifications />} />
               <Route path='/add-job' element={<ProtectedAddJob element={<CreateJob />} />} />

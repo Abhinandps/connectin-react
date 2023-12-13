@@ -121,3 +121,19 @@ export const fetchPostDataReducer = (state, action) => {
     }
 }
 
+
+export const fetchOnePostFromFeedReducer = (state, action) => {
+    const { postId } = action.payload
+
+    console.log(state, 'state')
+
+
+    const updatedFeed = state.feed.filter((post: any) => post._id === postId);
+
+    return {
+        ...state,
+        feed: [],
+    }
+}
+
+

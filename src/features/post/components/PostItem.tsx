@@ -52,7 +52,7 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg }: any) => {
     }
 
     return (
-        <div key={_id} className='bg-white rounded-lg border  border-borderColor py-3 min-h-[500px] px-5 relative' >
+        <div key={_id} className='bg-white rounded-lg border mb-3 border-borderColor py-3 min-h-[500px] px-5 relative' >
 
             <Header {...post.creator} />
 
@@ -75,7 +75,9 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg }: any) => {
                     </>
                 )
             }
+
             <PostOptions {...postWithIsLiked} handlePostEdit={handlePostEdit} handleDeletePost={handleDeletePost} isPostOptions={isPostOptions} />
+            
         </div>
     )
 }

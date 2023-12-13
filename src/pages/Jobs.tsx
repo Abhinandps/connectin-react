@@ -56,6 +56,12 @@ const Jobs = () => {
                         </div>
                         <p className="text-sm font-medium">Job Applicants</p>
                     </Link>
+                    <Link to={'/jobs/my-interviews'} className="flex items-center justify-start gap-3 px-3 py-2 hover:bg-slate-50 text-secondaryColor  hover:text-primaryColor">
+                        <div className="text-xl font-bold rounded-lg   w-[20px] flex justify-center items-center ">
+                            📆
+                        </div>
+                        <p className="text-sm font-medium">My Interviews</p>
+                    </Link>
                     <Link to={'/jobs/scheduled-interviews'} className="flex items-center justify-start gap-3 px-3 py-2 hover:bg-slate-50 text-secondaryColor  hover:text-primaryColor">
                         <div className="text-xl font-bold rounded-lg   w-[20px] flex justify-center items-center ">
                             📅
@@ -67,7 +73,7 @@ const Jobs = () => {
 
             </div>
 
-            <div className="flex flex-col gap-3 w-full">
+            <div className="flex flex-col gap-3 w-full ">
                 <Outlet />
             </div>
 

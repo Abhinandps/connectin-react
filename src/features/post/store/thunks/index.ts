@@ -23,10 +23,9 @@ export const createPost = createAsyncThunk(
 )
 
 export const updatePost = createAsyncThunk(
-    'data/createPost',
+    'data/updatePost',
     async (form, thunkAPI) => {
         const { postId, formData }: any = form
-        console.log(form);
 
         try {
             const res = await apiCall({
@@ -67,11 +66,13 @@ export const fetchUserPosts = createAsyncThunk(
 
 export const fetchUserFeed = createAsyncThunk(
     'data/fetchFeed',
-    async (_unknown, thunkAPI) => {
+    async (postId: string, thunkAPI) => {
         try {
+            console.log(postId)
             const res = await apiCall({
-                url: `/users/user/feed`
+                url: `/users/user/feed?${postId ? `postId=${postId}` : ''}`
             })
+
             console.log(res);
 
             if (res.statusCode === 403) {
@@ -84,6 +85,30 @@ export const fetchUserFeed = createAsyncThunk(
         }
     }
 )
+
+export const fetchUserLikedPosts = createAsyncThunk(
+    'data/fetchUserLikedPosts',
+    async (_unknown, thunkAPI) => {
+        try {
+            const res = await apiCall({
+                url: `/posts/liked-posts`,
+                method:'POST'
+            })
+
+            console.log(res,'user liked posts');
+
+            if (res.statusCode === 403) {
+                // Handle the "Forbidden" error
+                throw new Error('Forbidden resource');
+            }
+            return { res }
+        } catch (err: any) {
+            return thunkAPI.rejectWithValue(err.message)
+        }
+    }
+)
+
+
 
 export const addCommentToPost = createAsyncThunk(
     'data/addComment',
