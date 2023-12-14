@@ -184,7 +184,8 @@ export const deleteCommentFromPostFullfilledReducer = (state, action) => {
 
 
 export const deletePostFullfilledReducer = (state, action) => {
-    let { postId } = action.payload.res
+    let { postId } = action.payload.res.data
+    console.log(postId,'post id id ')
 
     const updatedFeed = state.feed.filter((post: any) => post._id !== postId)
     const updatedPosts = state.posts.filter((post: any) => post._id !== postId)

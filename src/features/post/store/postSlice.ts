@@ -9,7 +9,7 @@ import {
     toggleCommentOptionsReducer,
     togglePostOptionsReducer
 } from './reducers'
-import { addCommentToPostFullfilledReducer, createPostFullfilledReducer, deleteCommentFromPostFullfilledReducer, fetchUserFeedFullfilledReducer, fetchUserFeedRejectedReducer, fetchUserLikesPostIdsFullfilledReducer, fetchUserPostsFullfilledReducer, likePostFullfilledReducer } from './reducers/extraReducers'
+import { addCommentToPostFullfilledReducer, createPostFullfilledReducer, deleteCommentFromPostFullfilledReducer, deletePostFullfilledReducer, fetchUserFeedFullfilledReducer, fetchUserFeedRejectedReducer, fetchUserLikesPostIdsFullfilledReducer, fetchUserPostsFullfilledReducer, likePostFullfilledReducer } from './reducers/extraReducers'
 import { addCommentToPost, createPost, deleteCommentFromPost, deletePost, fetchUserFeed, fetchUserLikedPosts, fetchUserPosts, likePost } from './thunks'
 
 
@@ -33,7 +33,7 @@ const postSlice = createSlice({
             .addCase(createPost.fulfilled, createPostFullfilledReducer)
             .addCase(addCommentToPost.fulfilled, addCommentToPostFullfilledReducer)
             .addCase(deleteCommentFromPost.fulfilled, deleteCommentFromPostFullfilledReducer)
-            .addCase(deletePost.fulfilled, deleteCommentFromPostFullfilledReducer)
+            .addCase(deletePost.fulfilled, deletePostFullfilledReducer)
     }
 })
 

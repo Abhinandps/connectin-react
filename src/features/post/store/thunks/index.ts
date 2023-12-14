@@ -92,10 +92,10 @@ export const fetchUserLikedPosts = createAsyncThunk(
         try {
             const res = await apiCall({
                 url: `/posts/liked-posts`,
-                method:'POST'
+                method: 'POST'
             })
 
-            console.log(res,'user liked posts');
+            console.log(res, 'user liked posts');
 
             if (res.statusCode === 403) {
                 // Handle the "Forbidden" error
@@ -173,19 +173,17 @@ export const deletePost = createAsyncThunk(
     'data/deletePost',
     async (postData, thunkAPI) => {
         const { postId }: any = postData;
-
-        // Now you can use 'postId' and 'content' in your thunk logic
-        console.log('Received postId:', postId);
-
+        console.log(postId,'from reducer')
         try {
             const res = await apiCall({
                 url: `/posts/delete/${postId}`,
                 method: 'DELETE',
             })
             if (res.statusCode === 403) {
-                // Handle the "Forbidden" error
                 throw new Error('Forbidden resource');
             }
+
+           
 
             return { res }
 

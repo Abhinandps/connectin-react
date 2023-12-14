@@ -48,6 +48,7 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg }: any) => {
     }
 
     const handleDeletePost = (postId: any) => {
+        console.log(postId,'called...')
         dispatch(deletePost({ postId }))
     }
 
@@ -77,7 +78,7 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg }: any) => {
             }
 
             <PostOptions {...postWithIsLiked} handlePostEdit={handlePostEdit} handleDeletePost={handleDeletePost} isPostOptions={isPostOptions} />
-            
+
         </div>
     )
 }
