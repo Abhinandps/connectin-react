@@ -1,6 +1,8 @@
 
 [🆗]post delete
 [🆗]post report
+[]self like not reflecting
+[🆗] notify moderators got a new position
 []moderator
 []Toaster Server actions
 []admin

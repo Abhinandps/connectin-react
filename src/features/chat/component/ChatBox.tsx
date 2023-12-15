@@ -215,14 +215,15 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
                                         </h2>
                                     )}
 
-                                    <p className={`${!isFirstMessage && 'ms-14 '} bg-[#edf3f8]/50  text-[15px] text-primaryColor font-normal  py-3 px-2 w-[300px] rounded-ss-none rounded-se-lg rounded-br-lg rounded-bl-lg relative`}
+                                    {/* <div dangerouslySetInnerHTML={{ __html: msg?.content }}></div> */}
+
+                                    <div className={`${!isFirstMessage && 'ms-14 '} bg-[#edf3f8]/50   text-[14px] leading-relaxed text-primaryColor font-light font-sans  py-3 px-2 w-[300px] rounded-ss-none rounded-se-lg rounded-br-lg rounded-bl-lg relative`}
                                         style={{ wordWrap: 'break-word' }}
-                                    >
-                                        {msg?.content}
+                                        dangerouslySetInnerHTML={{ __html: msg?.content }}
+                                    />
+                                    {/* {msg?.content} */}
 
-                                        <p className='text-[10px] absolute bottom-2 right-2' >{formattedTime !== 'Invalid Date' ? formattedTime : 'just now'}</p>
-
-                                    </p>
+                                    <p className='text-[10px] absolute bottom-2 right-10' >{formattedTime !== 'Invalid Date' ? formattedTime : 'just now'}</p>
                                 </div>
                             </div>
                         );
@@ -254,7 +255,7 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
                 />
                 <button disabled={!newMessage.length > 0} className={`${newMessage.length > 0 ? 'bg-primaryColor' : 'bg-primaryColor/50'} transition-all rounded-full px-3 py-1  text-white`} onClick={handleSend} >send</button>
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -92,7 +92,7 @@ function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
     return (
         <>
             <div className={`fixed z-[77777] bottom-0 right-5 bg-white py-1 mr-5 shadow-xl w-[350px] ${toggle ? 'h-[55px]' : 'h-[600px]'} 
-            border border-borderColor  rounded-lg
+            border border-borderColor  rounded-lg overflow-y-scroll hide-scrollbar
             `}>
                 <div>
                     <div className='pb-2  px-2 flex justify-between items-center border-b border-borderColor '>
