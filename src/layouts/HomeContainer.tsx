@@ -2,15 +2,17 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Navbar from './NavigationLayout';
 import Footer from './Footer';
-import Chat from '../pages/Chat';
+import { ToastContextProvider } from '../context/toastContext';
 
 
 const HomeContainer: React.FC = function () {
     return (
         <>
-            <Navbar />
-            <Outlet />
-            <Footer />
+            <ToastContextProvider>
+                <Navbar />
+                <Outlet />
+                <Footer />
+            </ToastContextProvider>
         </>
     )
 }

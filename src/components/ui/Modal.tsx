@@ -18,7 +18,7 @@ interface EditorProps
 
 export const FormLayout: React.FC<EditorProps> = ({ showModalLg, setShowModalLg, children, title }) => {
     return (
-        <div>
+        <div className="z-[77777]">
             <TEModal show={showModalLg} setShow={setShowModalLg}>
                 <TEModalDialog size="lg">
                     <TEModalContent>

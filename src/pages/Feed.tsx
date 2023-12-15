@@ -11,6 +11,7 @@ import ProfileAnalytics from '../features/common/components/ProfileAnalytics';
 import { MainView } from '../layouts/MainVIew';
 import { RightPanel } from '../layouts/RightPanel';
 import { fetchOnePostData } from '../features/post/store/postSlice';
+import Toaster from '../components/ui/Toaster';
 
 
 const Feed: React.FC = function () {
@@ -51,6 +52,8 @@ const Feed: React.FC = function () {
             <RightPanel />
 
             <Editor showModalLg={showModalLg} setShowModalLg={setShowModalLg} />
+
+            
 
         </FeedContainer >
 

@@ -15,11 +15,20 @@ import { FaPlus } from 'react-icons/fa';
 import { GrCheckboxSelected } from "react-icons/gr";
 import Button from '../../../../components/Form/Button';
 import apiCall from '../../../../services/apiCall';
+import { useToaster } from '../../../../context/toastContext';
+import { successSvg } from '../../../../components/ui/svgs';
+
+
+// import Toaster from '../../../../components/ui/Toaster';
+// import { successSvg } from '../../../../components/ui/svgs';
+
 
 function PostOptions({ _id, handlePostEdit, handleDeletePost, isPostOptions, feed, postId }: any) {
     const dispatch = useDispatch()
     const [showVerticalyCenteredModal, setShowVerticalyCenteredModal] =
         useState(false);
+
+    const { setToastDetails } = useToaster();
 
     const initialReasons = [
         'Harrasment',
@@ -73,6 +82,8 @@ function PostOptions({ _id, handlePostEdit, handleDeletePost, isPostOptions, fee
             dispatch(removeReportedPost(res.data))
 
             setShowVerticalyCenteredModal(false)
+
+            setToastDetails({ title: 'Report submitted', content: 'Post has been reported and removed from your feed.', svg: successSvg, isActive: true })
 
             console.log(res)
         } catch (err) {
@@ -192,6 +203,7 @@ function PostOptions({ _id, handlePostEdit, handleDeletePost, isPostOptions, fee
                     </div>
                 )
             }
+
         </>
     )
 }

@@ -51,7 +51,7 @@ function JobView() {
                 setLoading(false)
             }, 300)
         })()
-    }, [jobId])
+    }, [jobId || jobDetails])
 
 
     return (
@@ -65,6 +65,8 @@ function JobView() {
                 hiringManager={jobDetails?.userId}
                 showModalLg={showModalLg}
                 setShowModalLg={setShowModalLg}
+                setJobDetails={setJobDetails}
+                jobTitle={jobDetails?.jobTitle}
             />
 
         </>)
@@ -75,7 +77,7 @@ function JobView() {
 export default JobView
 
 
-export function ApplyJob({ title, showModalLg, setShowModalLg, jobId, hiringManager }: any) {
+export function ApplyJob({ title, jobTitle, showModalLg, setShowModalLg, jobId, hiringManager, setJobDetails }: any) {
 
     const [data, setData] = useState({
         email: '',
@@ -84,6 +86,8 @@ export function ApplyJob({ title, showModalLg, setShowModalLg, jobId, hiringMana
         jobId: jobId,
         hiringManager: hiringManager
     })
+
+    const { setToastDetails } = useToaster()
 
     const { email, mobile, resume } = data;
 
@@ -120,12 +124,37 @@ export function ApplyJob({ title, showModalLg, setShowModalLg, jobId, hiringMana
                 return alert('please add resume')
             }
 
-            console.log(data)
+            if (!data?.email || !data.mobile) {
+                return alert('please fill the input fields')
+            }
+
             const res = await apiCall({
                 url: "/jobs/apply",
                 method: 'POST',
                 data
             })
+
+            console.log(res, 'response.>_..')
+
+            if (res) {
+                setJobDetails((prevJobDetails) => ({
+                    ...prevJobDetails,
+                    isApplied: true
+                }));
+
+                setShowModalLg(false)
+
+                setToastDetails({
+                    title: 'Job Applied',
+                    content: `You applied to the job role on ${jobTitle} at ${title} successfully`,
+                    svgProp: successSvg,
+                    isActive: true
+                })
+            }
+
+
+
+
 
         } catch (err) {
 
@@ -258,6 +287,8 @@ export function ApplicationSetting() {
 
 import { HiDownload } from "react-icons/hi";
 import Button from "../components/Form/Button";
+import { useToaster } from "../context/toastContext";
+import { successSvg } from "../components/ui/svgs";
 
 export function Applicants() {
     const [applicants, setApplicants] = useState([])

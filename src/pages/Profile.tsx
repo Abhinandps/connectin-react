@@ -8,14 +8,17 @@ import apiCall from "../services/apiCall";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { useDispatch } from "react-redux";
 import { sendConnectionRequest } from "../features/user/store/thunks";
+import { useToaster } from "../context/toastContext";
+import { successSvg } from "../components/ui/svgs";
 
 function Profile() {
     const dispatch = useDispatch()
     const { id } = useParams();
+    const { setToastDetails } = useToaster()
     const [profile, setProfile] = useState<any>();
     const [moreprofileData, setProfileMoreProfile] = useState<any>();
     const [loading, setLoading] = useState(false)
-    
+
     useEffect(() => {
         (async () => {
             const res = await apiCall({ url: `/users/user/${id}`, method: 'POST' })
@@ -64,6 +67,9 @@ function Profile() {
                     connectionStatus: 'pending'
                 };
             });
+
+            setToastDetails({ title: "Request Sented", content: `Connection Request sented to ${profile.firstName} ${profile.lastName} successfully`, isActive: true, svgProp: successSvg })
+
             setLoading(false)
         }, 1000)
     }

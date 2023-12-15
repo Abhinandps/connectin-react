@@ -141,7 +141,7 @@ export function AllJobs() {
             <JobContainer title='More recent jobs for you' label='Based on your profile and search history'  >
                 <Filter select={select} setSelect={setSelect} handleSearch={handleSearch} searchterm={searchterm} setSearchTerm={setSearchTerm} suggestions={suggestions} handleSearchChange={handleSearchChange} setSuggestions={setSuggestions} />
                 {recentJobs.list.map((job) => (
-                    !job?.isDraft && (< JobCard {...job} publicProp={true} />)
+                    !job?.isDraft && (job?.userId !== user.userId) && (< JobCard {...job} publicProp={true} />)
                 ))}
             </JobContainer>
         </>
@@ -335,7 +335,7 @@ export function JobDetails({ jobTitle, jobType, workPlaceType, description, skil
             {
                 !isReadOnly && !isApplied && (
                     <div className="w-[150px] my-3">
-                        <Button title="Easy Apply" onClick={() => setShowModalLg(true)} />
+                        <Button title="Easy Apply" onClick={() => setShowModalLg(true)} disabled={true} />
                     </div>
                 )
             }
