@@ -16,20 +16,20 @@ function ManageInfo({ user }: ManageInfoProps) {
                     {
                         user.role === 'user' ? (
                             usersManageList.map(({ id, title, path }: any) => (
-                                <li>
-                                    <Link key={id} to={path}>{title}</Link>
+                                <li key={id}>
+                                    <Link  to={path}>{title}</Link>
                                 </li>
                             ))
                         ) : user.role === 'admin' ? (
                             superAdminManageList.map(({ id, title, path }: any) => (
-                                <li>
-                                    <Link key={id} to={path}>{title}</Link>
+                                <li key={id} >
+                                    <Link to={path}>{title}</Link>
                                 </li>
                             ))
                         ) : (
                             contentAdminManageList.map(({ id, title, path }: any) => (
-                                <li>
-                                    <Link key={id} to={path}>{title}</Link>
+                                <li key={id}>
+                                    <Link  to={path}>{title}</Link>
                                 </li>
                             ))
                         )

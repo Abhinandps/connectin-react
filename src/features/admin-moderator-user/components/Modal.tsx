@@ -13,9 +13,11 @@ const Modal = ({ isOpen, handleCloseModal, setRequestId, title, setLoading }: an
 
     useEffect(() => {
         async function fetchSuggestions() {
-            const response = await fetch(`http://localhost:3000/users/12345/search-suggestion?query=${searchTerm}`);
-            const data = await response.json()
-            setSuggestions(data);
+            const response = await apiCall({
+                url: `/users/12345/search-suggestion?s=${searchTerm}`
+            })
+            console.log(response)
+            setSuggestions(response.data);
         }
 
         if (searchTerm) {
@@ -34,8 +36,8 @@ const Modal = ({ isOpen, handleCloseModal, setRequestId, title, setLoading }: an
         try {
             const response = await apiCall({ url: `/users/${requestId}/add-admin`, method: "POST" })
 
-            if (response.message === 'success') {
-                setLoading((prev: boolean) => !prev)
+            if (response.data.message === 'success') {
+                setLoading(false)
                 setRequestId(requestId);
                 handleCloseModal()
                 // window.alert('The user has been successfully changed to an admin.');

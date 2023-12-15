@@ -64,7 +64,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
     return (
         <>
             {isOpen && (
-                <div className="absolute top-[65px] right-0 z-[777] bg-white  py-2 border w-[300px] border-borderColor rounded-md shadow-md"
+                <div className="absolute top-[65px] right-0 z-[777] text-[13px] text-secondaryColor bg-white capitalize py-2 px-1 border w-[300px] border-borderColor rounded-md shadow-md"
                     ref={popupRef}
                 >
                     {

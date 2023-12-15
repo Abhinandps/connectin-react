@@ -9,7 +9,7 @@ const NavItem = React.memo(function ({ data, handleTabClick, activeTab, isNewInv
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <>
+        <div className='relative'>
             <TETabsItem key={data?.id} onClick={() => data.modal ? setIsOpen(!isOpen) : handleTabClick(data.id, data.path)}
                 active={activeTab === data.id}
                 disabled={data.disabled}
@@ -32,20 +32,25 @@ const NavItem = React.memo(function ({ data, handleTabClick, activeTab, isNewInv
                         )}
                     </div>
                 </span>
-                {
-                    data.modal && isOpen ? (
 
-                        <Popup handleIsOpen={setIsOpen} isOpen={isOpen} />
 
-                    ) : null
-                }
 
                 {isNewInvites && <div className='absolute top-1 xs:right-3 md:right-4 transition delay-75 bg-red-600 w-[20px] border-2 shadow-sm border-borderColor h-[20px] flex items-center justify-center text-white rounded-full text-[10px] font-medium'>{unviewedInvitations.length}</div>}
 
                 {isNewNotifications && <div className='absolute top-1 xs:right-3 md:right-4 transition delay-75 bg-red-600 w-[20px] border-2 shadow-sm border-borderColor h-[20px] flex items-center justify-center text-white rounded-full text-[10px] font-medium'>{unviewedNotifications.length}</div>}
 
             </TETabsItem>
-        </>
+
+            {
+                data.modal && isOpen ? (
+
+                    <Popup handleIsOpen={setIsOpen} isOpen={isOpen} />
+
+                ) : null
+            }
+
+        </div>
+
     )
 
 

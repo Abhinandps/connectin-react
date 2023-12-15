@@ -8,6 +8,8 @@ function useFetchUsers(url: string) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
+
     useEffect(() => {
         async function fetchData() {
             try {
@@ -17,7 +19,7 @@ function useFetchUsers(url: string) {
                     throw new Error(data.message);
                 }
 
-                setUsers(data)
+                setUsers(data.data)
                 setLoading(false)
 
             } catch (error: any) {

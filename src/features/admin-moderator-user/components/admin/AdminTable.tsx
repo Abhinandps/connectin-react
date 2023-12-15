@@ -22,10 +22,13 @@ const AdminTable = (props: IAdminTableProps) => {
         try {
             const response = await apiCall({ url: `/users/${requestId}/remove-admin`, method: 'POST' })
 
-            if (response.message === 'success') {
-                setUsers((users) => users.filter((user: any) => user._id !== requestId));
+            if (response.data.message === 'success') {
                 setLoading(true);
+                setUsers((users) => users.filter((user: any) => user._id !== requestId));
                 setRequestId(requestId)
+                setTimeout(() => {
+                    setLoading(false);
+                }, 1000)
             } else {
                 throw new Error('Failed to remove admin.');
             }
