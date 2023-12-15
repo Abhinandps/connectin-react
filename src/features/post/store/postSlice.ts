@@ -4,8 +4,8 @@ import { initialState } from './initialState'
 
 import {
     enableCommentingReducer,
-    fetchOnePostFromFeedReducer,
     fetchPostDataReducer,
+    removeReportedPostReducer,
     toggleCommentOptionsReducer,
     togglePostOptionsReducer
 } from './reducers'
@@ -21,7 +21,7 @@ const postSlice = createSlice({
         toggleCommentOptions: toggleCommentOptionsReducer,
         togglePostOptions: togglePostOptionsReducer,
         fetchPostData: fetchPostDataReducer,
-        fetchOnePostData: fetchOnePostFromFeedReducer
+        removeReportedPost: removeReportedPostReducer
     },
     extraReducers: (builder) => {
         builder
@@ -37,7 +37,7 @@ const postSlice = createSlice({
     }
 })
 
-export const { enableCommenting, toggleCommentOptions, togglePostOptions, fetchPostData, fetchOnePostData } = postSlice.actions
+export const { enableCommenting, toggleCommentOptions, togglePostOptions, fetchPostData, removeReportedPost } = postSlice.actions
 
 export default postSlice.reducer;
 

@@ -11,7 +11,9 @@ import CommentBox from './post-component/CommentBox';
 import CommentListItem from './post-component/CommentListItem';
 import PostOptions from './post-component/PostOptions';
 
-const PostItem = ({ post, userLikedPosts, setShowModalLg }: any) => {
+
+
+const PostItem = ({ post, userLikedPosts, setShowModalLg, feed }: any) => {
     const dispatch = useDispatch()
 
     const [content, setContent] = useState('')
@@ -48,10 +50,12 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg }: any) => {
     }
 
     const handleDeletePost = (postId: any) => {
-        console.log(postId,'called...')
+        console.log(postId, 'called...')
         dispatch(deletePost({ postId }))
     }
 
+
+    
     return (
         <div key={_id} className='bg-white rounded-lg border mb-3 border-borderColor py-3 min-h-[500px] px-5 relative' >
 
@@ -77,7 +81,14 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg }: any) => {
                 )
             }
 
-            <PostOptions {...postWithIsLiked} handlePostEdit={handlePostEdit} handleDeletePost={handleDeletePost} isPostOptions={isPostOptions} />
+            <PostOptions
+                {...postWithIsLiked}
+                feed={feed}
+                postId={_id}
+                handlePostEdit={handlePostEdit}
+                handleDeletePost={handleDeletePost}
+                isPostOptions={isPostOptions}
+            />
 
         </div>
     )

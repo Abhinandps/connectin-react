@@ -29,6 +29,8 @@ export const enableCommentingReducer = (state, action) => {
     };
 }
 
+
+
 export const toggleCommentOptionsReducer = (state, action) => {
     const { postId, commentId } = action.payload;
 
@@ -80,6 +82,7 @@ export const toggleCommentOptionsReducer = (state, action) => {
 
 }
 
+
 export const togglePostOptionsReducer = (state, action) => {
     const { postId } = action.payload;
 
@@ -111,6 +114,7 @@ export const togglePostOptionsReducer = (state, action) => {
 
 }
 
+
 export const fetchPostDataReducer = (state, action) => {
     const { postId } = action.payload
 
@@ -122,18 +126,32 @@ export const fetchPostDataReducer = (state, action) => {
 }
 
 
-export const fetchOnePostFromFeedReducer = (state, action) => {
-    const { postId } = action.payload
+export const removeReportedPostReducer = (state, action) => {
+    const { post_id } = action.payload
 
-    console.log(state, 'state')
-
-
-    const updatedFeed = state.feed.filter((post: any) => post._id === postId);
+    const updatedFeed = state.feed.filter((post: any) => post._id !== post_id)
 
     return {
         ...state,
-        feed: [],
+        feed: updatedFeed
     }
 }
+
+
+// export const fetchOnePostFromFeedReducer = (state, action) => {
+//     const { postId } = action.payload
+
+//     console.log(state, 'state')
+
+
+//     const updatedFeed = state.feed.filter((post: any) => post._id === postId);
+
+//     return {
+//         ...state,
+//         feed: [],
+//     }
+// }
+
+
 
 

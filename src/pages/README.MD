@@ -1,6 +1,6 @@
 
-[⏳]post delete
-[]post report
+[🆗]post delete
+[🆗]post report
 []moderator
 []Toaster Server actions
 []admin
