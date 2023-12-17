@@ -19,11 +19,7 @@ export const Editor: React.FC<EditorProps> = function ({ showModalLg, setShowMod
         attachments: null
     })
 
-
     const { attachments }: any = data;
-
-
-
 
     const onChange = (key: string, value: any) => {
         setData(prev => ({

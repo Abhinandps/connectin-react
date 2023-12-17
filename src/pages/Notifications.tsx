@@ -35,9 +35,12 @@ function Notifications() {
             >
                 {
                     loading ? (<div className='flex justify-center pt-5'><LoadingSpinner /></div>) :
-                        notifications.map((notification: any, index: number) => (
+                        notifications.map((notification: any, index: number) => 
+                        (
                             <>
+                            
                                 {
+
                                     (
                                         <div key={notification}
                                             className={`px-3 py-5 border-b border-borderColor ${!notification.viewed && 'bg-sky-100'} hover:bg-sky-200 cursor-pointer `}
@@ -49,9 +52,13 @@ function Notifications() {
 
                                             <div className='flex  items-start gap-2 cursor-pointer'>
                                                 <div className={`${!notification.viewed ? 'opacity-1' : 'opacity-0'} rounded-full w-[10px] h-[10px] bg-sky-600 border border-borderColor shadow-sm`}></div >
-                                                {notification?.data?.profileImgae == null && (
-                                                    <img className='w-[50px] h-[50px] rounded-full' src="https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645719137?e=1703116800&v=beta&t=emx0qOZ_uF1VpGQGbBT_cLE9uE_Q7D5vov-PgRQXy1I" alt="" />
-                                                )}
+                                                {/* {notification?.data?.profileImgae == null && ( */}
+                                                <img
+                                                    className='w-[50px] h-[50px] rounded-full'
+                                                    src={notification.data.profileImage} alt=""
+                                                />
+
+                                                {/* )} */}
 
                                                 <p className='text-sm font-medium text-primaryColor'>{notification?.message}</p>
                                             </div>
@@ -85,7 +92,8 @@ function Notifications() {
                                 }
 
                             </>
-                        ))
+                        )
+                        )
                 }
             </div >
         </FeedContainer >

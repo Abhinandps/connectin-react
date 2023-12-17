@@ -1,16 +1,16 @@
 
 [🆗]post delete
 [🆗]post report
-[]self like not reflecting
+[]self like not reflecting on my posts
 [🆗] notify moderators got a new position
 [⏳]moderator
 [🆗]Toaster Server actions
 []admin
-[]profile
-[]my network (follow, hashtag)
-[]recommendation (job, users, post)
+[⏳]profile
+[⏳]my network (follow, hashtag)
+[⏳]recommendation (job, users, post)
 []Filters for education qualification, skills, location,CTC
-[]Hide easy apply button for hiring managers,
+[🆗]Hide easy apply button for hiring managers,
 [🆗]Close the model after applying the job,
 []Notification for interview completion
 []404 page 
