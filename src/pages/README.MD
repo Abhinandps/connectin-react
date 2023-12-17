@@ -6,7 +6,7 @@
 [⏳]moderator
 [🆗]Toaster Server actions
 []admin
-[⏳]profile
+[🆗]profile
 [⏳]my network (follow, hashtag)
 [⏳]recommendation (job, users, post)
 []Filters for education qualification, skills, location,CTC

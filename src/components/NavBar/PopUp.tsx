@@ -14,7 +14,6 @@ import LoadingSpinner from '../ui/LoadingSpinner';
 interface PopupProps {
     isOpen: boolean;
     handleIsOpen: (isOpen: boolean) => void;
-
 }
 
 const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {

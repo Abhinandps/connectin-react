@@ -4,7 +4,8 @@ import Popup from '../NavBar/PopUp';
 import { useSelector } from 'react-redux';
 
 
-const NavItem = React.memo(function ({ data, handleTabClick, activeTab, isNewInvites, unviewedInvitations, unviewedNotifications, isNewNotifications }: { data: any, handleTabClick: any, activeTab: any, isNewInvites: boolean, unviewedInvitations: any, unviewedNotifications: any, isNewNotifications: boolean }) {
+const NavItem = React.memo(function ({ data, handleTabClick, activeTab, isNewInvites, unviewedInvitations, unviewedNotifications, isNewNotifications, profilePic }:
+    { data: any, handleTabClick: any, activeTab: any, isNewInvites: boolean, unviewedInvitations: any, unviewedNotifications: any, isNewNotifications: boolean, profilePic: any }) {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -20,7 +21,7 @@ const NavItem = React.memo(function ({ data, handleTabClick, activeTab, isNewInv
                     data.icon instanceof Function ? (
                         < data.icon className={`text-[1.8em] ${activeTab === data.id ? 'text-primaryColor' : 'text-secondaryColor'}  hover:text-primaryColor focus:text-primaryColor`} />
                     ) : (
-                        <img className="w-[22px] h-[22px] rounded-full" src={data.icon} alt={data.title} />
+                        <img className="w-[22px] h-[22px] rounded-full" src={profilePic} alt={data.title} />
                     )
                 ) : null}
 
@@ -44,7 +45,7 @@ const NavItem = React.memo(function ({ data, handleTabClick, activeTab, isNewInv
             {
                 data.modal && isOpen ? (
 
-                    <Popup handleIsOpen={setIsOpen} isOpen={isOpen} />
+                    <Popup handleIsOpen={setIsOpen} isOpen={isOpen}  />
 
                 ) : null
             }

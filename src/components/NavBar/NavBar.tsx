@@ -14,14 +14,14 @@ import Chat from '../../pages/Chat';
 
 const NavBar = () => {
 
+    const { user } = useAuth()
+    const { userData, loading, error }: any = useUserData(user.userId)
+
 
     const unviewedInvitations = useSelector((state: any) => state.user.invitations.filter((user: InvitationData) => !user.viewed))
     const unviewedNotifications = useSelector((state: any) => state.notifications.notifications.filter((notification: any) => !notification.viewed))
     // console.log(unviewedNotifications)
 
-
-
-    const { user } = useAuth()
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [sendMessage, setSendMessage] = useState(null);
     const [receivedMessage, setReceivedMessage] = useState(null);
@@ -113,6 +113,7 @@ const NavBar = () => {
                             <NavItem
                                 isNewInvites={(data?.id === 'tab2' && unviewedInvitations.length > 0)}
                                 isNewNotifications={(data?.id === 'tab5' && unviewedNotifications.length > 0)}
+                                profilePic={(data?.id === 'tab6' ? userData?.profileImage : data?.icon)}
                                 unviewedInvitations={unviewedInvitations}
                                 unviewedNotifications={unviewedNotifications}
                                 key={data.id}

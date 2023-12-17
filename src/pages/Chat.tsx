@@ -6,9 +6,11 @@ import ChatBox from '../features/chat/component/ChatBox';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
+import useUserData from '../hooks/useUserData';
 
 function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
     const { user } = useAuth();
+    const { userData }: any = useUserData(user.userId)
 
     const [chats, setChats] = useState([]);
     const [newMessage, setNewMessage] = useState("");
@@ -97,7 +99,7 @@ function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
                 <div>
                     <div className='pb-2  px-2 flex justify-between items-center border-b border-borderColor '>
                         <div className='flex items-center gap-3 relative'>
-                            <img src='https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645754255?e=1706140800&v=beta&t=SihjLc7kCa9AUn4epgBF8b7VAo1shsRQgH8hEIZlOfk' className="rounded-full w-[40px] h-[40px]" alt="" />
+                            <img src={userData?.profileImage} className="rounded-full w-[40px] h-[40px]" alt="" />
                             <span className='w-[13px] h-[13px] rounded-full border-2 border-white bg-green-700 absolute top-7 left-7'></span>
                             <h2 className='text-sm font-semibold'>Messaging</h2>
                         </div>

@@ -12,6 +12,8 @@ import { MainView } from '../layouts/MainVIew';
 import { RightPanel } from '../layouts/RightPanel';
 import { fetchOnePostData } from '../features/post/store/postSlice';
 import Toaster from '../components/ui/Toaster';
+import { useAuth } from '../features/auth/hooks/useAuth';
+import useUserData from '../hooks/useUserData';
 
 
 const Feed: React.FC = function () {
@@ -28,9 +30,6 @@ const Feed: React.FC = function () {
         dispatch(fetchUserLikedPosts())
         dispatch(fetchUserFeed(postId));
     }, [dispatch]);
-
-
-
 
     return (
         <FeedContainer>
@@ -53,7 +52,7 @@ const Feed: React.FC = function () {
 
             <Editor showModalLg={showModalLg} setShowModalLg={setShowModalLg} />
 
-            
+
 
         </FeedContainer >
 
@@ -63,12 +62,15 @@ const Feed: React.FC = function () {
 export default Feed;
 
 export const AddPost = ({ setShowModalLg }: boolean | any) => {
+    const { user } = useAuth()
+    const { userData, loading, error }: any = useUserData(user.userId)
     return (
         <>
             {/* add post  */}
             <div className='bg-white flex flex-col h-[115px] justify-center items-center w-full border border-borderColor rounded-lg'>
                 <div className='flex w-full justify-between items-center py-3 px-3 gap-2'>
-                    <img className='w-[45px] h-[45px] rounded-full' src="https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645719137?e=1703116800&v=beta&t=emx0qOZ_uF1VpGQGbBT_cLE9uE_Q7D5vov-PgRQXy1I" alt="" />
+                    <img className='w-[45px] h-[45px] rounded-full'
+                        src={userData?.profileImage} alt="" />
                     <input type="text" className='w-full border border-[#727272] h-[50px] rounded-full text-sm px-4' placeholder='Start a Post' />
                 </div>
                 <div className='flex justify-between w-full px-14 py-3 cursor-pointer'>
@@ -93,6 +95,7 @@ export const AddPost = ({ setShowModalLg }: boolean | any) => {
 }
 
 export const FilterFeed = () => {
+
     return (<>
         {/* filter */}
         <div className='my-5 relative'>
