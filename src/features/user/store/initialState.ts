@@ -5,7 +5,8 @@ type NETWORK = {
     connections: [],
     following: [],
     followers: [],
-    hashtag: []
+    hashtag: [],
+    recommendations: []
 }
 
 export const initialState: NETWORK = {
@@ -13,5 +14,6 @@ export const initialState: NETWORK = {
     connections: [],
     following: [],
     followers: [],
-    hashtag: []
+    hashtag: [],
+    recommendations: []
 }

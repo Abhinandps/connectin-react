@@ -15,7 +15,7 @@ import Chat from '../../pages/Chat';
 const NavBar = () => {
 
     const { user } = useAuth()
-    const { userData, loading, error }: any = useUserData(user.userId)
+    const { userData, loading, error }: any = useUserData(user?.userId)
 
 
     const unviewedInvitations = useSelector((state: any) => state.user.invitations.filter((user: InvitationData) => !user.viewed))

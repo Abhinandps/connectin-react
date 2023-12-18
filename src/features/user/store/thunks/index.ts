@@ -88,3 +88,21 @@ export const fetchConnections = createAsyncThunk(
 )
 
 
+export const fetchRecommendations = createAsyncThunk(
+    'fetch/recommened',
+    async (_unknown, thunkAPI) => {
+        try {
+            const res = await apiCall({
+                url: `/users/recommendations`,
+                method: 'POST'
+            })
+            console.log(res,'res.......................')
+
+            return { res }
+        } catch (err: any) {
+            return thunkAPI.rejectWithValue(err.message)
+        }
+    }
+)
+
+

@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import apiCall from "../services/apiCall";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendConnectionRequest } from "../features/user/store/thunks";
 import { useToaster } from "../context/toastContext";
 import { successSvg } from "../components/ui/svgs";
@@ -19,6 +19,7 @@ import { FileUpload } from "../components/Form/FileUpload";
 function Profile() {
     const dispatch = useDispatch()
     const { user } = useAuth()
+    const Recommended = useSelector((state: any) => state.user.recommendations)
     const { id } = useParams();
     const { setToastDetails } = useToaster()
     const [profile, setProfile] = useState<any>();
@@ -386,8 +387,14 @@ function Profile() {
             <div className='lg:w-[400px] md:w-[300px] sm:w-full xs:w-full min-h-[100px]' >
                 <div className='bg-white w-full border border-borderColor rounded-lg p-3'>
                     <h2 className="text-primaryColor text-sm font-medium">People You may know</h2>
-                    <div className="my-3">
-                        <Card onRequestSent={sendConnectionRequest} isLoading={loading} minimalistData />
+                    <div className="w-full">
+                        {
+                            Recommended.map((user: any) =>
+                            (
+                                <Card user={user} onRequestSent={sendConnectionRequest} isLoading={loading} minimalistData />
+                            )
+                            )
+                        }
                     </div>
                 </div>
             </div >

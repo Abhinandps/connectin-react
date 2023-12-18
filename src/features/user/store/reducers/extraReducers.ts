@@ -67,8 +67,14 @@ export const rejectConnectionRequestFullfilledReducer = (state, action) => {
 
 export const fetchConnectionsFullfilledReducer = (state, action) => {
     let py = action.payload.res
-    console.log(py,'py')
+    console.log(py, 'py')
     state.connections = py
+}
+
+
+export const fetchRecommendedFullfilledReducer = (state, action) => {
+    let py = action.payload.res.data
+    state.recommendations = py
 }
 
 
