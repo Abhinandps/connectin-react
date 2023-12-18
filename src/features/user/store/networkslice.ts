@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from './initialState'
-import { acceptConnectionRequest, fetchConnections, fetchConnectionsRequests, fetchRecommendations, rejectConnectionRequest } from "./thunks";
-import { acceptConnectionsRequestFullilledReducer, fetchConnectionsFullfilledReducer, fetchConnectionsRequestsFullfilledReducer, fetchRecommendedFullfilledReducer, rejectConnectionRequestFullfilledReducer } from "./reducers/extraReducers";
+import { acceptConnectionRequest, fetchConnections, fetchConnectionsRequests, fetchFollowers, fetchFollowing, fetchRecommendations, rejectConnectionRequest } from "./thunks";
+import { acceptConnectionsRequestFullilledReducer, fetchConnectionsFullfilledReducer, fetchConnectionsRequestsFullfilledReducer, fetchFollowersFullfilledReducer, fetchFollowingFullfilledReducer, fetchRecommendedFullfilledReducer, rejectConnectionRequestFullfilledReducer } from "./reducers/extraReducers";
 
 
 export interface InvitationData {
@@ -39,6 +39,8 @@ const networkSlice = createSlice({
             .addCase(rejectConnectionRequest.fulfilled, rejectConnectionRequestFullfilledReducer)
             .addCase(fetchConnections.fulfilled, fetchConnectionsFullfilledReducer)
             .addCase(fetchRecommendations.fulfilled, fetchRecommendedFullfilledReducer)
+            .addCase(fetchFollowers.fulfilled, fetchFollowersFullfilledReducer)
+            .addCase(fetchFollowing.fulfilled, fetchFollowingFullfilledReducer)
     }
 })
 

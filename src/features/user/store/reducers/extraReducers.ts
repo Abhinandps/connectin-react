@@ -77,4 +77,16 @@ export const fetchRecommendedFullfilledReducer = (state, action) => {
     state.recommendations = py
 }
 
+// FOLLOWERS
+
+export const fetchFollowersFullfilledReducer = (state, action) => {
+    let py = action.payload.res
+    state.followers = py
+}
+
+export const fetchFollowingFullfilledReducer = (state, action) => {
+    let py = action.payload.res
+    state.following = py
+}
+
 

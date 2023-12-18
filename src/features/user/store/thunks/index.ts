@@ -36,6 +36,37 @@ export const fetchConnectionsRequests = createAsyncThunk(
     }
 )
 
+export const fetchFollowers = createAsyncThunk(
+    'fetch/followers',
+    async (_unknown, thunkAPI) => {
+        try {
+            const res = await apiCall({
+                url: `/users/followers`,
+                method: 'POST'
+            })
+
+            return { res }
+        } catch (err: any) {
+            return thunkAPI.rejectWithValue(err.message)
+        }
+    }
+)
+export const fetchFollowing = createAsyncThunk(
+    'fetch/following',
+    async (_unknown, thunkAPI) => {
+        try {
+            const res = await apiCall({
+                url: `/users/following`,
+                method: 'POST'
+            })
+
+            return { res }
+        } catch (err: any) {
+            return thunkAPI.rejectWithValue(err.message)
+        }
+    }
+)
+
 export const acceptConnectionRequest = createAsyncThunk(
     'accept/connection-request',
     async (userId, thunkAPI) => {

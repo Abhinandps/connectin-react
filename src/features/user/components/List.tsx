@@ -14,10 +14,11 @@ interface ListProp {
     onAccept?: any
     isAccepted?: boolean
     onRemove?: any
+    FollowStatusFinder?: any
 }
 
 // bg-sky-100
-function List({ connected, follow, follows, hashtag, user, onReject, onAccept, onRemove }: ListProp) {
+function List({ connected, follow, follows, hashtag, user, onReject, onAccept, onRemove, FollowStatusFinder }: ListProp) {
     return (
         <>
             <div className={`flex justify-between items-center gap-2 px-5 py-3 border-t ${!user?.viewed ? 'bg-sky-50' : 'bg-transparent'}  border-borderColor`}>
@@ -31,11 +32,11 @@ function List({ connected, follow, follows, hashtag, user, onReject, onAccept, o
                                 </div>
                             </>) : (
                             <>
-                                <img className='w-[70px] h-[70px] rounded-full ' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsynwv-5qtogtOwJbIjaPFJUmHpzhxgqIAug&usqp=CAU" alt="" />
+                                <img className='w-[70px] h-[70px] rounded-full ' src={user?.profileImage ?? undefined} alt="" />
                                 <div className='text-left'>
                                     <Link to={`/in/${user?.userId}`} className='text-sm capitalize hover:underline transition-all cursor-pointer '>{user?.firstName} {user?.lastName}</Link>
                                     <p className='text-xs text-secondaryColor font-normal'>
-                                        Virtual Assistent at Luminar Technologies {user?.headline}</p>
+                                        {user?.headline}</p>
                                     {
                                         !connected && (
 

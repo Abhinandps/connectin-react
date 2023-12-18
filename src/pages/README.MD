@@ -15,7 +15,7 @@
 []Notification for interview completion
 []404 page 
 []pdf viewer issue
-
+[]hashtag follow and manage post feed
 []feed pagination
 []notification
 []connections,recomendations-> pagination

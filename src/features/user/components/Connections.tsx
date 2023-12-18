@@ -3,11 +3,12 @@ import List from "./List"
 import Row from "./Row"
 import { useEffect, useState } from "react"
 import LoadingSpinner from "../../../components/ui/LoadingSpinner"
-import { fetchConnections } from "../store/thunks"
+import { fetchConnections, fetchFollowers } from "../store/thunks"
 
 
 function Connections() {
     const Connections = useSelector((state: any) => state.user.connections)
+    const Followers = useSelector((state: any) => state.user.followers)
 
     const [isLoading, setIsLoading] = useState(true)
 
@@ -16,6 +17,7 @@ function Connections() {
     useEffect(() => {
         setIsLoading(true)
         dispatch(fetchConnections())
+        dispatch(fetchFollowers())
         setIsLoading(false)
     }, [dispatch])
 
