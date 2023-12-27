@@ -61,6 +61,20 @@ export const rejectConnectionRequestFullfilledReducer = (state, action) => {
 }
 
 
+export const removeConnectionFullfilledReducer = (state, action) => {
+    let { userId } = action.payload
+
+    const updateConnections = state.connections.filter((user: any) => user?.userId !== userId)
+
+    return {
+        ...state,
+        connections: updateConnections
+    }
+}
+
+
+
+
 // Connections
 // ===================
 
@@ -88,5 +102,16 @@ export const fetchFollowingFullfilledReducer = (state, action) => {
     let py = action.payload.res
     state.following = py
 }
+
+export const followUserFullfilledReducer = (state, action) => {
+    let { sender } = action.payload
+    console.log(sender, 'sender id')
+}
+
+export const unFollowUserFullfilledReducer = (state, action) => {
+    let { sender } = action.payload
+    console.log(sender, 'sender id')
+}
+
 
 

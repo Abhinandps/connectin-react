@@ -11,15 +11,17 @@ const AdminTableRow: React.FC<IAdminTableRowProps> = (props) => {
 
     return (
         <tr className='bg-white'>
-            <th>
+            <th className="w-0">
 
                 {/* FIXME: */}
-                <div className='flex justify-center items-center gap-2 py-3'>
-                    <img className='w-[70px] h-[70px] rounded-full ' src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" />
+                <div className='flex justify-start ps-10  items-center gap-2 py-3 w-[300px] '>
+                    <div className="">
+                        <img className='w-[70px] h-[70px] rounded-full ' src={user?.profileImage || 'https://picsum.photos/200'} alt="" />
+
+                    </div>
                     <div className='text-left'>
                         <h2 className='text-sm capitalize'>{user?.firstName} {user?.lastName}</h2>
-                        <p className='text-xs text-secondaryColor font-normal'>{user?.headline} || Bookeeper | content Creator | <br />
-                            Virtual Assistent</p>
+                        <p className='text-xs text-secondaryColor font-normal'>{user?.headline} </p>
                     </div>
                 </div>
 

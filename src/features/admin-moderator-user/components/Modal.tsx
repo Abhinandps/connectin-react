@@ -66,11 +66,10 @@ const Modal = ({ isOpen, handleCloseModal, setRequestId, title, setLoading }: an
                                         {suggestions.map((user: any) => (
                                             <li onClick={() => handleChangeToAdmin(user._id)} key={user._id} className="cursor-pointer hover:bg-gray-200">
                                                 <div className='flex justify-center items-center gap-2 py-3'>
-                                                    <img className='w-[70px] h-[70px] rounded-full ' src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" />
+                                                    <img className='w-[70px] h-[70px] rounded-full ' src={user?.profileImage || 'https://picsum.photos/200'} alt="" />
                                                     <div className='text-left'>
                                                         <h2 className='text-sm capitalize'>{user?.firstName} {user?.lastName}</h2>
-                                                        <p className='text-xs text-secondaryColor font-normal'>{user?.headline} || Bookeeper | content Creator | <br />
-                                                            Virtual Assistent</p>
+                                                        <p className='text-xs text-secondaryColor font-normal'>{user?.headline}</p>
                                                     </div>
                                                 </div>
                                             </li>

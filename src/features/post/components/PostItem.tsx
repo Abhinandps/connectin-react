@@ -19,8 +19,8 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg, feed }: any) => {
     const [content, setContent] = useState('')
 
     const postWithIsLiked = {
-        ...post,
-        isLiked: userLikedPosts.includes(post._id)
+        ...(post || {}),
+        isLiked: Array.isArray(userLikedPosts) && userLikedPosts?.includes(post?._id)
     };
 
     const { userId } = post.creator
@@ -55,7 +55,7 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg, feed }: any) => {
     }
 
 
-    
+
     return (
         <div key={_id} className='bg-white rounded-lg border mb-3 border-borderColor py-3 min-h-[500px] px-5 relative' >
 

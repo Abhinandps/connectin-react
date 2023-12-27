@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from './initialState'
-import { acceptConnectionRequest, fetchConnections, fetchConnectionsRequests, fetchFollowers, fetchFollowing, fetchRecommendations, rejectConnectionRequest } from "./thunks";
-import { acceptConnectionsRequestFullilledReducer, fetchConnectionsFullfilledReducer, fetchConnectionsRequestsFullfilledReducer, fetchFollowersFullfilledReducer, fetchFollowingFullfilledReducer, fetchRecommendedFullfilledReducer, rejectConnectionRequestFullfilledReducer } from "./reducers/extraReducers";
+import { acceptConnectionRequest, fetchConnections, fetchConnectionsRequests, fetchFollowers, fetchFollowing, fetchRecommendations, followUser, followUserReducer, rejectConnectionRequest, removeConnection, removeConnectionReducer, unFollowUserReducer } from "./thunks";
+import { acceptConnectionsRequestFullilledReducer, fetchConnectionsFullfilledReducer, fetchConnectionsRequestsFullfilledReducer, fetchFollowersFullfilledReducer, fetchFollowingFullfilledReducer, fetchRecommendedFullfilledReducer, followUserFullfilledReducer, rejectConnectionRequestFullfilledReducer, removeConnectionFullfilledReducer, unFollowUserFullfilledReducer } from "./reducers/extraReducers";
 
 
 export interface InvitationData {
@@ -37,10 +37,13 @@ const networkSlice = createSlice({
             .addCase(fetchConnectionsRequests.fulfilled, fetchConnectionsRequestsFullfilledReducer)
             .addCase(acceptConnectionRequest.fulfilled, acceptConnectionsRequestFullilledReducer)
             .addCase(rejectConnectionRequest.fulfilled, rejectConnectionRequestFullfilledReducer)
+            .addCase(removeConnectionReducer.fulfilled, removeConnectionFullfilledReducer)
             .addCase(fetchConnections.fulfilled, fetchConnectionsFullfilledReducer)
             .addCase(fetchRecommendations.fulfilled, fetchRecommendedFullfilledReducer)
             .addCase(fetchFollowers.fulfilled, fetchFollowersFullfilledReducer)
             .addCase(fetchFollowing.fulfilled, fetchFollowingFullfilledReducer)
+            .addCase(followUserReducer.fulfilled, followUserFullfilledReducer)
+            .addCase(unFollowUserReducer.fulfilled, unFollowUserFullfilledReducer)
     }
 })
 

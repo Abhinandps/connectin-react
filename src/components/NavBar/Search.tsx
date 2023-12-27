@@ -97,7 +97,7 @@ export default Search
 
 
 
-function List({ firstName, lastName, userId }: any) {
+function List({ firstName, lastName, userId, profileImage, headline }: any) {
     const navigate = useNavigate()
     const handleClick = (userId: string) => {
         setTimeout(() => {
@@ -127,11 +127,12 @@ function List({ firstName, lastName, userId }: any) {
                 </h2>
                 <p className='text-secondaryColor px-1 text-xs'>▪ 3rd+ ▪</p>
                 <p className="text-xs text-secondaryColor" style={{ width: '230px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    Full stack developer at zyz company jasdlkf kjasd.
+                    {headline}
                 </p>
             </div>
-            <div className="w-[40px] h-[40px] m-2 ">
-                <img src='https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645719137?e=1703116800&v=beta&t=emx0qOZ_uF1VpGQGbBT_cLE9uE_Q7D5vov-PgRQXy1I' className="rounded-full" alt="" />
+            <div className=" m-2 ">
+                <img src={profileImage || 'https://picsum.photos/200'}
+                    className="rounded-full w-[40px] h-[40px]" alt="" />
             </div>
         </button>
 

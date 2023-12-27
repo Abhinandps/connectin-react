@@ -137,15 +137,15 @@ function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
                                     <p className='text-sm'>{`we didn't find anything with "${searchInput}"`}</p>
                                 </div>
                             ) : (
-                                chats.map((chat) => {
+                                chats && Array.isArray(chats) && chats.map((chat) => {
                                     // Count unread messages
-                                    const unreadMessagesCount = chat.messages.filter(message => !message.isViewed).length;
+                                    const unreadMessagesCount = chat?.messages.filter(message => !message.isViewed).length;
 
                                     // Check if the current user is a participant in the chat
-                                    const isCurrentUserParticipant = chat.participants.some(participant => participant.userId === user?.userId);
+                                    const isCurrentUserParticipant = chat?.participants.some(participant => participant.userId === user?.userId);
 
                                     // Check if there are unread messages for the current user
-                                    const hasUnreadMessages = chat.messages.some(message => message.sender !== user?.userId && !message.isViewed);
+                                    const hasUnreadMessages = chat?.messages.some(message => message.sender !== user?.userId && !message.isViewed);
 
                                     return (
                                         <div
@@ -153,7 +153,7 @@ function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
                                                 setCurrentChat(chat);
                                                 {
                                                     isCurrentUserParticipant && hasUnreadMessages &&
-                                                        handleChatOpen(chat, user?.userId, chat.participants.find((participant: any) => participant.userId !== user?.userId).userId)
+                                                        handleChatOpen(chat, user?.userId, chat?.participants.find((participant: any) => participant.userId !== user?.userId).userId)
                                                 }
                                             }}
                                         >
@@ -195,7 +195,7 @@ function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
 export default Chat
 
 function List(props: any) {
-    const { firstName, lastName, userId } = props.data
+    const { firstName, lastName, userId , profileImage} = props.data
 
     const { user } = useAuth();
 
@@ -227,11 +227,12 @@ function List(props: any) {
         }
 
     };
+    
     return (
 
         <button className="flex items-center justify-start w-full hover:bg-sky-50 rounded-md cursor-pointer px-3 my-2" onClick={() => handleClick(userId, user?.userId)}>
-            <div className="w-[40px] h-[40px] m-2 ">
-                <img src='https://media.licdn.com/dms/image/D5603AQGWIWfHozDbFw/profile-displayphoto-shrink_100_100/0/1681645754255?e=1706140800&v=beta&t=SihjLc7kCa9AUn4epgBF8b7VAo1shsRQgH8hEIZlOfk' className="rounded-full" alt="" />
+            <div className=" m-2 ">
+                <img src={profileImage || 'https://picsum.photos/200'} className="w-[40px] h-[40px] rounded-full" alt="" />
             </div>
             <div className="m-2 flex items-center">
                 <h2 style={{ width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} className="text-[13px] text-primaryColor font-medium px-1 capitalize">{firstName}  <span className='lowercase'>{lastName}</span>

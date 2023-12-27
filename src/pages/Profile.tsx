@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import apiCall from "../services/apiCall";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
-import { sendConnectionRequest } from "../features/user/store/thunks";
+import { followUserReducer, sendConnectionRequest, unFollowUserReducer } from "../features/user/store/thunks";
 import { useToaster } from "../context/toastContext";
 import { successSvg } from "../components/ui/svgs";
 import { RiEditCircleFill } from "react-icons/ri";
@@ -33,6 +33,7 @@ function Profile() {
     const isProfile = user && id && user.userId === id
 
 
+    console.log('profile--', profile)
 
     useEffect(() => {
         (async () => {
@@ -49,6 +50,8 @@ function Profile() {
             });
         })()
     }, [id])
+
+
 
 
     const [formData, setFormData] = useState<any>(
@@ -147,6 +150,43 @@ function Profile() {
         }, 1000)
     }
 
+    const followUser = (userId: string) => {
+        console.log(userId, 'followed user')
+        setLoading(true)
+        setTimeout(() => {
+            dispatch(followUserReducer(userId))
+            setProfile((prev: any) => {
+                return {
+                    ...prev,
+                    followStatus: 'following'
+                };
+            });
+
+            setToastDetails({ title: "Followed", content: `You Followed ${profile.firstName} ${profile.lastName} successfully`, isActive: true, svgProp: successSvg })
+
+            setLoading(false)
+        }, 1000)
+    }
+
+
+    const unfollowUser = (userId: string) => {
+        setLoading(true)
+        setTimeout(() => {
+            dispatch(unFollowUserReducer(userId))
+            setProfile((prev: any) => {
+                return {
+                    ...prev,
+                    followStatus: 'follow'
+                };
+            });
+
+            setToastDetails({ title: "Unfollowed", content: `You Unfollowed ${profile.firstName} ${profile.lastName} successfully`, isActive: true, svgProp: successSvg })
+
+            setLoading(false)
+        }, 1000)
+    }
+
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -232,9 +272,12 @@ function Profile() {
                                     </Button>
 
                                     <Button
+                                        userId={profile?.userId}
                                         icon={FollowStatusFinder(profile?.followStatus).icon || ''}
                                         title={FollowStatusFinder(profile?.followStatus).status || ''} fill
                                         color={FollowStatusFinder(profile?.connectionStatus).color || ''}
+                                        onFollows={profile?.followStatus === 'follow' ? followUser : unfollowUser}
+                                        // FollowStatusFinder(profile?.followStatus).status === 'following' ? unfollowUser : followUser
                                     >
                                         {/* {isLoading ? <LoadingSpinner width="25" /> : null} */}
                                     </Button>
@@ -419,14 +462,25 @@ interface BProps {
     children?: any
     color?: string
     onRequestSent?: any
+    onFollows?: any;
     isLoading?: any
 }
 
-function Button({ title, Border, icon, fill, children, color, onRequestSent, isLoading, userId }: BProps) {
+
+
+function Button({ title, Border, icon, fill, children, color, onRequestSent, isLoading, userId, onFollows }: BProps) {
     return (
         <button className={`flex items-center  gap-1 px-4 py-2  transition-all text-sm ${fill ? 'bg-blue-500 text-white' : 'hover:bg-sky-50 bg-transparent'}  ${Border ? `border-2 border-blue-500 text-blue-500` : 'text-secondaryColor'
             } font-bold rounded-full `}
-            onClick={() => onRequestSent && onRequestSent(userId)}
+            onClick={
+                () => {
+                    if (onRequestSent) {
+                        onRequestSent(userId);
+                    } else if (onFollows) {
+                        onFollows(userId);
+                    }
+                }
+            }
         >
             {
                 isLoading ?

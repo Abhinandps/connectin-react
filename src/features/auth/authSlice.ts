@@ -37,23 +37,29 @@ export const loginUser = createAsyncThunk(
     'auth/loginUser',
     async (loginData: LoginData, thunkAPI) => {
         try {
-            const response = await fetch('http://localhost:3000/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(loginData),
-                credentials: 'include'
-            });
+            // const response = await fetch('http://localhost:3000/auth/login', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(loginData),
+            //     credentials: 'include'
+            // });
 
-            const data = await response.json();
+            // const data = await response.json();
 
-            if (data.message && typeof data.message != typeof []) {
-                throw new Error(data.message)
+            const res = await apiCall({
+                url:`/auth/login`,
+                method:'POST',
+                data:loginData
+            })
+
+            if (res.message && typeof res.message != typeof []) {
+                throw new Error(res.message)
             }
 
 
-            if (!response.ok) {
+            if (!res.ok) {
                 throw new Error('Invalid username or password.')
             }
 
@@ -61,11 +67,11 @@ export const loginUser = createAsyncThunk(
 
 
             const user = {
-                userId: data?.user?.userId,
-                email: data?.user?.email,
-                role: data?.user?.role
+                userId: res?.user?.userId,
+                email: res?.user?.email,
+                role: res?.user?.role
             }
-            return { user, token: data?.access_token };
+            return { user, token: res?.access_token };
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.message);
         }
@@ -157,24 +163,29 @@ export const fetchUserDetails = createAsyncThunk(
     'data/fetchUserData',
     async (_token, thunkAPI) => {
         try {
-            const response = await fetch('http://localhost:3000/validate-token', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include'
-            });
+            // const response = await fetch('http://localhost:3000/validate-token', {
+            //     method: 'GET',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     credentials: 'include'
+            // });
 
-            if (!response.ok) {
-                throw new Error('validation failed');
-            }
+            // if (!response.ok) {
+            //     throw new Error('validation failed');
+            // }
 
-            const data = await response.json();
+            // const data = await response.json();
 
+            const res= await apiCall({
+                url:'/validate-token'
+            })
+
+        
             const user = {
-                userId: data?._id,
-                email: data?.email,
-                role: data?.role
+                userId: res?._id,
+                email: res?.email,
+                role: res?.role
             }
 
 

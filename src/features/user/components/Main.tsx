@@ -25,54 +25,6 @@ function Main() {
     }, [dispatch])
 
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const res = await apiCall({ url: `/users/user/${id}`, method: 'POST' })
-    //         const result = await apiCall({ url: `/users/${id}` })
-    //         setProfile(res.data)
-    //         setProfileMoreProfile(result.data)
-    //         setFormData({
-    //             firstName: result.data?.firstName || "",
-    //             lastName: result.data?.lastName || "",
-    //             headline: result.data?.headline || "",
-    //             profileImage: result.data?.profileImage || "",
-    //             coverImage: result.data?.coverImage || ""
-    //         });
-    //     })()
-    // }, [id])
-
-
-    const ConnectoinStatusFinder = (status: string): { status: string; icon: JSX.Element } => {
-        if (status === 'connected') {
-            return { status: 'message', icon: <FaEnvelope /> };
-        }
-        if (status === 'pending') {
-            return { status: 'pending', icon: <FaClock /> };
-        }
-        if (status === 'connect') {
-            return { status: 'connect', icon: <FaUserPlus /> };
-        }
-        return { status: '', icon: <></> };
-    };
-
-
-    const sendRequest = (userId: string) => {
-        setTimeout(() => {
-            dispatch(sendConnectionRequest(userId))
-
-            // setProfile((prev: any) => {
-            //     return {
-            //         ...prev,
-            //         connectionStatus: 'pending'
-            //     };
-            // });
-
-            // setToastDetails({ title: "Request Sented", content: `Connection Request sented to ${profile.firstName} ${profile.lastName} successfully`, isActive: true, svgProp: successSvg })
-
-        }, 1000)
-    }
-
-
     const handleAcceptConnectionRequest = (userId: string) => {
         if (userId) {
             alert(`${userId} is a connection. you can message now`)

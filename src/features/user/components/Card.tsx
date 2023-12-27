@@ -3,11 +3,9 @@ import { FaUserPlus } from "react-icons/fa6";
 import LoadingSpinner from "../../../components/ui/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 
-function Card({ minimalistData, isLoading, onRequestSent, user }: any) {
+function Card({ minimalistData, isLoading, onRequestSent, user ,onFollows}: any) {
 
     const navigate = useNavigate()
-
-
 
     return (
         minimalistData ? (
@@ -33,11 +31,11 @@ function Card({ minimalistData, isLoading, onRequestSent, user }: any) {
                 <div className='absolute w-[68px] h-[68px] top-5 left-[50%] translate-x-[-50%] '>
                     <img className='w-full object-fill h-full rounded-full' src={user?.profileImage} alt="" />
                 </div>
-                <div className='bg-white pt-10 pb-3 px-5 flex justify-center flex-col items-center border-b border-l border-r border-borderColor rounded-b-lg'>
+                <div className='h-[200px] pt-10 pb-3 px-5 flex justify-center flex-col items-center border-b border-l border-r border-borderColor rounded-b-lg'>
                     <h2 className='font-semibold text-md my-1 capitalize hover:underline cursor-pointer'
                         onClick={() => navigate(`/in/${user?.userId}`)}
                     >{user?.firstName} {user?.lastName}</h2>
-                    <p className='text-xs text-center font-light leading-3 text-gray-500'>{user?.headline}</p>
+                    <p className='text-xs text-center font-light leading-3 text-gray-500'>{user?.headline.slice(0,50)}...</p>
                     <p className="text-[10px] flex items-center gap-2 text-secondaryColor mt-2">
                         <GiLinkedRings className='text-primaryColor text-xs' /> Ana Fara and 79 others
                     </p>

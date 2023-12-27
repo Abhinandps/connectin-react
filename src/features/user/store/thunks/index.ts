@@ -98,6 +98,22 @@ export const rejectConnectionRequest = createAsyncThunk(
     }
 )
 
+export const removeConnectionReducer = createAsyncThunk(
+    'remove/removeConnection',
+    async (userId, thunkAPI) => {
+        try {
+            const res = await apiCall({
+                url: `/users/${userId}/remove-connection`,
+                method: 'POST'
+            })
+
+            return { ...res, userId }
+        } catch (err: any) {
+            return thunkAPI.rejectWithValue(err.message)
+        }
+    }
+)
+
 
 // Connections
 // ===================
@@ -127,9 +143,46 @@ export const fetchRecommendations = createAsyncThunk(
                 url: `/users/recommendations`,
                 method: 'POST'
             })
-            console.log(res,'res.......................')
+            console.log(res, 'res.......................')
 
             return { res }
+        } catch (err: any) {
+            return thunkAPI.rejectWithValue(err.message)
+        }
+    }
+)
+
+// FOLLOWS
+
+export const followUserReducer = createAsyncThunk(
+    'follow/follow-user',
+    async (sender, thunkAPI) => {
+        try {
+
+            const res = await apiCall({
+                url: `/users/${sender}/follow`,
+                method: 'POST'
+            })
+
+            return { ...res, sender }
+        } catch (err: any) {
+            return thunkAPI.rejectWithValue(err.message)
+        }
+    }
+)
+
+
+export const unFollowUserReducer = createAsyncThunk(
+    'unfollow/unfollow-user',
+    async (sender, thunkAPI) => {
+        try {
+
+            const res = await apiCall({
+                url: `/users/${sender}/unfollow`,
+                method: 'DELETE'
+            })
+
+            return { ...res, sender }
         } catch (err: any) {
             return thunkAPI.rejectWithValue(err.message)
         }

@@ -43,7 +43,7 @@ const Feed: React.FC = function () {
                 <FilterFeed />
                 {
                     feed && (feed).map((post: any) => (
-                        <PostItem feed={true} post={post} userLikedPosts={userLikedPosts} setShowModalLg={setShowModalLg} />
+                        <PostItem key={post._id} feed={true} post={post} userLikedPosts={userLikedPosts} setShowModalLg={setShowModalLg} />
                     ))
                 }
             </MainView>

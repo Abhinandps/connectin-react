@@ -3,12 +3,16 @@ import List from "./List"
 import Row from "./Row"
 import { useEffect, useState } from "react"
 import LoadingSpinner from "../../../components/ui/LoadingSpinner"
-import { fetchConnections, fetchFollowers } from "../store/thunks"
+import { fetchConnections, fetchFollowers, removeConnectionReducer } from "../store/thunks"
+import { useToaster } from "../../../context/toastContext"
+import { successSvg } from "../../../components/ui/svgs"
 
 
 function Connections() {
     const Connections = useSelector((state: any) => state.user.connections)
-    const Followers = useSelector((state: any) => state.user.followers)
+
+    const { setToastDetails } = useToaster()
+
 
     const [isLoading, setIsLoading] = useState(true)
 
@@ -23,7 +27,10 @@ function Connections() {
 
 
     const removeConnection = (userId: string) => {
-        console.log(userId)
+        dispatch(removeConnectionReducer(userId))
+
+        setToastDetails({ title: "Connection Removed", content: `Connection Removed Successfully `, isActive: true, svgProp: successSvg })
+
     }
 
 
