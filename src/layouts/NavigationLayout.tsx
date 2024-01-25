@@ -1,7 +1,7 @@
 import React from "react"
 import { useAuth } from "../features/auth/hooks/useAuth";
 import NavBar from "../components/NavBar/NavBar";
-import useUserData from "../hooks/useUserData";
+// import useUserData from "../hooks/useUserData";
 
 const NavigationLayout: React.FC = function () {
 

@@ -6,7 +6,6 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { FormLayout } from "../components/ui/Modal";
 import InputField from "../components/Form/InputField";
 import { FileUpload } from "../components/Form/FileUpload";
-import { FcApproval } from "react-icons/fc";
 
 function JobView() {
 
@@ -16,7 +15,7 @@ function JobView() {
 
     const jobId = queryParams.get('jobId');
 
-    const [jobDetails, setJobDetails] = useState<object>()
+    const [jobDetails, setJobDetails] = useState<any>()
 
     console.log(jobDetails, "jobDetails")
 
@@ -30,9 +29,9 @@ function JobView() {
             const res = await apiCall({
                 url: `/jobs/${jobId}/public`
             })
-            console.log(res, 'response----')
+            // console.log(res, 'response----')
 
-            setJobDetails((prevJobDetails) => ({
+            setJobDetails((prevJobDetails: any) => ({
                 ...prevJobDetails,
                 jobTitle: res?.data.jobTitle,
                 company: res?.data.company,
@@ -99,7 +98,7 @@ export function ApplyJob({ title, jobTitle, showModalLg, setShowModalLg, jobId, 
     }
 
 
-    const [loading, setLoading] = useState(false)
+    const [_loading, setLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -116,7 +115,7 @@ export function ApplyJob({ title, jobTitle, showModalLg, setShowModalLg, jobId, 
     }, [])
 
 
-    const submit = async (e) => {
+    const submit = async (e: any) => {
         try {
             e.preventDefault()
 
@@ -137,7 +136,7 @@ export function ApplyJob({ title, jobTitle, showModalLg, setShowModalLg, jobId, 
             console.log(res, 'response.>_..')
 
             if (res) {
-                setJobDetails((prevJobDetails) => ({
+                setJobDetails((prevJobDetails: any) => ({
                     ...prevJobDetails,
                     isApplied: true
                 }));

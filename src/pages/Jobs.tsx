@@ -86,7 +86,7 @@ export default Jobs
 
 export function AllJobs() {
 
-    const { managedJobs, recentJobs } = useSelector((state: any) => state.job)
+    const { recentJobs } = useSelector((state: any) => state.job)
     const dispatch = useDispatch()
     const { user } = useAuth()
     const accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_ACCESS_TOKEN
@@ -140,7 +140,7 @@ export function AllJobs() {
 
             <JobContainer title='More recent jobs for you' label='Based on your profile and search history'  >
                 <Filter select={select} setSelect={setSelect} handleSearch={handleSearch} searchterm={searchterm} setSearchTerm={setSearchTerm} suggestions={suggestions} handleSearchChange={handleSearchChange} setSuggestions={setSuggestions} />
-                {recentJobs.list.map((job) => (
+                {recentJobs.list.map((job: any) => (
                     !job?.isDraft && (job?.userId !== user.userId) && (< JobCard {...job} publicProp={true} />)
                 ))}
             </JobContainer>
@@ -149,7 +149,7 @@ export function AllJobs() {
 }
 
 
-export function Filter({ select, setSelect, handleSearchChange, suggestions, setSearchTerm, searchterm, setSuggestions, handleSearch }) {
+export function Filter({ select, setSelect, handleSearchChange, suggestions, setSearchTerm, searchterm, setSuggestions, handleSearch }: any) {
 
     return (
         <div className="h-[60px] flex justify-between items-center px-5 border-b border-borderColor pb-2 ">
@@ -231,14 +231,14 @@ export function ManagedJobs() {
 
     return (
         <JobContainer title='Manage Posted Jobs'>
-            {managedJobs.list.map((job) => (
+            {managedJobs.list.map((job: any) => (
                 user?.userId === job?.userId && (< JobCard {...job} />)
             ))}
         </JobContainer>
     )
 }
 
-export function JobCard({ jobTitle, jobType, workPlaceType, employeeLocation, company, createdAt, updatedAt, isDraft, _id, userId, publicProp }: any) {
+export function JobCard({ jobTitle, workPlaceType, employeeLocation, company, updatedAt, isDraft, _id, userId, publicProp }: any) {
 
     const navigate = useNavigate()
 
@@ -305,7 +305,7 @@ export function JobCard({ jobTitle, jobType, workPlaceType, employeeLocation, co
 }
 
 
-export function JobDetails({ jobTitle, jobType, workPlaceType, description, skills, employeeLocation, company, createdAt, updatedAt, isDraft, isReadOnly, setShowModalLg, isApplied }: any) {
+export function JobDetails({ jobTitle, jobType, workPlaceType, description, skills, employeeLocation, company, isDraft, isReadOnly, setShowModalLg, isApplied }: any) {
 
     return (
         <div className="bg-white p-5 rounded-md shadow-md relative">
@@ -370,12 +370,11 @@ import 'react-quill/dist/quill.snow.css'
 import apiCall from "../services/apiCall";
 import { useAuth } from "../features/auth/hooks/useAuth";
 import axios from "axios";
-import { TERipple } from "tw-elements-react";
 
 export function CreateJob() {
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const location = useLocation();
 
@@ -471,7 +470,7 @@ export function CreateJob() {
             const res = await apiCall({
                 url: `/jobs/${jobId}`
             })
-            console.log(res)
+            // console.log(res)
 
             setJobDetails((prevJobDetails) => ({
                 ...prevJobDetails,
@@ -497,7 +496,7 @@ export function CreateJob() {
     const [suggestions, setSuggestions] = useState([]);
 
 
-    const handleSearchChange = async (query) => {
+    const handleSearchChange = async (query: any) => {
         // onChange("employeeLocation", query)
 
         try {
@@ -528,7 +527,7 @@ export function CreateJob() {
             employeeLocation: "",
             jobType: ""
         })
-        const { employeeLocation, ...rest } = formData
+        const { employeeLocation, ...rest }: any = formData
         const newFormData = {
             ...rest,
             employeeLocation: employeeLocation?.name
@@ -537,7 +536,7 @@ export function CreateJob() {
         if (createJobs.fulfilled.match(res)) {
 
             if (res.payload.res.data) {
-                console.log(res.payload.res.data, 'creation data')
+                // console.log(res.payload.res.data, 'creation data')
                 const data = res.payload.res.data
                 setJobDetails((prevJobDetails) => ({
                     ...prevJobDetails,
@@ -584,9 +583,9 @@ export function CreateJob() {
         }))
     }, [formData])
 
-    const goBack = () => {
-        onPageChange("currentPage", 1)
-    }
+    // const goBack = () => {
+    //     onPageChange("currentPage", 1)
+    // }
 
 
     const handleAddSkills = () => {
@@ -620,7 +619,7 @@ export function CreateJob() {
             setSkill('')
             setDescription('')
 
-            console.log(jobDetails.description, jobDetails.skills)
+            // console.log(jobDetails.description, jobDetails.skills)
 
             const res = await apiCall({
                 url: `/jobs/${jobId}/update`,
@@ -634,7 +633,7 @@ export function CreateJob() {
         }
     }
 
-    const handleSaveToDraft = async (e) => {
+    const handleSaveToDraft = async (e: any) => {
         try {
             e.preventDefault()
             setJobDetails((prevJobDetails) => ({
@@ -646,7 +645,7 @@ export function CreateJob() {
             setSkill('')
             setDescription('')
 
-            const res = await apiCall({
+            await apiCall({
                 url: `/jobs/${jobId}/draft`,
                 method: 'PUT',
                 data: jobDetails
@@ -656,7 +655,6 @@ export function CreateJob() {
 
         }
     }
-
 
 
 
@@ -775,25 +773,29 @@ export function CreateJob() {
                         ]}
                         value={workPlaceType}
                         error={errorData.workPlaceType}
-                        onChange={v => onChange("workPlaceType", v)}
+                        onChange={(v: any) => onChange("workPlaceType", v)}
                     />
 
 
                     <InputField
                         Label={"Employee location"}
                         placeholder={""}
-                        value={employeeLocation.name}
+                        value={employeeLocation?.name}
                         error={errorData.employeeLocation}
                         onChange={v => onChange("employeeLocation", v)}
-                        handleSearchChange={v => handleSearchChange(v)}
+                        handleSearchChange={(v: any) => handleSearchChange(v)}
                     />
                     {suggestions.length > 0 && (
                         <ul className="absolute bg-white border border-borderColor z-30 w-full py-2 rounded-md shadow-md">
-                            {suggestions.map((location) => (
+                            {suggestions.map((location: any) => (
                                 <li
                                     className="text-sm font-light capitalize py-2 px-4  text-secondaryColor hover:bg-blue-100 cursor-pointer"
                                     key={location?.id}
-                                    onClick={() => { onChange('employeeLocation', { name: location?.place_name, id: location?.id }); setSuggestions([]) }}
+                                    onClick={() => {
+                                        onChange('employeeLocation',
+                                            { name: location?.place_name, id: location?.id });
+                                        setSuggestions([])
+                                    }}
                                 >
                                     {location?.place_name}
 
@@ -829,7 +831,7 @@ export function CreateJob() {
                         ]}
                         value={jobType}
                         error={errorData.jobType}
-                        onChange={v => onChange("jobType", v)}
+                        onChange={(v: any) => onChange("jobType", v)}
                     />
 
                     <Button title="Get started" />
@@ -839,12 +841,14 @@ export function CreateJob() {
     )
 }
 
+
+
 export function TimeAgo({ createdAt }: any) {
     function timeAgo(createdAt: any) {
         const currentDate = new Date();
         const createdDate = new Date(createdAt);
 
-        const timeDifferenceInSeconds = Math.floor((currentDate - createdDate) / 1000);
+        const timeDifferenceInSeconds = Math.floor((currentDate.getTime() - createdDate.getTime()) / 1000);
 
         if (timeDifferenceInSeconds < 60) {
             return `${timeDifferenceInSeconds} sec ago`;

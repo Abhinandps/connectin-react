@@ -1,6 +1,6 @@
 
 
-export const enableCommentingReducer = (state, action) => {
+export const enableCommentingReducer = (state:any, action:any) => {
     const postId = action.payload;
 
     const updatedFeed = state.feed.map((post: any) => {
@@ -31,7 +31,7 @@ export const enableCommentingReducer = (state, action) => {
 
 
 
-export const toggleCommentOptionsReducer = (state, action) => {
+export const toggleCommentOptionsReducer = (state:any, action:any) => {
     const { postId, commentId } = action.payload;
 
     const updatedFeed = state.feed.map((post: any) => {
@@ -83,7 +83,7 @@ export const toggleCommentOptionsReducer = (state, action) => {
 }
 
 
-export const togglePostOptionsReducer = (state, action) => {
+export const togglePostOptionsReducer = (state:any, action:any) => {
     const { postId } = action.payload;
 
     const updatedFeed = state.feed.map((post: any) => {
@@ -115,7 +115,7 @@ export const togglePostOptionsReducer = (state, action) => {
 }
 
 
-export const fetchPostDataReducer = (state: { posts: any[]; }, action: { payload: { postId: any; }; }) => {
+export const fetchPostDataReducer = (state: any, action: any) => {
     const { postId } = action.payload
 
     const postData = state.posts.find((post: any) => post._id === postId)
@@ -126,7 +126,7 @@ export const fetchPostDataReducer = (state: { posts: any[]; }, action: { payload
 }
 
 
-export const removeReportedPostReducer = (state, action) => {
+export const removeReportedPostReducer = (state:any, action:any) => {
     const { post_id } = action.payload
 
     const updatedFeed = state.feed.filter((post: any) => post._id !== post_id)

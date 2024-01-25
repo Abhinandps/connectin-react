@@ -9,7 +9,7 @@ interface ListProp {
     follow?: boolean
     follows?: boolean
     hashtag?: boolean
-    user: InvitationData
+    user?: InvitationData
     onReject?: any
     onAccept?: any
     isAccepted?: boolean
@@ -18,7 +18,7 @@ interface ListProp {
 }
 
 // bg-sky-100
-function List({ connected, follow, follows, hashtag, user, onReject, onAccept, onRemove, FollowStatusFinder }: ListProp) {
+function List({ connected, follow, follows, hashtag, user, onReject, onAccept, onRemove }: ListProp) {
     return (
         <>
             <div className={`flex justify-between items-center gap-2 px-5 py-3 border-t ${!user?.viewed ? 'bg-sky-50' : 'bg-transparent'}  border-borderColor`}>

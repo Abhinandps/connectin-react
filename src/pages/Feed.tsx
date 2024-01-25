@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FeedContainer from '../layouts/FeedContainer';
 
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Editor } from '../features/post/components/Editor';
 import PostItem from '../features/post/components/PostItem';
@@ -10,8 +10,6 @@ import { LeftPanel } from '../layouts/LeftPanel';
 import ProfileAnalytics from '../features/common/components/ProfileAnalytics';
 import { MainView } from '../layouts/MainVIew';
 import { RightPanel } from '../layouts/RightPanel';
-import { fetchOnePostData } from '../features/post/store/postSlice';
-import Toaster from '../components/ui/Toaster';
 import { useAuth } from '../features/auth/hooks/useAuth';
 import useUserData from '../hooks/useUserData';
 
@@ -63,7 +61,7 @@ export default Feed;
 
 export const AddPost = ({ setShowModalLg }: boolean | any) => {
     const { user } = useAuth()
-    const { userData, loading, error }: any = useUserData(user.userId)
+    const { userData }: any = useUserData(user.userId)
     return (
         <>
             {/* add post  */}

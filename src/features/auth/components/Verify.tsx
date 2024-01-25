@@ -57,7 +57,7 @@ const Verify: React.FC = function () {
             })
 
 
-            const res = await verifyRequestReset(email, parseInt(otp))
+            const res = await verifyRequestReset(email, otp) // parseInt ?
             if (res.message === 'OTP verified') {
                 navigate("/changepassword/verify", { state: { email: formData.email } });
             }

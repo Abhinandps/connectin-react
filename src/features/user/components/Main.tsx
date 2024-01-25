@@ -5,15 +5,13 @@ import Row from './Row'
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingSpinner from '../../../components/ui/LoadingSpinner';
 import { acceptConnectionRequest, fetchConnections, fetchConnectionsRequests, fetchRecommendations, rejectConnectionRequest, sendConnectionRequest } from '../store/thunks';
-import { useToaster } from '../../../context/toastContext';
-import { successSvg } from '../../../components/ui/svgs';
-import { FaClock, FaEnvelope, FaUserPlus } from 'react-icons/fa';
+// import { useToaster } from '../../../context/toastContext';
 
 function Main() {
     const Invitations = useSelector((state: any) => state.user.invitations)
     const Recommended = useSelector((state: any) => state.user.recommendations)
     const [isLoading, setIsLoading] = useState(false)
-    const { setToastDetails } = useToaster()
+    // const { setToastDetails } = useToaster()
 
     const dispatch = useDispatch()
 

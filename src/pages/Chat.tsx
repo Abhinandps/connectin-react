@@ -8,12 +8,12 @@ import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import useUserData from '../hooks/useUserData';
 
-function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
+function Chat({ setSendMessage, receivedMessage }: any) {
     const { user } = useAuth();
     const { userData }: any = useUserData(user.userId)
 
     const [chats, setChats] = useState([]);
-    const [newMessage, setNewMessage] = useState("");
+    // const [newMessage, setNewMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
     const [searchInput, setSearchInput] = useState('')
@@ -61,20 +61,20 @@ function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
 
     const handleToggle = () => setToggle(!toggle)
 
-    const handleChatOpen = async (chat, firstId, secondId) => {
+    const handleChatOpen = async (chat: any, firstId: any, secondId: any) => {
 
         // Update isViewed status for all messages in the chat locally
 
         const updatedChat = {
             ...chat,
-            messages: chat.messages.map(message => ({
+            messages: chat.messages.map((message: any) => ({
                 ...message,
                 isViewed: true,
             })),
         };
 
         // Update the chat in your state or component
-        setChats((chats: any) => chats.map(c => (c._id === updatedChat._id ? updatedChat : c)));
+        setChats((chats: any) => chats.map((c: any) => (c._id === updatedChat._id ? updatedChat : c)));
 
         // Send a request to the server to mark messages as viewed
         try {
@@ -87,7 +87,7 @@ function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
             // If there's an error updating on the server, you might want to rollback the local update
             console.error('Error marking messages as read:', error);
             // Rollback the local update (optional)
-            setChats((chats: any) => chats.map(c => (c._id === updatedChat._id ? chat : c)));
+            setChats((chats: any) => chats.map((c: any) => (c._id === updatedChat._id ? chat : c)));
         }
     };
 
@@ -137,15 +137,15 @@ function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
                                     <p className='text-sm'>{`we didn't find anything with "${searchInput}"`}</p>
                                 </div>
                             ) : (
-                                chats && Array.isArray(chats) && chats.map((chat) => {
+                                chats && Array.isArray(chats) && chats.map((chat: any) => {
                                     // Count unread messages
-                                    const unreadMessagesCount = chat?.messages.filter(message => !message.isViewed).length;
+                                    const unreadMessagesCount = chat?.messages.filter((message: any) => !message.isViewed).length;
 
                                     // Check if the current user is a participant in the chat
-                                    const isCurrentUserParticipant = chat?.participants.some(participant => participant.userId === user?.userId);
+                                    const isCurrentUserParticipant = chat?.participants.some((participant: any) => participant.userId === user?.userId);
 
                                     // Check if there are unread messages for the current user
-                                    const hasUnreadMessages = chat?.messages.some(message => message.sender !== user?.userId && !message.isViewed);
+                                    const hasUnreadMessages = chat?.messages.some((message: any) => message.sender !== user?.userId && !message.isViewed);
 
                                     return (
                                         <div
@@ -195,7 +195,7 @@ function Chat({ onlineUsers, setSendMessage, receivedMessage }: any) {
 export default Chat
 
 function List(props: any) {
-    const { firstName, lastName, userId , profileImage} = props.data
+    const { firstName, lastName, userId, profileImage } = props.data
 
     const { user } = useAuth();
 
@@ -227,7 +227,7 @@ function List(props: any) {
         }
 
     };
-    
+
     return (
 
         <button className="flex items-center justify-start w-full hover:bg-sky-50 rounded-md cursor-pointer px-3 my-2" onClick={() => handleClick(userId, user?.userId)}>

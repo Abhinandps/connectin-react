@@ -4,7 +4,7 @@ import useUserData from "../hooks/useUserData"
 
 export const RightPanel = () => {
     const { user } = useAuth()
-    const { userData, loading, error }: any = useUserData(user.userId)
+    const { userData }: any = useUserData(user.userId)
     return (
         < div className='lg:block md:hidden sm:hidden xs:hidden hidden w-[300px] max-h-[500px]' >
             <div className='bg-white w-full h-[250px] border border-borderColor rounded-lg p-5 flex flex-col items-center justify-center'>

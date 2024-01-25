@@ -4,12 +4,12 @@ import { InvitationData } from "../networkslice"
 // Invitations
 // ===================
 
-export const sendConnectionRequestFullfilledReducer = (state, action) => {
+export const sendConnectionRequestFullfilledReducer = (_state:any, action:any) => {
     let { sender } = action.payload
     console.log(sender, 'sender id')
 }
 
-export const fetchConnectionsRequestsFullfilledReducer = (state, action) => {
+export const fetchConnectionsRequestsFullfilledReducer = (state:any, action:any) => {
     let py = action.payload.res
 
     const unviewedInvitationsId = state.invitations.filter((user: InvitationData) => !user.viewed).map((unviewedInvitation: any) => unviewedInvitation.userId);
@@ -28,7 +28,7 @@ export const fetchConnectionsRequestsFullfilledReducer = (state, action) => {
 
 }
 
-export const acceptConnectionsRequestFullilledReducer = (state, action) => {
+export const acceptConnectionsRequestFullilledReducer = (state:any, action:any) => {
     let { userId } = action.payload
     const updateInvitation = state.invitations.map((user: InvitationData) => {
         if (user?.userId === userId) {
@@ -49,7 +49,7 @@ export const acceptConnectionsRequestFullilledReducer = (state, action) => {
 
 }
 
-export const rejectConnectionRequestFullfilledReducer = (state, action) => {
+export const rejectConnectionRequestFullfilledReducer = (state:any, action:any) => {
     let { userId } = action.payload
 
     const updateInvitation = state.invitations.filter((user: any) => user?.userId !== userId)
@@ -61,7 +61,7 @@ export const rejectConnectionRequestFullfilledReducer = (state, action) => {
 }
 
 
-export const removeConnectionFullfilledReducer = (state, action) => {
+export const removeConnectionFullfilledReducer = (state:any, action:any) => {
     let { userId } = action.payload
 
     const updateConnections = state.connections.filter((user: any) => user?.userId !== userId)
@@ -79,36 +79,36 @@ export const removeConnectionFullfilledReducer = (state, action) => {
 // ===================
 
 
-export const fetchConnectionsFullfilledReducer = (state, action) => {
+export const fetchConnectionsFullfilledReducer = (state:any, action:any) => {
     let py = action.payload.res
     console.log(py, 'py')
     state.connections = py
 }
 
 
-export const fetchRecommendedFullfilledReducer = (state, action) => {
+export const fetchRecommendedFullfilledReducer = (state:any, action:any) => {
     let py = action.payload.res.data
     state.recommendations = py
 }
 
 // FOLLOWERS
 
-export const fetchFollowersFullfilledReducer = (state, action) => {
+export const fetchFollowersFullfilledReducer = (state:any, action:any) => {
     let py = action.payload.res
     state.followers = py
 }
 
-export const fetchFollowingFullfilledReducer = (state, action) => {
+export const fetchFollowingFullfilledReducer = (state:any, action:any) => {
     let py = action.payload.res
     state.following = py
 }
 
-export const followUserFullfilledReducer = (state, action) => {
+export const followUserFullfilledReducer = (_state:any, action:any) => {
     let { sender } = action.payload
     console.log(sender, 'sender id')
 }
 
-export const unFollowUserFullfilledReducer = (state, action) => {
+export const unFollowUserFullfilledReducer = (_state:any, action:any) => {
     let { sender } = action.payload
     console.log(sender, 'sender id')
 }

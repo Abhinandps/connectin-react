@@ -41,7 +41,7 @@ export const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg
             e.preventDefault();
 
             if (!postData?._id) {
-                const createPostAction = await dispatch(createPost(formData));
+                const createPostAction = dispatch(createPost(formData));
 
                 if (createPost.fulfilled.match(createPostAction)) {
                     setShowModalLg(false)

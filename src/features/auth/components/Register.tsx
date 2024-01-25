@@ -69,7 +69,7 @@ const Register: React.FC = function () {
             } else if (registerUser.rejected.match(res)) {
                 const errors: any = res.payload
                 const errorArray = errors.split(',')
-                const formattedErrors = errorArray.map(error => error.trim().replace(/^data\./, ''));
+                const formattedErrors = errorArray.map((error: any) => error.trim().replace(/^data\./, ''));
                 formattedErrors.forEach((error: string) => {
                     const inputFieldName = error.split(" ")[0];
                     onError(inputFieldName, error.toLowerCase())
