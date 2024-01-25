@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.7",
+    "@reduxjs/toolkit": "^2.1.0",
     "@stripe/react-stripe-js": "^2.3.2",
     "@stripe/stripe-js": "^2.1.11",
     "@types/googlemaps": "^3.43.3",

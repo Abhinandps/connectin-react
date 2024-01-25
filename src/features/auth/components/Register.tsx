@@ -62,7 +62,7 @@ const Register: React.FC = function () {
                 lastName: ""
             })
 
-            const res = await dispatch(registerUser(formData));
+            const res = await dispatch(registerUser(formData) as any);
 
             if (registerUser.fulfilled.match(res)) {
                 navigate('/email-confirmation/sent')
@@ -70,7 +70,7 @@ const Register: React.FC = function () {
                 const errors: any = res.payload
                 const errorArray = errors.split(',')
                 const formattedErrors = errorArray.map((error: any) => error.trim().replace(/^data\./, ''));
-                formattedErrors.forEach((error: string) => {
+                formattedErrors.forEach((error: any) => {
                     const inputFieldName = error.split(" ")[0];
                     onError(inputFieldName, error.toLowerCase())
                 });

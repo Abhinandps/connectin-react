@@ -231,7 +231,7 @@ export function ApplicationSetting() {
         })()
     }, [])
 
-    const submit = (e) => {
+    const submit = (e: any) => {
         e.preventDefault()
         if (attachments) {
             (async () => {

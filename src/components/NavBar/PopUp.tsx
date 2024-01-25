@@ -43,8 +43,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
     const handleLogout = async () => {
         try {
 
-            // FIXME: fix the typeError of function
-            const res:any = () => dispatch(logoutUser());
+            const res: any = () => dispatch(logoutUser() as any);
 
             if (logoutUser.fulfilled.match(res)) {
                 navigate('/')

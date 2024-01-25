@@ -54,7 +54,7 @@ const Login: React.FC<LoginProps> = function ({ style, label }) {
             e.preventDefault();
             setError("")
             // Dispatch the loginUser action with loginData as the argument
-            const res = await dispatch(loginUser(formData));
+            const res = await dispatch(loginUser(formData) as any);
             if (loginUser.fulfilled.match(res)) {
                 navigate('/')
             } else if (loginUser.rejected.match(res)) {

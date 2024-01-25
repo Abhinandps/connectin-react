@@ -28,7 +28,7 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg, feed }: any) => {
     const { _id, isCommenting, comments, isPostOptions } = postWithIsLiked
 
     const handleLikeClick = (postId: any) => {
-        dispatch(likePost(postId))
+        dispatch(likePost(postId) as any)
     }
 
     const handleEnableCommenting = (postId: any) => {
@@ -36,22 +36,22 @@ const PostItem = ({ post, userLikedPosts, setShowModalLg, feed }: any) => {
     }
 
     const handleSubmitComment = (postId: any) => {
-        dispatch(addCommentToPost({ postId, content }))
+        dispatch(addCommentToPost({ postId, content }) as any)
         setContent('')
     }
 
     const handlePostEdit = (postId: any) => {
-        dispatch(fetchPostData({ postId }))
+        dispatch(fetchPostData({ postId }) as any)
         setShowModalLg(true)
     }
 
     const handleDeleteComment = (postId: any, commentId: any) => {
-        dispatch(deleteCommentFromPost({ postId, commentId }))
+        dispatch(deleteCommentFromPost({ postId, commentId }) as any)
     }
 
     const handleDeletePost = (postId: any) => {
         console.log(postId, 'called...')
-        dispatch(deletePost({ postId }))
+        dispatch(deletePost({ postId }) as any)
     }
 
 

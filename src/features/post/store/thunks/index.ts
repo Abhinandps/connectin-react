@@ -4,7 +4,7 @@ import apiCall from '../../../../services/apiCall';
 
 export const createPost = createAsyncThunk(
     'data/createPost',
-    async (formData, thunkAPI) => {
+    async (formData: any, thunkAPI) => {
         try {
             const res = await apiCall({
                 url: `/posts/create`,
@@ -24,7 +24,7 @@ export const createPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
     'data/updatePost',
-    async (form, thunkAPI) => {
+    async (form: any, thunkAPI) => {
         const { postId, formData }: any = form
 
         try {
@@ -66,7 +66,7 @@ export const fetchUserPosts = createAsyncThunk(
 
 export const fetchUserFeed = createAsyncThunk(
     'data/fetchFeed',
-    async (postId: string, thunkAPI) => {
+    async (postId: string | null, thunkAPI) => {
         try {
             console.log(postId)
             const res = await apiCall({
@@ -112,7 +112,7 @@ export const fetchUserLikedPosts = createAsyncThunk(
 
 export const addCommentToPost = createAsyncThunk(
     'data/addComment',
-    async (postData, thunkAPI) => {
+    async (postData: any, thunkAPI) => {
         const { postId, content }: any = postData;
 
         // Now you can use 'postId' and 'content' in your thunk logic
@@ -142,7 +142,7 @@ export const addCommentToPost = createAsyncThunk(
 
 export const deleteCommentFromPost = createAsyncThunk(
     'data/deleteComment',
-    async (postData, thunkAPI) => {
+    async (postData: any, thunkAPI) => {
         const { postId, commentId }: any = postData;
 
         // Now you can use 'postId' and 'content' in your thunk logic
@@ -171,9 +171,9 @@ export const deleteCommentFromPost = createAsyncThunk(
 
 export const deletePost = createAsyncThunk(
     'data/deletePost',
-    async (postData, thunkAPI) => {
+    async (postData: any, thunkAPI) => {
         const { postId }: any = postData;
-        console.log(postId,'from reducer')
+        console.log(postId, 'from reducer')
         try {
             const res = await apiCall({
                 url: `/posts/delete/${postId}`,
@@ -183,7 +183,7 @@ export const deletePost = createAsyncThunk(
                 throw new Error('Forbidden resource');
             }
 
-           
+
 
             return { res }
 

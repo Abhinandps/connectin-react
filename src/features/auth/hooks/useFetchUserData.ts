@@ -16,7 +16,7 @@ function useFetchUserData() {
                 dispatch(logout())
                 return;
             }
-            await dispatch(fetchUserDetails())
+            await dispatch(fetchUserDetails() as any)
         }
         fetchUserData();
     }, [dispatch]);

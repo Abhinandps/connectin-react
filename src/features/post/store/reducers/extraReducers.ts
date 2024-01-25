@@ -1,7 +1,7 @@
 
 
 
-export const fetchUserPostsFullfilledReducer = (state:any, action:any) => {
+export const fetchUserPostsFullfilledReducer = (state:any, action: { payload: { res: { data: any; }; }; }) => {
     let py = action.payload.res.data
     const PostsWithFlags = py.map((post: any) => {
         const postWithFlags = {
@@ -24,13 +24,13 @@ export const fetchUserPostsFullfilledReducer = (state:any, action:any) => {
     state.posts = PostsWithFlags;
 }
 
-export const fetchUserLikesPostIdsFullfilledReducer = (state:any, action:any) => {
+export const fetchUserLikesPostIdsFullfilledReducer = (state:any, action: { payload: { res: any; }; }) => {
     let py = action.payload.res
     state.userLikedPosts = py
 }
 
 
-export const fetchUserFeedFullfilledReducer = (state:any, action:any) => {
+export const fetchUserFeedFullfilledReducer = (state:any, action: { payload: { res: { data: any; }; }; }) => {
     let py = action.payload.res.data
 
     const feedWithFlags = py.map((post: any) => {
@@ -66,7 +66,7 @@ export const fetchUserFeedRejectedReducer = (state:any, _action:any) => {
 }
 
 
-export const likePostFullfilledReducer = (state:any, action:any) => {
+export const likePostFullfilledReducer = (state:any, action: { payload: { id: any; }; }) => {
     let postId = action.payload.id
     // console.log(postId)
     const likedPostInFeed = state.feed.find((post: any) => post._id === postId)
@@ -92,7 +92,7 @@ export const likePostFullfilledReducer = (state:any, action:any) => {
 
 
 
-export const createPostFullfilledReducer = (state:any, action:any) => {
+export const createPostFullfilledReducer = (state:any, action: { payload: { res: { data: any; }; }; }) => {
     const newPost = action.payload.res.data;
 
     // Update the feed
@@ -111,7 +111,7 @@ export const createPostFullfilledReducer = (state:any, action:any) => {
 
 
 
-export const addCommentToPostFullfilledReducer = (state:any, action:any) => {
+export const addCommentToPostFullfilledReducer = (state:any, action: { payload: any; }) => {
     let py = action.payload
 
     const { postId, ...comment } = py
@@ -149,7 +149,7 @@ export const addCommentToPostFullfilledReducer = (state:any, action:any) => {
 
 
 
-export const deleteCommentFromPostFullfilledReducer = (state:any, action:any) => {
+export const deleteCommentFromPostFullfilledReducer = (state:any, action: { payload: { res: { data: { commentId: any; postId: any; }; }; }; }) => {
     let { commentId, postId } = action.payload.res.data
 
     const updatedFeed = state.feed.map((post: any) => {
@@ -183,7 +183,7 @@ export const deleteCommentFromPostFullfilledReducer = (state:any, action:any) =>
 }
 
 
-export const deletePostFullfilledReducer = (state:any, action:any) => {
+export const deletePostFullfilledReducer = (state:any, action: { payload: { res: { data: { postId: any; }; }; }; }) => {
     let { postId } = action.payload.res.data
     // console.log(postId,'post id id ')
 

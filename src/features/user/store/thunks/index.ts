@@ -69,7 +69,7 @@ export const fetchFollowing = createAsyncThunk(
 
 export const acceptConnectionRequest = createAsyncThunk(
     'accept/connection-request',
-    async (userId, thunkAPI) => {
+    async (userId:any, thunkAPI) => {
         try {
             const res = await apiCall({
                 url: `/users/${userId}/accept-connection`,
@@ -84,7 +84,7 @@ export const acceptConnectionRequest = createAsyncThunk(
 
 export const rejectConnectionRequest = createAsyncThunk(
     'reject/connection-request',
-    async (userId, thunkAPI) => {
+    async (userId:any, thunkAPI) => {
         try {
             const res = await apiCall({
                 url: `/users/${userId}/reject-connection`,

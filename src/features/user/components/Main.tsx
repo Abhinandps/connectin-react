@@ -4,7 +4,7 @@ import List from './List'
 import Row from './Row'
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingSpinner from '../../../components/ui/LoadingSpinner';
-import { acceptConnectionRequest, fetchConnections, fetchConnectionsRequests, fetchRecommendations, rejectConnectionRequest, sendConnectionRequest } from '../store/thunks';
+import { acceptConnectionRequest, fetchConnections, fetchConnectionsRequests, fetchRecommendations, rejectConnectionRequest } from '../store/thunks';
 // import { useToaster } from '../../../context/toastContext';
 
 function Main() {
@@ -17,24 +17,24 @@ function Main() {
 
     useEffect(() => {
         setIsLoading(true)
-        dispatch(fetchConnectionsRequests())
-        dispatch(fetchRecommendations())
+        dispatch(fetchConnectionsRequests() as any)
+        dispatch(fetchRecommendations() as any)
         setIsLoading(false)
     }, [dispatch])
 
 
     const handleAcceptConnectionRequest = (userId: string) => {
         if (userId) {
-            alert(`${userId} is a connection. you can message now`)
-            dispatch(acceptConnectionRequest(userId))
-            dispatch(fetchConnections())
+            // alert(`${userId} is a connection. you can message now`)
+            dispatch(acceptConnectionRequest(userId) as any)
+            dispatch(fetchConnections() as any)
         }
     }
 
 
     const handleRejectConnectionRequest = (userId: string) => {
         if (userId) {
-            dispatch(rejectConnectionRequest(userId))
+            dispatch(rejectConnectionRequest(userId) as any)
         }
     }
 

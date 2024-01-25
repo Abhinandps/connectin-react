@@ -20,13 +20,13 @@ const Feed: React.FC = function () {
     const [showModalLg, setShowModalLg] = useState(false);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const postId = queryParams.get('postId');
+    const postId: string | null = queryParams.get('postId');
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchUserLikedPosts())
-        dispatch(fetchUserFeed(postId));
+        dispatch(fetchUserLikedPosts() as any)
+        dispatch(fetchUserFeed(postId) as any);
     }, [dispatch]);
 
     return (

@@ -14,14 +14,14 @@ function useRefreshToken() {
 
             const accessToken = Cookies.get('access_token');
             const refreshToken = Cookies.get('refresh_token');
-            
+
             if (!refreshToken) {
                 dispatch(logout())
                 return;
             }
 
             if (!accessToken) {
-                await dispatch(getAccessToken(refreshToken))
+                await dispatch(getAccessToken(refreshToken) as any)
             }
         }
 

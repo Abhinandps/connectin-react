@@ -1,5 +1,5 @@
 
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk, AsyncThunkAction } from '@reduxjs/toolkit'
 import apiCall from '../../services/apiCall';
 
 
@@ -49,9 +49,9 @@ export const loginUser = createAsyncThunk(
             // const data = await response.json();
 
             const res = await apiCall({
-                url:`/auth/login`,
-                method:'POST',
-                data:loginData
+                url: `/auth/login`,
+                method: 'POST',
+                data: loginData
             })
 
             if (res.message && typeof res.message != typeof []) {
@@ -176,11 +176,11 @@ export const fetchUserDetails = createAsyncThunk(
 
             // const data = await response.json();
 
-            const res= await apiCall({
-                url:'/validate-token'
+            const res = await apiCall({
+                url: '/validate-token'
             })
 
-        
+
             const user = {
                 userId: res?._id,
                 email: res?.email,
@@ -198,7 +198,7 @@ export const fetchUserDetails = createAsyncThunk(
 // Async thunk for fetch access_token based on refresh_token
 export const getAccessToken = createAsyncThunk(
     'data/getAccessToken',
-    async (_token, thunkAPI) => {
+    async (_token:string, thunkAPI) => {
         try {
             const response = await apiCall({
                 url: '/auth/refresh',

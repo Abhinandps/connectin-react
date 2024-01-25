@@ -1,12 +1,12 @@
-import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import FeedContainer from "../layouts/FeedContainer";
 import InputField from "../components/Form/InputField";
 import Button from "../components/Form/Button";
 import Select from "../components/Form/Select";
 
-import { useCallback, useState, useEffect, useRef } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { createJobs, fetchManagedJobs, fetchRecentJobs, updateJob } from "../features/job/jobslice";
+import { createJobs, fetchManagedJobs, fetchRecentJobs } from "../features/job/jobslice";
 import { CiSaveDown2 } from "react-icons/ci";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaCirclePlus } from "react-icons/fa6";
@@ -97,25 +97,25 @@ export function AllJobs() {
 
     console.log(recentJobs, 'recentJobs')
     useEffect(() => {
-        dispatch(fetchManagedJobs())
-        dispatch(fetchRecentJobs({}))
+        dispatch(fetchManagedJobs() as any)
+        dispatch(fetchRecentJobs({}) as any)
     }, [dispatch])
 
 
     const handleSearch = (searchterm: any) => {
         if (!searchterm) return
-        dispatch(fetchRecentJobs({ searchterm }))
+        dispatch(fetchRecentJobs({ searchterm }) as any)
     }
 
     useEffect(() => {
         if (!select) return
-        dispatch(fetchRecentJobs({ select }))
+        dispatch(fetchRecentJobs({ select }) as any)
         setSelect(null)
     }, [select])
 
 
 
-    const handleSearchChange = async (query) => {
+    const handleSearchChange = async (query: string) => {
 
         try {
             const response = await axios.get(
@@ -164,7 +164,7 @@ export function Filter({ select, setSelect, handleSearchChange, suggestions, set
                 />
                 {suggestions.length > 0 && (
                     <ul className="absolute top-10 bg-white border border-borderColor z-30 w-full py-2 rounded-md shadow-md">
-                        {suggestions.map((location) => (
+                        {suggestions.map((location: any) => (
                             <li
                                 className="text-sm font-light capitalize py-2 px-4  text-secondaryColor hover:bg-blue-100 cursor-pointer"
                                 key={location?.id}
@@ -222,7 +222,7 @@ export function ManagedJobs() {
     const { user } = useAuth()
 
     useEffect(() => {
-        dispatch(fetchManagedJobs())
+        dispatch(fetchManagedJobs() as any)
     }, [dispatch])
 
     const { managedJobs } = useSelector((state: any) => state.job)
@@ -428,7 +428,7 @@ export function CreateJob() {
 
 
 
-    const [formData, setFormData] = useState(
+    const [formData, setFormData] = useState<any>(
         {
             jobTitle: "",
             company: "",
@@ -532,7 +532,7 @@ export function CreateJob() {
             ...rest,
             employeeLocation: employeeLocation?.name
         }
-        const res = await dispatch(createJobs(newFormData))
+        const res = await dispatch(createJobs(newFormData) as any)
         if (createJobs.fulfilled.match(res)) {
 
             if (res.payload.res.data) {
@@ -568,7 +568,7 @@ export function CreateJob() {
         jobType: ""
     })
 
-    const onChange = useCallback((key: string, value: string | number) => {
+    const onChange = useCallback((key: string, value: string | number | any) => {
         setFormData({
             ...formData,
             [key]: value
