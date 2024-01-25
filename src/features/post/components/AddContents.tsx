@@ -54,14 +54,14 @@ export const AddContents: React.FC<any> = ({ goBack, showModalLg, setShowModalLg
                 formData
             }
 
-            const editPostAction = dispatch(updatePost(form))
+             dispatch(updatePost(form))
 
         } catch (err) { }
     }
 
-    const clear = () => {
-        setFormData(emptyFormData)
-    }
+    // const clear = () => {
+    //     setFormData(emptyFormData)
+    // }
 
 
     return (

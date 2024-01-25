@@ -84,7 +84,6 @@ export const logoutUser = createAsyncThunk(
     'auth/logoutUser',
     async (_data, thunkAPI) => {
         try {
-            console.log('hitted');
 
             const response = await fetch('http://localhost:3000/auth/logout', {
                 method: 'GET',

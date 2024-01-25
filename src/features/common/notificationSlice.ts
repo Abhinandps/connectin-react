@@ -1,7 +1,11 @@
 // notificationSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+interface Notification {
+
+}
+
+const initialState:{notifications: Notification[]} = {
     notifications: [],
 };
 
@@ -18,7 +22,7 @@ const notificationSlice = createSlice({
             }
         },
         changeNotificationStatus: (state, action) => {
-            let py: any = action.payload;
+            // let py: any = action.payload;
             const indexToChange = action.payload;
 
             const updatedNotifications = state.notifications.map((notification: any, index) => {

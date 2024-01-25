@@ -1,7 +1,7 @@
 import { toggleCommentOptions } from '../../store/postSlice'
 import { useDispatch } from 'react-redux'
 
-function CommentListItem({ uId, postId, _id, content, likes, userId, isCommentOptions, firstName, lastName, profileImage, headline, handleDeleteComment }: any) {
+function CommentListItem({ uId, postId, _id, content, userId, isCommentOptions, firstName, lastName, headline, handleDeleteComment }: any) {
     const dispatch = useDispatch()
     return (
         <>

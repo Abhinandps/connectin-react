@@ -86,7 +86,7 @@ const PasswordForgot: React.FC = function () {
                             title="Back"
                             type='button'
                             outlineOnly={true}
-                            onClick={()=>navigate('/sign-in')}
+                            onClick={() => { navigate('/sign-in'); return {}; }}
                         />
                     </form>
                 </div>

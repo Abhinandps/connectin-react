@@ -19,8 +19,7 @@ interface PopupProps {
 const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
 
     const { user } = useAuth()
-    const { userData, loading, error }: any = useUserData(user.userId)
-    console.log(userData, 'data')
+    const { userData, loading }: any = useUserData(user.userId)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -45,7 +44,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
         try {
 
             // FIXME: fix the typeError of function
-            const res = dispatch(logoutUser());
+            const res:any = () => dispatch(logoutUser());
 
             if (logoutUser.fulfilled.match(res)) {
                 navigate('/')

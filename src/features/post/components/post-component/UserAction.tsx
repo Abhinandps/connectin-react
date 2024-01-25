@@ -1,7 +1,6 @@
-import React from 'react'
 import { Action } from '../Action'
 
-function UserAction({ isLiked, _id, handleLikeClick, handleEnableCommenting }) {
+function UserAction({ isLiked, _id, handleLikeClick, handleEnableCommenting }: any) {
     return (
         <div className='flex justify-between border-t mt-6'>
 

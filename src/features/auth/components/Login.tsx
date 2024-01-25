@@ -112,7 +112,7 @@ const Login: React.FC<LoginProps> = function ({ style, label }) {
                     title="New to ConnectIn? Join now"
                     outlineOnly={true}
                     type='button'
-                    onClick={() => navigate('/sign-up')}
+                    onClick={() => { navigate('/sign-up'); return {}; }}
                 />
 
             </form>

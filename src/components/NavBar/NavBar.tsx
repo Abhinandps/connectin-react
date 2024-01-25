@@ -15,14 +15,14 @@ import Chat from '../../pages/Chat';
 const NavBar = () => {
 
     const { user } = useAuth()
-    const { userData, loading, error }: any = useUserData(user?.userId)
+    const { userData }: any = useUserData(user?.userId)
 
 
     const unviewedInvitations = useSelector((state: any) => state.user.invitations.filter((user: InvitationData) => !user.viewed))
     const unviewedNotifications = useSelector((state: any) => state.notifications.notifications.filter((notification: any) => !notification.viewed))
     // console.log(unviewedNotifications)
 
-    const [onlineUsers, setOnlineUsers] = useState([]);
+    // TODO:online users state update soon
     const [sendMessage, setSendMessage] = useState(null);
     const [receivedMessage, setReceivedMessage] = useState(null);
 
@@ -36,7 +36,6 @@ const NavBar = () => {
 
     useEffect(() => {
         socket.on('onEmitUser', (data: InvitationData) => {
-            // console.log('Received notification:', data);
             dispatch(reciveInvitation(data))
         });
 
@@ -45,9 +44,9 @@ const NavBar = () => {
             dispatch(addNotification(data))
         });
 
-        socket.on("get-users", (users) => {
+        // socket.on("get-users", (users) => {
             // setOnlineUsers();
-        });
+        // });
 
         if (sendMessage !== null) {
             socket.emit("send-message", sendMessage);
@@ -65,25 +64,6 @@ const NavBar = () => {
 
 
 
-    // Send Message to socket server
-    // useEffect(() => {
-    //     if (sendMessage !== null) {
-    //         socket.emit("send-message", sendMessage);
-    //     }
-    // }, [sendMessage]);
-
-
-    // Get the message from socket server
-    // useEffect(() => {
-    //     socket.current.on("recieve-message", (data) => {
-    //         console.log(data)
-    //         setReceivedMessage(data);
-    //     }
-
-    //     );
-    // }, []);
-
-    // console.log(onlineUsers)
 
     const { isAuthenticated } = useAuth()
 

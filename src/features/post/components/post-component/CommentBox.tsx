@@ -1,6 +1,6 @@
 import { TERipple } from 'tw-elements-react'
 
-function CommentBox({ _id, content, setContent, handleSubmitComment }) {
+function CommentBox({ _id, content, setContent, handleSubmitComment }: any) {
     return (
         <div>
             <div className='flex w-full justify-between items-center py-3 px-3 gap-2'>

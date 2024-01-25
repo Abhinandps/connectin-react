@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { useAuth } from './features/auth/hooks/useAuth'
 import useRefreshToken from './features/auth/hooks/useRefreshToken'
@@ -16,14 +15,11 @@ import useFetchUserData from './features/auth/hooks/useFetchUserData'
 import EmailConfirmationSent from './layouts/EmailConfimationSent'
 import Authorization from './layouts/Authorization'
 import ManageUsersAndAdmins from './pages/ManageUsersAndAdmins'
-import { useDispatch } from 'react-redux'
-import { fetchUserFeed } from './features/post/store/thunks'
 import PostsAndActivity from './pages/PostsAndActivity'
 import Subscription, { Completion } from './pages/Subscription'
-import Jobs, { AllJobs, CreateJob, JobDetails, ManagedJobs } from './pages/Jobs'
+import Jobs, { AllJobs, CreateJob, ManagedJobs } from './pages/Jobs'
 import ProtectedAddJob from './layouts/ProtectedAddJob'
 import Mynetwork from './pages/Mynetwork'
-import Invitations from './features/user/components/Row'
 import Main from './features/user/components/Main'
 import Connections from './features/user/components/Connections'
 import Network from './features/user/components/Network'
@@ -59,14 +55,6 @@ function App() {
   useRefreshToken()
 
   useFetchUserData()
-
-  // const dispath = useDispatch()
-
-  // useEffect(() => {
-  //   (() => {
-  //     dispath(fetchUserFeed())
-  //   })()
-  // }, [])
 
   const { isAuthenticated, user } = useAuth();
 

@@ -3,13 +3,12 @@ import InputEmojiWithRef from "react-input-emoji"
 import apiCall from '../../../services/apiCall';
 import { IoIosClose } from "react-icons/io";
 import TimeAgo from 'react-timeago'
-import date from 'date-and-time';
 
 
 function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurrentChat, setMessages, messages }: any) {
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState<any>(null);
     // const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState('');
+    const [newMessage, setNewMessage] = useState<any>('');
 
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -23,11 +22,11 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
     useEffect(() => {
         const user = chat?.participants.find((participant: any) => participant.userId !== currentUser)
         setUserData(user)
-        console.log('called', user)
+
     }, [chat, currentUser])
 
 
-    const handleChange = (newMessage) => {
+    const handleChange = (newMessage: any) => {
         setNewMessage(newMessage)
     }
 
@@ -35,7 +34,7 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
         setCurrentChat('')
     }
 
-    const handleSend = async (e) => {
+    const handleSend = async (e: any) => {
         e.preventDefault()
 
         if (!newMessage) return
@@ -55,7 +54,8 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
 
         // send message to database
         try {
-            const res = await apiCall({
+
+            await apiCall({
                 url: '/chat/add',
                 method: 'POST',
                 data: message
@@ -63,7 +63,7 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
 
             const { chatId, ...rest } = message
 
-            setMessages((prevMessages) => {
+            setMessages((prevMessages: any) => {
                 const { senderId, text, ...otherRest } = rest;
 
                 const updatedMessage = {
@@ -94,7 +94,7 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
         if (receivedMessage !== null && receivedMessage.chatId === chat._id) {
             console.log("Message Arrived: ", receivedMessage)
 
-            setMessages((prevMessages) => {
+            setMessages((prevMessages: any) => {
                 const { senderId, text, isViewed } = receivedMessage
 
                 const updatedMessage = {
@@ -125,7 +125,7 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
                     const res = await apiCall({
                         url: `/chat/find/${currentUser}/${userData?.userId}`
                     })
-                    console.log(res, 'participants chats')
+                    // console.log(res, 'participants chats')
                     setMessages(res);
                 } catch (error) {
                     console.log(error);
@@ -179,15 +179,15 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
                 <div className=''>
 
 
-                    {messages && messages.messages && messages.messages.map((msg, index) => {
+                    {messages && messages.messages && messages.messages.map((msg: any, index: any) => {
                         // Check if it's the first message or the sender is different from the previous one
                         const isFirstMessage = index === 0 || msg.sender !== messages.messages[index - 1].sender;
 
-                        const senderInfo = messages.participants.find(participant => participant.userId === msg.sender)
+                        const senderInfo = messages.participants.find((participant: any) => participant.userId === msg.sender)
 
                         const date = new Date(msg?.timestamp);
 
-                        const timeOptions = {
+                        const timeOptions: any = {
                             hour: 'numeric',
                             minute: 'numeric',
                             hour12: true,
@@ -253,7 +253,7 @@ function ChatBox({ chat, currentUser, setSendMessage, receivedMessage, setCurren
                     value={newMessage}
                     onChange={handleChange}
                 />
-                <button disabled={!newMessage.length > 0} className={`${newMessage.length > 0 ? 'bg-primaryColor' : 'bg-primaryColor/50'} transition-all rounded-full px-3 py-1  text-white`} onClick={handleSend} >send</button>
+                <button disabled={newMessage.length === 0} className={`${newMessage.length > 0 ? 'bg-primaryColor' : 'bg-primaryColor/50'} transition-all rounded-full px-3 py-1  text-white`} onClick={handleSend} >send</button>
             </div>
         </div >
     )

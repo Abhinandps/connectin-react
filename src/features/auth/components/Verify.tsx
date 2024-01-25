@@ -3,7 +3,6 @@ import InputField from '../../../components/Form/InputField';
 import Button from '../../../components/Form/Button';
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import { requestPasswordReset } from '..';
 import { verifyRequestReset } from '../services/authService';
 
 
@@ -86,7 +85,7 @@ const Verify: React.FC = function () {
                             placeholder=''
                             type='number'
                             onChange={v => onChange("otp", v)}
-                            value={otp}
+                            value={otp.toString()}
                             error={errorData.otp}
                         />
                         <div className=' mb-4'> <span className=' text-xs text-blue-500 hover:bg-blue-50 py-1 rounded-full px-1 cursor-pointer font-bold' onClick={() => { }}>Resend code</span> </div>

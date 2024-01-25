@@ -126,7 +126,7 @@ const Register: React.FC = function () {
                     title="Already on ConnectIn? Sign In"
                     outlineOnly={true}
                     type='button'
-                    onClick={() => navigate('/sign-in')}
+                    onClick={() => { navigate('/sign-in'); return {} }}
                 />
             </form>
 

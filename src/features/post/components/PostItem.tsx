@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import { addCommentToPost, deleteCommentFromPost, deletePost, likePost } from '../store/thunks';
-import { enableCommenting, fetchPostData, toggleCommentOptions, togglePostOptions } from '../store/postSlice';
+import { enableCommenting, fetchPostData } from '../store/postSlice';
 import { useDispatch } from 'react-redux';
 import Header from './post-component/Header';
 import ContentBody from './post-component/ContentBody';

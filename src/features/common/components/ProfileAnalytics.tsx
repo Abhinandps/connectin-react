@@ -5,7 +5,7 @@ import { useAuth } from "../../auth/hooks/useAuth"
 
 const ProfileAnalytics = () => {
     const { user } = useAuth()
-    const { userData, loading, error }: any = useUserData(user.userId)
+    const { userData }: any = useUserData(user.userId)
 
     return (
         <>

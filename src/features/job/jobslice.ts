@@ -71,8 +71,8 @@ export const createJobs = createAsyncThunk(
             console.log(res)
 
             return { res }
-        } catch (err) {
-            console.log(err)
+        } catch (err: any) {
+            // console.log(err)
             return thunkAPI.rejectWithValue(err.message)
         }
     }
@@ -93,8 +93,8 @@ export const updateJob = createAsyncThunk(
             const response = await res.json();
 
             return { response }
-        } catch (err) {
-            console.log(err)
+        } catch (err:any) {
+            // console.log(err)
             return thunkAPI.rejectWithValue(err.message)
         }
     }
@@ -112,14 +112,14 @@ const jobSlice = createSlice({
                     state.managedJobs.error = py.message
                 }
             })
-            .addCase(createJobs.rejected, (state, action) => {
+            .addCase(createJobs.rejected, (_state, _action) => {
 
             })
             .addCase(fetchManagedJobs.fulfilled, (state, action) => {
                 const py = action.payload.res.data
                 state.managedJobs.list = py
             })
-            .addCase(updateJob.fulfilled, (state, action) => {
+            .addCase(updateJob.fulfilled, (_state, action) => {
                 const py = action.payload.response
                 console.log(py)
             })

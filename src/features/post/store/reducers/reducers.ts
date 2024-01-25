@@ -115,7 +115,7 @@ export const togglePostOptionsReducer = (state, action) => {
 }
 
 
-export const fetchPostDataReducer = (state, action) => {
+export const fetchPostDataReducer = (state: { posts: any[]; }, action: { payload: { postId: any; }; }) => {
     const { postId } = action.payload
 
     const postData = state.posts.find((post: any) => post._id === postId)

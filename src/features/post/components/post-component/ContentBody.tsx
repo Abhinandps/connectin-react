@@ -1,5 +1,5 @@
 
-const ContentBody = ({ title, contentBody }) => {
+const ContentBody = ({ title, contentBody }: any) => {
     return (
         <div className=''>
             <p className='font-light text-[12px] py-2 ' >{title}</p>

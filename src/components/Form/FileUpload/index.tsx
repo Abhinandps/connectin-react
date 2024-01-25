@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import apiCall from '../../../services/apiCall';
 
 interface FileUploadProps {
     Label?: string;
@@ -39,11 +38,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({ value, onChange, error, 
         setFiles(selectedFiles);
     };
 
-    const handleRemoveImage = (index: number) => {
-        const newFiles = [...files];
-        newFiles.splice(index, 1);
-        setFiles(newFiles);
-    };
+    // handle remove image
+    // pending...
 
     const handlePreviewVideo = (file: File, parentElement: HTMLElement) => {
         const video = document.createElement('video');

@@ -1,5 +1,5 @@
 
-function Thumbnail({attachments}) {
+function Thumbnail({ attachments }: any) {
     return (
         <div>
             <img src={attachments[0]} alt="" className='h-[400px] w-full object-cover' />

@@ -2,7 +2,6 @@ import { useDispatch } from 'react-redux'
 import { removeReportedPost, togglePostOptions } from '../../store/postSlice'
 
 import {
-    TERipple,
     TEModal,
     TEModalDialog,
     TEModalContent,

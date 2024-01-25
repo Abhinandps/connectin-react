@@ -45,7 +45,7 @@ function MyInterviews() {
             </div>
             {
                 interviews.length > 0 ? (
-                    interviews.map((data) => (
+                    interviews.map((data: any) => (
                         <div className='bg-white w-full flex items-center justify-between px-5  rounded-md border border-borderColor mb-2'>
                             <h2>{data?.eventType}</h2>
                             <p>{data?.startDate.split('T')[0]}</p>
@@ -75,6 +75,15 @@ function MyInterviews() {
 export default MyInterviews
 
 
-const MyComponent = ({ roomUrl }: any) => {
+declare global {
+    namespace JSX {
+      interface IntrinsicElements {
+        'whereby-embed': any;
+      }
+    }
+  }
+  
+
+const MyComponent: React.FC<any> = ({ roomUrl }: any) => {
     return <whereby-embed style={{ height: '100%', width: '100%' }} room={roomUrl} />
 }

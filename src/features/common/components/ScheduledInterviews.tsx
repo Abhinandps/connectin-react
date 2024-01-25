@@ -45,7 +45,7 @@ function ScheduledInterviews() {
             <div className='px-10 py-10 flex justify-start flex-wrap'>
                 {
                     interviews.length > 0 ? (
-                        interviews.map((data) => (
+                        interviews.map((data: any) => (
                             <div className='border border-blue-700 text-sm  w-[350px] px-5 py-3 rounded-md'>
                                 <h2 className='text-primaryColor font-bold text-xl pt-5'>{data?.eventType}</h2>
                                 <p className='text-xs text-secondaryColor pb-5'>One-on-One</p>

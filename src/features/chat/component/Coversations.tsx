@@ -1,8 +1,8 @@
 
 import { useState, useEffect } from 'react'
 
-export function Coversations({ data, currentUser, online, unreadMessagesCount, isCurrentUserParticipant, hasUnreadMessages }: any) {
-  const [userData, setUserData] = useState(null)
+export function Coversations({ data, currentUser, unreadMessagesCount, isCurrentUserParticipant, hasUnreadMessages }: any) {
+  const [userData, setUserData] = useState<any>(null)
 
 
   useEffect(() => {

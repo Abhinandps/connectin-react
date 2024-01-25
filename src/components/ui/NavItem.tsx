@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { TETabsItem } from 'tw-elements-react';
 import Popup from '../NavBar/PopUp';
-import { useSelector } from 'react-redux';
 
 
 const NavItem = React.memo(function ({ data, handleTabClick, activeTab, isNewInvites, unviewedInvitations, unviewedNotifications, isNewNotifications, profilePic }:
