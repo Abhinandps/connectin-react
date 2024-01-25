@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import FeedContainer from '../layouts/FeedContainer'
 import Button from '../components/Form/Button'
-import { loadStripe } from '@stripe/stripe-js'
+import {  loadStripe } from '@stripe/stripe-js'
 import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js'
 
 
 import apiCall from '../services/apiCall'
-import Feed from './Feed'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../features/auth/hooks/useAuth'
 import useUserData from '../hooks/useUserData'
@@ -16,7 +15,7 @@ import LoadingSpinner from '../components/ui/LoadingSpinner'
 const Subscription = () => {
 
     const { user } = useAuth()
-    const { userData, loading, error, updatedData, daysLeft }: any = useUserData(user.userId)
+    const { loading, updatedData, daysLeft }: any = useUserData(user.userId)
 
     const [clientSecret, setClientSecret] = useState<any>()
     const [stripePromise, setStripePromise] = useState<any>(null)
@@ -108,7 +107,7 @@ const Subscription = () => {
                             {
                                 loading ? <div className=" grid place-content-center h-full">
                                     <LoadingSpinner />
-                                </div> : updatedData.map((c) => (
+                                </div> : updatedData.map((c: any) => (
                                     <Card {...c} daysLeft={daysLeft} OnButtonClick={handleSubscriptionAmount} />
                                 ))
                             }
@@ -163,7 +162,14 @@ export function Card({ label, price, features, OnButtonClick, isActive, daysLeft
                     </ul>
                 }
             </p>
-            <Button type={'button'} onClick={!isActive && (() => OnButtonClick(price, label))} title={isActive ? 'Subscribed' : 'Subscribe'} />
+            {/* <Button type={'button'} onClick={!isActive && (() => OnButtonClick(price, label))} title={isActive ? 'Subscribed' : 'Subscribe'} /> */}
+
+            <Button
+                type={'button'}
+                onClick={!isActive ? (() => OnButtonClick(price, label)) : undefined}
+                title={isActive ? 'Subscribed' : 'Subscribe'}
+            />
+
         </div>
     )
 }
@@ -179,8 +185,9 @@ export function CheckoutForm({ goBack, amount, label }: any) {
     const navigate = useNavigate()
 
 
-    const [message, setMessage] = useState<string>('')
+    const [_message, setMessage] = useState<string>('')
     const [isProcessing, setIsProcessing] = useState(false)
+
 
 
     const handleSubmit = async (e: any) => {
@@ -190,7 +197,7 @@ export function CheckoutForm({ goBack, amount, label }: any) {
 
         setIsProcessing(true)
 
-        const { error, paymentIntent } = await stripe.confirmPayment({
+        const { error, paymentIntent }: any = await stripe.confirmPayment({
             elements,
             confirmParams: {
                 // return_url: `${window.location.origin}/completion`
@@ -200,7 +207,6 @@ export function CheckoutForm({ goBack, amount, label }: any) {
 
 
         if (error) {
-            console.log(error);
             setMessage(error.message)
         } else if (paymentIntent && paymentIntent.status === "succeeded") {
             try {

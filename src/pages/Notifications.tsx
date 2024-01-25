@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import FeedContainer from '../layouts/FeedContainer'
-import { InlineWidget, PopupButton, PopupWidget } from "react-calendly";
+import { PopupButton } from "react-calendly";
 import { useEffect, useRef, useState } from 'react'
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { changeNotificationStatus } from '../features/common/notificationSlice';
@@ -35,10 +35,10 @@ function Notifications() {
             >
                 {
                     loading ? (<div className='flex justify-center pt-5'><LoadingSpinner /></div>) :
-                        notifications.map((notification: any, index: number) => 
+                        notifications.map((notification: any, index: number) =>
                         (
                             <>
-                            
+
                                 {
 
                                     (

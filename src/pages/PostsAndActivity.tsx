@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FeedContainer from '../layouts/FeedContainer';
 import { TERipple } from 'tw-elements-react';
 
-import { useAuth } from '../features/auth/hooks/useAuth';
+// import { useAuth } from '../features/auth/hooks/useAuth';
 import { AddContents } from '../features/post/components/AddContents';
 import PostItem from '../features/post/components/PostItem';
 import { fetchUserPosts } from '../features/post/store/thunks';
@@ -14,14 +14,14 @@ import ProfileAnalytics from '../features/common/components/ProfileAnalytics';
 import { RightPanel } from '../layouts/RightPanel';
 
 const PostsAndActivity = () => {
-    const { user } = useAuth()
+    // const { user } = useAuth()
     const { posts, userLikedPosts, postToEdit } = useSelector((state: any) => state.post)
     const [showModalLg, setShowModalLg] = useState(false);
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchUserPosts(user.userId));
+        dispatch(fetchUserPosts() as any); //user.userId
     }, [dispatch]);
 
 

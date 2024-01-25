@@ -13,7 +13,7 @@ function Following() {
 
     useEffect(() => {
         setIsLoading(true)
-        dispatch(fetchFollowing())
+        dispatch(fetchFollowing() as any)
         setIsLoading(false)
     }, [dispatch])
     return (

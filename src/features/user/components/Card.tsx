@@ -3,7 +3,7 @@ import { FaUserPlus } from "react-icons/fa6";
 import LoadingSpinner from "../../../components/ui/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 
-function Card({ minimalistData, isLoading, onRequestSent, user ,onFollows}: any) {
+function Card({ minimalistData, isLoading, onRequestSent, user }: any) {
 
     const navigate = useNavigate()
 
@@ -62,7 +62,7 @@ interface BProps {
     disabled?: any
 }
 
-function Button({ title, Border, icon, onRequestSent, disabled }: BProps) {
+function Button({ title, Border, icon, onRequestSent }: BProps) {
     return (
         <button className={`flex items-center gap-1 px-4 py-2 hover:bg-sky-50 transition text-sm bg-transparent ${Border ? 'border-2 border-blue-500 text-blue-500' : 'text-secondaryColor'
             } font-bold rounded-full  `}

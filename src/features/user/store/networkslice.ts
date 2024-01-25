@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from './initialState'
-import { acceptConnectionRequest, fetchConnections, fetchConnectionsRequests, fetchFollowers, fetchFollowing, fetchRecommendations, followUser, followUserReducer, rejectConnectionRequest, removeConnection, removeConnectionReducer, unFollowUserReducer } from "./thunks";
+import { acceptConnectionRequest, fetchConnections, fetchConnectionsRequests, fetchFollowers, fetchFollowing, fetchRecommendations, followUserReducer, rejectConnectionRequest, removeConnectionReducer, unFollowUserReducer } from "./thunks";
 import { acceptConnectionsRequestFullilledReducer, fetchConnectionsFullfilledReducer, fetchConnectionsRequestsFullfilledReducer, fetchFollowersFullfilledReducer, fetchFollowingFullfilledReducer, fetchRecommendedFullfilledReducer, followUserFullfilledReducer, rejectConnectionRequestFullfilledReducer, removeConnectionFullfilledReducer, unFollowUserFullfilledReducer } from "./reducers/extraReducers";
 
 

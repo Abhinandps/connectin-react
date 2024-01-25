@@ -20,14 +20,14 @@ function Connections() {
 
     useEffect(() => {
         setIsLoading(true)
-        dispatch(fetchConnections())
-        dispatch(fetchFollowers())
+        dispatch(fetchConnections() as any)
+        dispatch(fetchFollowers() as any)
         setIsLoading(false)
     }, [dispatch])
 
 
     const removeConnection = (userId: string) => {
-        dispatch(removeConnectionReducer(userId))
+        dispatch(removeConnectionReducer(userId) as any) 
 
         setToastDetails({ title: "Connection Removed", content: `Connection Removed Successfully `, isActive: true, svgProp: successSvg })
 

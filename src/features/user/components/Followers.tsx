@@ -3,7 +3,6 @@ import List from "./List"
 import { useEffect, useState } from "react"
 import { fetchFollowers } from "../store/thunks"
 import LoadingSpinner from "../../../components/ui/LoadingSpinner"
-import { FaPlus, FaUserPlus } from "react-icons/fa"
 
 function Followers() {
 
@@ -15,7 +14,7 @@ function Followers() {
 
     useEffect(() => {
         setIsLoading(true)
-        dispatch(fetchFollowers())
+        dispatch(fetchFollowers() as any)
         setIsLoading(false)
     }, [dispatch])
 

@@ -136,7 +136,7 @@ function Profile() {
     const sendRequest = (userId: string) => {
         setLoading(true)
         setTimeout(() => {
-            dispatch(sendConnectionRequest(userId))
+            dispatch(sendConnectionRequest(userId) as any)
             setProfile((prev: any) => {
                 return {
                     ...prev,
@@ -154,7 +154,7 @@ function Profile() {
         console.log(userId, 'followed user')
         setLoading(true)
         setTimeout(() => {
-            dispatch(followUserReducer(userId))
+            dispatch(followUserReducer(userId) as any)
             setProfile((prev: any) => {
                 return {
                     ...prev,
@@ -172,7 +172,7 @@ function Profile() {
     const unfollowUser = (userId: string) => {
         setLoading(true)
         setTimeout(() => {
-            dispatch(unFollowUserReducer(userId))
+            dispatch(unFollowUserReducer(userId) as any)
             setProfile((prev: any) => {
                 return {
                     ...prev,
@@ -187,7 +187,7 @@ function Profile() {
     }
 
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         try {
             e.preventDefault();
             const res = await apiCall({
@@ -265,7 +265,7 @@ function Profile() {
                                         onRequestSent={sendRequest} isLoading={loading}
                                         icon={ConnectoinStatusFinder(profile?.connectionStatus).icon || ''}
                                         title={ConnectoinStatusFinder(profile?.connectionStatus).status || ''}
-                                        color={ConnectoinStatusFinder(profile?.connectionStatus).color || ''}
+                                        // color={ConnectoinStatusFinder('')}
                                         Border
                                     >
                                         {/* {isLoading ? <LoadingSpinner width="25" /> : null} */}
@@ -277,7 +277,7 @@ function Profile() {
                                         title={FollowStatusFinder(profile?.followStatus).status || ''} fill
                                         color={FollowStatusFinder(profile?.connectionStatus).color || ''}
                                         onFollows={profile?.followStatus === 'follow' ? followUser : unfollowUser}
-                                        // FollowStatusFinder(profile?.followStatus).status === 'following' ? unfollowUser : followUser
+                                    // FollowStatusFinder(profile?.followStatus).status === 'following' ? unfollowUser : followUser
                                     >
                                         {/* {isLoading ? <LoadingSpinner width="25" /> : null} */}
                                     </Button>

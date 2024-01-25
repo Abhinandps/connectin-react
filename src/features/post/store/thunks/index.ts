@@ -201,7 +201,7 @@ export const likePost = createAsyncThunk(
     'post/likePost',
     async (postId: any, thunkAPI) => {
         try {
-            const response = await apiCall({
+             await apiCall({
                 url: `/posts/likes/${postId}`,
                 method: 'PUT'
             })

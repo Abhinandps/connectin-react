@@ -6,7 +6,7 @@ import apiCall from '../../../../services/apiCall';
 
 export const sendConnectionRequest = createAsyncThunk(
     'send/connection-request',
-    async (sender, thunkAPI) => {
+    async (sender:any, thunkAPI) => {
         try {
             const res = await apiCall({
                 url: `/users/${sender}/send-connection-request`,
@@ -100,7 +100,7 @@ export const rejectConnectionRequest = createAsyncThunk(
 
 export const removeConnectionReducer = createAsyncThunk(
     'remove/removeConnection',
-    async (userId, thunkAPI) => {
+    async (userId:any, thunkAPI) => {
         try {
             const res = await apiCall({
                 url: `/users/${userId}/remove-connection`,
@@ -156,7 +156,7 @@ export const fetchRecommendations = createAsyncThunk(
 
 export const followUserReducer = createAsyncThunk(
     'follow/follow-user',
-    async (sender, thunkAPI) => {
+    async (sender:any, thunkAPI) => {
         try {
 
             const res = await apiCall({
@@ -174,7 +174,7 @@ export const followUserReducer = createAsyncThunk(
 
 export const unFollowUserReducer = createAsyncThunk(
     'unfollow/unfollow-user',
-    async (sender, thunkAPI) => {
+    async (sender:any, thunkAPI) => {
         try {
 
             const res = await apiCall({
