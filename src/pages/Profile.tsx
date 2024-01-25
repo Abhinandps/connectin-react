@@ -83,12 +83,12 @@ function Profile() {
     }, [formData])
 
 
-    const onError = useCallback((key: string, value: string | number) => {
-        setErrorData(prev => ({
-            ...prev,
-            [key]: value
-        }))
-    }, [formData])
+    // const onError = useCallback((key: string, value: string | number) => {
+    //     setErrorData(prev => ({
+    //         ...prev,
+    //         [key]: value
+    //     }))
+    // }, [formData])
 
     useEffect(() => {
         (async () => {
@@ -468,7 +468,7 @@ interface BProps {
 
 
 
-function Button({ title, Border, icon, fill, children, color, onRequestSent, isLoading, userId, onFollows }: BProps) {
+function Button({ title, Border, icon, fill, children, onRequestSent, isLoading, userId, onFollows }: BProps) {
     return (
         <button className={`flex items-center  gap-1 px-4 py-2  transition-all text-sm ${fill ? 'bg-blue-500 text-white' : 'hover:bg-sky-50 bg-transparent'}  ${Border ? `border-2 border-blue-500 text-blue-500` : 'text-secondaryColor'
             } font-bold rounded-full `}
