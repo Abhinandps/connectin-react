@@ -33,7 +33,6 @@ function Profile() {
     const isProfile = user && id && user.userId === id
 
 
-    console.log('profile--', profile)
 
     useEffect(() => {
         (async () => {
@@ -66,7 +65,7 @@ function Profile() {
 
     const { firstName, lastName, headline, profileImage, coverImage } = formData
 
-    const [errorData, setErrorData] = useState({
+    const [errorData, _setErrorData] = useState({
         firstName: "",
         lastName: "",
         headline: "",
