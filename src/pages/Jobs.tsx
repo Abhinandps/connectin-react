@@ -305,7 +305,9 @@ export function JobCard({ jobTitle, workPlaceType, employeeLocation, company, up
 }
 
 
-export function JobDetails({ jobTitle, jobType, workPlaceType, description, skills, employeeLocation, company, isDraft, isReadOnly, setShowModalLg, isApplied }: any) {
+export function JobDetails({ jobTitle, jobType, workPlaceType, description, userId, skills, employeeLocation, company, isDraft, isReadOnly, setShowModalLg, isApplied }: any) {
+
+    const { user } = useAuth()
 
     return (
         <div className="bg-white p-5 rounded-md shadow-md relative">
@@ -335,7 +337,8 @@ export function JobDetails({ jobTitle, jobType, workPlaceType, description, skil
             {
                 !isReadOnly && !isApplied && (
                     <div className="w-[150px] my-3">
-                        <Button title="Easy Apply" onClick={() => setShowModalLg(true)} disabled={true} />
+                        {/* disabled={true} */}
+                        <Button title="Easy Apply" onClick={() => setShowModalLg(true)} disabled={user?.userId === userId} />
                     </div>
                 )
             }
