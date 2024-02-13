@@ -54,23 +54,25 @@ export const loginUser = createAsyncThunk(
                 data: loginData
             })
 
+            console.log(res)
+
             if (res.message && typeof res.message != typeof []) {
                 throw new Error(res.message)
             }
 
 
-            if (!res.ok) {
+            if (!res) {
                 throw new Error('Invalid username or password.')
             }
-
-
-
 
             const user = {
                 userId: res?.user?.userId,
                 email: res?.user?.email,
                 role: res?.user?.role
             }
+
+            console.log(user)
+
             return { user, token: res?.access_token };
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.message);
@@ -85,7 +87,7 @@ export const logoutUser = createAsyncThunk(
     async (_data, thunkAPI) => {
         try {
 
-            const response = await fetch('http://localhost:3000/auth/logout', {
+            const response = await fetch('https://serverapponline.cloud/auth/logout', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -128,7 +130,7 @@ export const registerUser = createAsyncThunk(
     'auth/registerUser',
     async (registerData: { firstName: string; lastName: string; email: string; password: string; }, thunkAPI) => {
         try {
-            const response = await fetch('http://localhost:3000/auth/register', {
+            const response = await fetch('https://serverapponline.cloud/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -198,7 +200,7 @@ export const fetchUserDetails = createAsyncThunk(
 // Async thunk for fetch access_token based on refresh_token
 export const getAccessToken = createAsyncThunk(
     'data/getAccessToken',
-    async (_token:string, thunkAPI) => {
+    async (_token: string, thunkAPI) => {
         try {
             const response = await apiCall({
                 url: '/auth/refresh',

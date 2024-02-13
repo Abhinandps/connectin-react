@@ -56,6 +56,7 @@ const Login: React.FC<LoginProps> = function ({ style, label }) {
             // Dispatch the loginUser action with loginData as the argument
             const res = await dispatch(loginUser(formData) as any);
             if (loginUser.fulfilled.match(res)) {
+                console.log(res)
                 navigate('/')
             } else if (loginUser.rejected.match(res)) {
                 const error: any = res.payload
