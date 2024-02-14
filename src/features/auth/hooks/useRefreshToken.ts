@@ -15,6 +15,8 @@ function useRefreshToken() {
             const accessToken = Cookies.get('access_token');
             const refreshToken = Cookies.get('refresh_token');
 
+            console.log('Access and Refresh',accessToken, refreshToken)
+
             if (!refreshToken) {
                 dispatch(logout())
                 return;
