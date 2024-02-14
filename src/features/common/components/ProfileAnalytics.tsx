@@ -15,7 +15,7 @@ const ProfileAnalytics = () => {
             </div>
             <div className='absolute w-[68px] h-[68px] top-5 left-[50%] translate-x-[-50%] '>
                 <img className='w-full h-full rounded-full'
-                    src={userData?.profileImage} alt="" />
+                    src={userData?.profileImage || 'https://picsum.photos/200'} alt="" />
             </div>
             <div className='bg-white pt-12 pb-3 px-10 flex justify-center flex-col items-center border-b border-l border-r border-borderColor rounded-b-lg'>
                 <h2 className='font-semibold text-sm my-1 capitalize'>{userData?.firstName} {userData?.lastName}</h2>

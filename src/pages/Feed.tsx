@@ -68,7 +68,7 @@ export const AddPost = ({ setShowModalLg }: boolean | any) => {
             <div className='bg-white flex flex-col h-[115px] justify-center items-center w-full border border-borderColor rounded-lg'>
                 <div className='flex w-full justify-between items-center py-3 px-3 gap-2'>
                     <img className='w-[45px] h-[45px] rounded-full'
-                        src={userData?.profileImage} alt="" />
+                        src={userData?.profileImage || 'https://picsum.photos/200'} alt="" />
                     <input type="text" className='w-full border border-[#727272] h-[50px] rounded-full text-sm px-4' placeholder='Start a Post' />
                 </div>
                 <div className='flex justify-between w-full px-14 py-3 cursor-pointer'>

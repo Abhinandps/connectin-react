@@ -20,7 +20,7 @@ const NavItem = React.memo(function ({ data, handleTabClick, activeTab, isNewInv
                     data.icon instanceof Function ? (
                         < data.icon className={`text-[1.8em] ${activeTab === data.id ? 'text-primaryColor' : 'text-secondaryColor'}  hover:text-primaryColor focus:text-primaryColor`} />
                     ) : (
-                        <img className="w-[22px] h-[22px] rounded-full" src={profilePic} alt={data.title} />
+                        <img className="w-[22px] h-[22px] rounded-full" src={profilePic || 'https://picsum.photos/200'} alt={data.title} />
                     )
                 ) : null}
 
