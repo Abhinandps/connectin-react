@@ -79,7 +79,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
 
                                 <SignOut handleLogout={handleLogout} />
 
-                                <div className='m-2 cursor-pointer hover:text-red-900' onClick={() => handleLogout()}>signout</div>
+                                {/* <div className='m-2 cursor-pointer hover:text-red-900' onClick={() => handleLogout()}>signout</div> */}
                             </>
 
 
