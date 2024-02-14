@@ -91,7 +91,7 @@ function Profile() {
 
     useEffect(() => {
         (async () => {
-            const res = await fetch(`http://localhost:3000/posts/utils/upload-files`, {
+            const res = await fetch(`https://serverapponline.cloud/posts/utils/upload-files`, {
                 method: "POST",
                 body: photo
             });

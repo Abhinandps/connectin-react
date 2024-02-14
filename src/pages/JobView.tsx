@@ -235,7 +235,7 @@ export function ApplicationSetting() {
         e.preventDefault()
         if (attachments) {
             (async () => {
-                const res = await fetch(`http://localhost:3000/jobs/resume`, {
+                const res = await fetch(`https://serverapponline.cloud/jobs/resume`, {
                     method: "POST",
                     body: attachments,
                     credentials: 'include'

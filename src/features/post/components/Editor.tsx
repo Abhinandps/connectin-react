@@ -35,7 +35,7 @@ export const Editor: React.FC<EditorProps> = function ({ showModalLg, setShowMod
         try {
             e.preventDefault();
 
-            const res = await fetch(`http://localhost:3000/posts/utils/upload-files`, {
+            const res = await fetch(`https://serverapponline.cloud/posts/utils/upload-files`, {
                 method: "POST",
                 body: attachments
             });

@@ -16,7 +16,7 @@ const EmailConfirmation = () => {
         const confirmEmail = async () => {
             try {
                 if (token) {
-                    const response = await fetch(`http://localhost:3000/auth/email-confirmation/confirm`, {
+                    const response = await fetch(`https://serverapponline.cloud/auth/email-confirmation/confirm`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

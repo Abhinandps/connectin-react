@@ -28,7 +28,7 @@ const NavBar = () => {
 
     const dispatch = useDispatch()
 
-    const socket = io('http://localhost:3000', {
+    const socket = io('https://serverapponline.cloud', {
         query: { userId: user?.userId }, reconnection: true,
         reconnectionDelay: 1000
     });
