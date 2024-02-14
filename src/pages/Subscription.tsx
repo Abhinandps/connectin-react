@@ -42,7 +42,7 @@ const Subscription = () => {
     }
 
     useEffect(() => {
-        fetch('http://localhost:3000/payments/config').then(async (r) => {
+        fetch('https://serverapponline.cloud/payments/config').then(async (r) => {
             const { publishableKey } = await r.json()
 
             setStripePromise(loadStripe(publishableKey))
