@@ -5,7 +5,7 @@ interface SignOutProps {
 
 function SignOut({ handleLogout }: SignOutProps) {
     return (
-        <div className="m-2 cursor-pointer hover:text-red-900" onClick={() => handleLogout()}>
+        <div className="m-2 cursor-pointer hover:text-red-900" onClick={() => alert('working')}>
             <ul>
                 <li>Sign Out</li>
             </ul>
