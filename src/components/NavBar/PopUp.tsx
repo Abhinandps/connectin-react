@@ -77,7 +77,12 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
 
                                 <ManageInfo user={user} />
 
-                                <SignOut handleLogout={handleLogout} /></>
+                                <SignOut handleLogout={handleLogout} />
+
+                                <div onClick={() => alert('working')}>signout</div>
+                            </>
+
+
                         )
                     }
                 </div>
