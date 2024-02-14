@@ -456,6 +456,7 @@ export function CreateJob() {
 
     const accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_ACCESS_TOKEN
 
+    
 
     useEffect(() => {
         setJobDetails((prevJobDetails) => ({
