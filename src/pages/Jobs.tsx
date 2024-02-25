@@ -373,11 +373,14 @@ import 'react-quill/dist/quill.snow.css'
 import apiCall from "../services/apiCall";
 import { useAuth } from "../features/auth/hooks/useAuth";
 import axios from "axios";
+import { useToaster } from "../context/toastContext";
+import { successSvg, warningSvg } from "../components/ui/svgs";
 
 export function CreateJob() {
 
     const dispatch = useDispatch()
     // const navigate = useNavigate()
+    const { setToastDetails } = useToaster();
 
     const location = useLocation();
 
@@ -456,7 +459,7 @@ export function CreateJob() {
 
     const accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_ACCESS_TOKEN
 
-    
+
 
     useEffect(() => {
         setJobDetails((prevJobDetails) => ({
@@ -548,6 +551,7 @@ export function CreateJob() {
                     description: data?.description,
                     skills: data?.skills
                 }));
+                setToastDetails({ title: 'Job Created', content: `${formData.jobTitle} has been Created Successfully.`, svg: successSvg, isActive: true })
                 onPageChange('currentPage', 2)
             }
 
@@ -609,8 +613,6 @@ export function CreateJob() {
         }))
     }
 
-
-
     const handleUpdate = async (e: React.FormEvent) => {
         try {
             e.preventDefault()
@@ -632,6 +634,7 @@ export function CreateJob() {
             })
 
             console.log(res)
+            setToastDetails({ title: 'Job Posted', content: `Job has been Posted Successfully.`, svg: successSvg, isActive: true })
         } catch (err) {
 
         }
@@ -654,13 +657,12 @@ export function CreateJob() {
                 method: 'PUT',
                 data: jobDetails
             })
+            setToastDetails({ title: 'Job Added to Draft', content: `Job has been Added to the Draft.`, svg: warningSvg, isActive: true })
 
         } catch (err) {
 
         }
     }
-
-
 
 
     if (page.currentPage === 2) return (
