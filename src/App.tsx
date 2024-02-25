@@ -31,6 +31,7 @@ import JobView, { Applicants, ApplicationSetting } from './pages/JobView'
 import Notifications from './pages/Notifications'
 import ScheduledInterviews from './features/common/components/ScheduledInterviews'
 import MyInterviews from './features/common/components/MyInterviews'
+import ErrorBoundary from './layouts/ErrorBoundary'
 
 
 /* TODO: 
@@ -59,72 +60,75 @@ function App() {
   const { isAuthenticated, user } = useAuth();
 
   return (
-    <Router>
-      <Routes>
-        {isAuthenticated ? (
-          <>
-            <Route path='/' element={<HomeContainer />}>
-              <Route index element={<Feed />} />
-              <Route path='/jobs' element={<Jobs />}>
-                <Route index element={<AllJobs />} />
-                <Route path='posted-jobs' element={<ProtectedAddJob element={<ManagedJobs />} />} />
-                <Route path='view' element={<JobView />} />
-                <Route path='settings' element={<ApplicationSetting />} />
-                <Route path='applicants' element={<ProtectedAddJob element={<Applicants />} />} />
-                <Route path='my-interviews' element={<ProtectedAddJob element={<MyInterviews />} />} />
-                <Route path='scheduled-interviews' element={<ScheduledInterviews />} />
-              </Route>
-              <Route path='/notifications' element={<Notifications />} />
-              <Route path='/add-job' element={<ProtectedAddJob element={<CreateJob />} />} />
-              <Route path='/premium' element={<Subscription />} />
-              <Route path='/completion' element={<Completion />} />
-              <Route path='/mynetwork' element={<Mynetwork />}>
-                <Route index element={<Main />} />
-                <Route path='connections' element={<Connections />} />
-                <Route path='network-manager' element={<Network />} >
-                  <Route index element={<Following />} />
-                  <Route path='followers' element={<Followers />} />
+    <ErrorBoundary>
+      <Router>
+        <Routes>
+          {isAuthenticated ? (
+            <>
+              <Route path='/' element={<HomeContainer />}>
+                <Route index element={<Feed />} />
+                <Route path='/jobs' element={<Jobs />}>
+                  <Route index element={<AllJobs />} />
+                  <Route path='posted-jobs' element={<ProtectedAddJob element={<ManagedJobs />} />} />
+                  <Route path='view' element={<JobView />} />
+                  <Route path='settings' element={<ApplicationSetting />} />
+                  <Route path='applicants' element={<ProtectedAddJob element={<Applicants />} />} />
+                  <Route path='my-interviews' element={<ProtectedAddJob element={<MyInterviews />} />} />
+                  <Route path='scheduled-interviews' element={<ScheduledInterviews />} />
                 </Route>
-                <Route path='hashtags' element={<Hashtag />} />
+                <Route path='/notifications' element={<Notifications />} />
+                <Route path='/add-job' element={<ProtectedAddJob element={<CreateJob />} />} />
+                <Route path='/premium' element={<Subscription />} />
+                <Route path='/completion' element={<Completion />} />
+                <Route path='/mynetwork' element={<Mynetwork />}>
+                  <Route index element={<Main />} />
+                  <Route path='connections' element={<Connections />} />
+                  <Route path='network-manager' element={<Network />} >
+                    <Route index element={<Following />} />
+                    <Route path='followers' element={<Followers />} />
+                  </Route>
+                  <Route path='hashtags' element={<Hashtag />} />
+                </Route>
+                <Route path='/manage-admins' element={
+                  <Authorization userRoles={user?.role} requiredRole="admin">
+                    <ManageUsersAndAdmins isAdmin />
+                  </Authorization>
+                } />
+                <Route path='/manage-users' element={
+                  <Authorization userRoles={user?.role} requiredRole="admin">
+                    <ManageUsersAndAdmins />
+                  </Authorization>
+                } />
+
+                <Route path='recent-activity/all' element={<PostsAndActivity />} />
+                <Route path='in/:id' element={<Profile />} />
+
               </Route>
-              <Route path='/manage-admins' element={
-                <Authorization userRoles={user?.role} requiredRole="admin">
-                  <ManageUsersAndAdmins isAdmin />
-                </Authorization>
-              } />
-              <Route path='/manage-users' element={
-                <Authorization userRoles={user?.role} requiredRole="admin">
-                  <ManageUsersAndAdmins />
-                </Authorization>
-              } />
-
-              <Route path='recent-activity/all' element={<PostsAndActivity />} />
-              <Route path='in/:id' element={<Profile />} />
-
-            </Route>
 
 
 
 
-            <Route path="email-confirmation/sent" element={<EmailConfirmationSent />} />
-          </>
-        ) : (
-          <>
-            <Route path='/' element={<HomeContainer />}>
-              <Route index element={<Home />} />
-              <Route path='sign-in' element={<SignIn />} />
-              <Route path='sign-up' element={<SignUp />} />
-              <Route path='request-password-reset' element={<PasswordForgot />} />
-              <Route path='checkpoint/verify' element={<Verify />} />
-              <Route path='changepassword/verify' element={<ChangePassword />} />
-            </Route>
-            <Route path="email-confirmation/confirm" element={<EmailConfirmation />} />
-          </>
-        )}
-        <Route path='unauthorized' element={<div>unauthorized</div>} />
-        <Route path='*' element={<div>404</div>} />
-      </Routes>
-    </Router >
+              <Route path="email-confirmation/sent" element={<EmailConfirmationSent />} />
+            </>
+          ) : (
+            <>
+              <Route path='/' element={<HomeContainer />}>
+                <Route index element={<Home />} />
+                <Route path='sign-in' element={<SignIn />} />
+                <Route path='sign-up' element={<SignUp />} />
+                <Route path='request-password-reset' element={<PasswordForgot />} />
+                <Route path='checkpoint/verify' element={<Verify />} />
+                <Route path='changepassword/verify' element={<ChangePassword />} />
+              </Route>
+              <Route path="email-confirmation/confirm" element={<EmailConfirmation />} />
+            </>
+          )}
+          <Route path='unauthorized' element={<div>unauthorized</div>} />
+          <Route path='*' element={<div>404</div>} />
+        </Routes>
+      </Router >
+    </ErrorBoundary>
+
   );
 }
 
