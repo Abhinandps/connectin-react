@@ -1,6 +1,6 @@
 
 
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { useAuth } from '../../features/auth/hooks/useAuth'
 import Home from '../../pages/Home'
 import HomeContainer from '../../layouts/HomeContainer'
