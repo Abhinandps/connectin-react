@@ -38,11 +38,24 @@ function InLogo() {
 function ConnectInLogo() {
     return (
         <>
-            <div className="tracking-tighter hidden md:block left-0 top-0 absolute text-primaryColor text-opacity-90 text-3xl font-bold font-['Poppins']">Connect</div>
+            <div className={`tracking-tighter hidden md:block left-0 top-1 absolute text-primaryColor text-opacity-90 text-3xl font-bold font-['Poppins']`}>Connect</div>
             <div className="w-6 h-7 md:left-[125px] top-0 absolute">
                 <div className="w-9 h-9 left-0 top-[1px] absolute bg-primaryColor bg-opacity-90 rounded-sm" />
-                <div className="tracking-tighter left-[5px] top-1 absolute text-white text-opacity-90 text-3xl font-bold font-['Poppins']">in</div>
+                <div className={`tracking-tighter left-[5px] top-1 absolute text-white text-opacity-90 text-3xl font-bold font-['Poppins']`}>in</div>
             </div>
         </>
+    )
+}
+
+
+export default function ConnectInLogoLight() {
+    return (
+        <div className="md:w-16 me-2 h-7 flex relative cursor-pointer">
+            <div className={`tracking-tighter hidden md:block left-0 top-1 absolute text-white text-opacity-90 text-3xl font-bold font-['Poppins']`}>Connect</div>
+            <div className="w-6 h-7 md:left-[125px] top-0 absolute">
+                <div className="w-9 h-9 left-0 top-[1px] absolute bg-white bg-opacity-90 rounded-sm" />
+                <div className={`tracking-tighter left-[5px] top-1 absolute text-primaryColor text-opacity-90 text-3xl font-bold font-['Poppins']`}>in</div>
+            </div>
+        </div>
     )
 }

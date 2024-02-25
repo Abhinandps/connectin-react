@@ -8,6 +8,7 @@ import ManageInfo from './ManageInfo';
 import SignOut from './SignOut';
 import useUserData from '../../hooks/useUserData';
 import LoadingSpinner from '../ui/LoadingSpinner';
+import { useLoading } from '../../context/LoadingContext';
 
 
 interface PopupProps {
@@ -18,6 +19,7 @@ interface PopupProps {
 const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
 
     const { user } = useAuth()
+    const { setLoading } = useLoading();
     const { userData, loading }: any = useUserData(user.userId)
 
     const dispatch = useDispatch()
@@ -42,6 +44,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
         try {
             // const res: any = () => 
             dispatch(logoutUser() as any);
+            setLoading(true)
 
         } catch (error) {
             // Handle errors if necessary

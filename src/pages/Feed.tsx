@@ -12,15 +12,18 @@ import { MainView } from '../layouts/MainVIew';
 import { RightPanel } from '../layouts/RightPanel';
 import { useAuth } from '../features/auth/hooks/useAuth';
 import useUserData from '../hooks/useUserData';
+import PageLoader from '../components/ui/PageLoader';
+import { useLoading } from '../context/LoadingContext';
 
 
 const Feed: React.FC = function () {
-
+    const { loading, setLoading } = useLoading();
     const { feed, userLikedPosts } = useSelector((state: any) => state.post)
     const [showModalLg, setShowModalLg] = useState(false);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const postId: string | null = queryParams.get('postId');
+
 
     const dispatch = useDispatch()
 
@@ -29,30 +32,42 @@ const Feed: React.FC = function () {
         dispatch(fetchUserFeed(postId) as any);
     }, [dispatch]);
 
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 5000);
+
+        return () => clearTimeout(timer);
+    }, [dispatch]);
+
+
     return (
-        <FeedContainer>
+        <>
+            {loading && (<PageLoader />)}
+            <FeedContainer>
+                <LeftPanel>
+                    <ProfileAnalytics />
+                </LeftPanel>
 
-            <LeftPanel>
-                <ProfileAnalytics />
-            </LeftPanel>
+                <MainView feed>
+                    <AddPost setShowModalLg={setShowModalLg} />
+                    <FilterFeed />
+                    {
+                        feed && (feed).map((post: any) => (
+                            <PostItem key={post._id} feed={true} post={post} userLikedPosts={userLikedPosts} setShowModalLg={setShowModalLg} />
+                        ))
+                    }
+                </MainView>
 
-            <MainView feed>
-                <AddPost setShowModalLg={setShowModalLg} />
-                <FilterFeed />
-                {
-                    feed && (feed).map((post: any) => (
-                        <PostItem key={post._id} feed={true} post={post} userLikedPosts={userLikedPosts} setShowModalLg={setShowModalLg} />
-                    ))
-                }
-            </MainView>
+                <RightPanel />
 
-            <RightPanel />
-
-            <Editor showModalLg={showModalLg} setShowModalLg={setShowModalLg} />
+                <Editor showModalLg={showModalLg} setShowModalLg={setShowModalLg} />
 
 
 
-        </FeedContainer >
+            </FeedContainer >
+        </>
 
     )
 }
