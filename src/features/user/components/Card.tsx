@@ -11,7 +11,7 @@ function Card({ minimalistData, isLoading, onRequestSent, user }: any) {
         minimalistData ? (
             <div className="w-full sm:mx-0 transition flex gap-3  border-b border-borderColor pb-5">
                 <div className=' flex items-center justify-center w-[100px]'>
-                    <img className='w-[68px] h-[68px] object-cover rounded-full' src={user?.profileImage} alt="" />
+                    <img className='w-[68px] h-[68px] object-cover rounded-full' src={user?.profileImage ? user?.profileImage : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsynwv-5qtogtOwJbIjaPFJUmHpzhxgqIAug&usqp=CAU'} alt="" />
                 </div>
                 <div className='flex w-full flex-col items-start justify-center '>
                     <h2
@@ -29,13 +29,13 @@ function Card({ minimalistData, isLoading, onRequestSent, user }: any) {
                     <img className='w-full h-full object-cover rounded-t-lg' src={user?.coverImage || 'https://picsum.photos/820/300'} alt="" />
                 </div >
                 <div className='absolute w-[68px] h-[68px] top-5 left-[50%] translate-x-[-50%] '>
-                    <img className='w-full object-fill h-full rounded-full' src={user?.profileImage} alt="" />
+                    <img className='w-full object-fill h-full rounded-full' src={user?.profileImage ? user?.profileImage : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsynwv-5qtogtOwJbIjaPFJUmHpzhxgqIAug&usqp=CAU'} alt="" />
                 </div>
                 <div className='h-[200px] pt-10 pb-3 px-5 flex justify-center flex-col items-center border-b border-l border-r border-borderColor rounded-b-lg'>
                     <h2 className='font-semibold text-md my-1 capitalize hover:underline cursor-pointer'
                         onClick={() => navigate(`/in/${user?.userId}`)}
                     >{user?.firstName} {user?.lastName}</h2>
-                    <p className='text-xs text-center font-light leading-3 text-gray-500'>{user?.headline.slice(0,50)}...</p>
+                    <p className='text-xs text-center font-light leading-3 text-gray-500'>{user?.headline.slice(0, 50)}...</p>
                     <p className="text-[10px] flex items-center gap-2 text-secondaryColor mt-2">
                         <GiLinkedRings className='text-primaryColor text-xs' /> Ana Fara and 79 others
                     </p>

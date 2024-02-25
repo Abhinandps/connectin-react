@@ -76,7 +76,7 @@ function List({ connected, follow, follows, hashtag, user, onReject, onAccept, o
             {
                 user?.status === 'connected' && (
                     <div className='px-3 py-2 flex items-center gap-2'>
-                        <img className='w-[30px] h-[30px] rounded-full' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsynwv-5qtogtOwJbIjaPFJUmHpzhxgqIAug&usqp=CAU" alt="" />
+                        <img className='w-[30px] h-[30px] rounded-full' src={` ${user?.profileImage ? user?.profileImage : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsynwv-5qtogtOwJbIjaPFJUmHpzhxgqIAug&usqp=CAU'}`} alt="" />
                         <div className='text-left flex items-center gap-2'>
                             <Link to={`/in/${user?.userId}`} className='text-xs font-bold capitalize hover:underline transition-all cursor-pointer '>{user?.firstName} {user?.lastName}</Link>
                             <p className='text-xs text-secondaryColor font-normal'>
