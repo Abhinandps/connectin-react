@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { navdata } from '../../utils/navigationData';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../features/auth/hooks/useAuth';
@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { InvitationData, reciveInvitation } from '../../features/user/store/networkslice';
 import { addNotification } from '../../features/common/notificationSlice';
 import Chat from '../../pages/Chat';
-import apiCall from '../../services/apiCall';
 import { apiUrl } from '../../config/apiUrl';
 
 const NavBar = () => {
@@ -22,6 +21,11 @@ const NavBar = () => {
 
     const unviewedInvitations = useSelector((state: any) => state.user.invitations.filter((user: InvitationData) => !user.viewed))
     const unviewedNotifications = useSelector((state: any) => state.notifications.notifications.filter((notification: any) => !notification.viewed))
+
+    // Memoize selectors
+    const memoizedUnviewedInvitations = useMemo(() => unviewedInvitations, [unviewedInvitations]);
+    const memoizedUnviewedNotifications = useMemo(() => unviewedNotifications, [unviewedNotifications]);
+
     // console.log(unviewedNotifications)
 
     // TODO:online users state update soon
@@ -47,7 +51,7 @@ const NavBar = () => {
         });
 
         // socket.on("get-users", (users) => {
-            // setOnlineUsers();
+        // setOnlineUsers();
         // });
 
         if (sendMessage !== null) {
@@ -72,6 +76,7 @@ const NavBar = () => {
     const navigate = useNavigate()
 
     const [activeTab, setActiveTab] = useState(navdata[0].id);
+    console.log(activeTab, 'active tab')
 
     const handleTabClick = (value: string, path: string) => {
         if (value === activeTab) {
@@ -93,11 +98,11 @@ const NavBar = () => {
                         {/* Navigation list  */}
                         {navdata && navdata.map((data) => (
                             <NavItem
-                                isNewInvites={(data?.id === 'tab2' && unviewedInvitations.length > 0)}
+                                isNewInvites={(data?.id === 'tab2' && memoizedUnviewedInvitations.length > 0)}
                                 isNewNotifications={(data?.id === 'tab5' && unviewedNotifications.length > 0)}
                                 profilePic={(data?.id === 'tab6' ? userData?.profileImage : data?.icon)}
                                 unviewedInvitations={unviewedInvitations}
-                                unviewedNotifications={unviewedNotifications}
+                                unviewedNotifications={memoizedUnviewedNotifications}
                                 key={data.id}
                                 data={data}
                                 handleTabClick={handleTabClick}
