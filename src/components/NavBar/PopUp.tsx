@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../features/auth/authSlice";
 import { useAuth } from '../../features/auth/hooks/useAuth';
 import { useDispatch } from 'react-redux';
@@ -22,7 +21,6 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
     const { userData, loading }: any = useUserData(user.userId)
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const popupRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -42,16 +40,9 @@ const Popup: React.FC<PopupProps> = ({ isOpen, handleIsOpen }) => {
 
     const handleLogout = async () => {
         try {
+            // const res: any = () => 
+            dispatch(logoutUser() as any);
 
-            const res: any = () => dispatch(logoutUser() as any);
-
-            if (logoutUser.fulfilled.match(res)) {
-                navigate('/')
-
-            } else if (logoutUser.rejected.match(res)) {
-                // const error: any = res.payload
-                // setError(error);
-            }
         } catch (error) {
             // Handle errors if necessary
             console.error('Logout error:', error);

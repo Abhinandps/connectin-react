@@ -4,6 +4,7 @@ import { AddContents } from './AddContents';
 import { FormLayout } from '../../../components/ui/Modal';
 import { FileUpload } from '../../../components/Form/FileUpload';
 import Button from '../../../components/Form/Button';
+import { apiUrl } from '../../../config/apiUrl';
 
 interface EditorProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -35,10 +36,12 @@ export const Editor: React.FC<EditorProps> = function ({ showModalLg, setShowMod
         try {
             e.preventDefault();
 
-            const res = await fetch(`https://serverapponline.cloud/posts/utils/upload-files`, {
+            const res = await fetch(`${apiUrl}/posts/utils/upload-files`, {
                 method: "POST",
                 body: attachments
             });
+
+            
 
             if (res.ok) {
                 const data = await res.json()

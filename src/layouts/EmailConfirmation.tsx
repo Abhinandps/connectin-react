@@ -1,6 +1,7 @@
 // EmailConfirmation.js
 import { useState, useEffect } from 'react';
 import { useNavigate, } from 'react-router-dom';
+import apiCall from '../services/apiCall';
 
 const EmailConfirmation = () => {
     const navigate = useNavigate();
@@ -16,14 +17,20 @@ const EmailConfirmation = () => {
         const confirmEmail = async () => {
             try {
                 if (token) {
-                    const response = await fetch(`https://serverapponline.cloud/auth/email-confirmation/confirm`, {
+                    // const response = await fetch(`https://serverapponline.cloud/auth/email-confirmation/confirm`, {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json'
+                    //     },
+                    //     body: JSON.stringify({ token: token }),
+                    //     credentials: 'include'
+                    // });
+
+                    const response = await apiCall({
+                        url: `/auth/email-confirmation/confirm`,
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ token: token }),
-                        credentials: 'include'
-                    });
+                        data: JSON.stringify({ token: token })
+                    })
 
                     if (response.ok) {
                         setTimeout(() => {

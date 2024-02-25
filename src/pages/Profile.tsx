@@ -15,6 +15,7 @@ import { FormLayout } from "../components/ui/Modal";
 import { useAuth } from "../features/auth/hooks/useAuth";
 import InputField from "../components/Form/InputField";
 import { FileUpload } from "../components/Form/FileUpload";
+import { apiUrl } from "../config/apiUrl";
 
 function Profile() {
     const dispatch = useDispatch()
@@ -91,7 +92,7 @@ function Profile() {
 
     useEffect(() => {
         (async () => {
-            const res = await fetch(`https://serverapponline.cloud/posts/utils/upload-files`, {
+            const res = await fetch(`${apiUrl}/posts/utils/upload-files`, {
                 method: "POST",
                 body: photo
             });

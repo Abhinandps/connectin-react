@@ -235,7 +235,7 @@ export function ApplicationSetting() {
         e.preventDefault()
         if (attachments) {
             (async () => {
-                const res = await fetch(`https://serverapponline.cloud/jobs/resume`, {
+                const res = await fetch(`${apiUrl}/jobs/resume`, {
                     method: "POST",
                     body: attachments,
                     credentials: 'include'
@@ -288,6 +288,7 @@ import { HiDownload } from "react-icons/hi";
 import Button from "../components/Form/Button";
 import { useToaster } from "../context/toastContext";
 import { successSvg } from "../components/ui/svgs";
+import { apiUrl } from "../config/apiUrl";
 
 export function Applicants() {
     const [applicants, setApplicants] = useState([])

@@ -71,7 +71,7 @@ export const loginUser = createAsyncThunk(
                 role: res?.user?.role
             }
 
-            console.log(user)
+            localStorage.setItem('access_token', res?.access_token)
 
             return { user, token: res?.access_token };
         } catch (error: any) {
@@ -87,38 +87,46 @@ export const logoutUser = createAsyncThunk(
     async (_data, thunkAPI) => {
         try {
 
-            const response = await fetch('https://serverapponline.cloud/auth/logout', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include'
+
+            // const response = await fetch('https://serverapponline.cloud/auth/logout', {
+            //     method: 'GET',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     credentials: 'include'
+            // });
+
+            // const data = await response.json();
+
+            const data = await apiCall({
+                url: '/auth/logout'
             });
 
-            const data = await response.json();
+            if (data) {
+                localStorage.removeItem('access_token')
+            }
 
             // console.log(data);
-
 
             if (data.message && typeof data.message != typeof []) {
                 throw new Error(data.message)
             }
 
 
-            if (!response.ok) {
+            if (!data) {
                 throw new Error('Invalid username or password.')
             }
 
 
-            // const user = {
-            //     userId: data?.user?.userId,
-            //     email: data?.user?.email,
-            //     role: data?.user?.role
-            // }
+            const user = {
+                userId: data?.user?.userId,
+                email: data?.user?.email,
+                role: data?.user?.role
+            }
 
             // console.log(user,"user data", data,"response");
 
-            // return { user, token: data?.access_token };
+            return { user, token: data?.access_token };
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.message);
         }
@@ -130,16 +138,23 @@ export const registerUser = createAsyncThunk(
     'auth/registerUser',
     async (registerData: { firstName: string; lastName: string; email: string; password: string; }, thunkAPI) => {
         try {
-            const response = await fetch('https://serverapponline.cloud/auth/register', {
+            // const response = await fetch('https://serverapponline.cloud/auth/register', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(registerData)
+            // });
+
+
+            // const data = await response.json();
+
+
+            const data = await apiCall({
+                url: `/auth/register`,
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(registerData)
-            });
-
-
-            const data = await response.json();
+                data: JSON.stringify(registerData)
+            })
 
             if (data.error) {
                 throw new Error(data.message);

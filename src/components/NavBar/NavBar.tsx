@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { InvitationData, reciveInvitation } from '../../features/user/store/networkslice';
 import { addNotification } from '../../features/common/notificationSlice';
 import Chat from '../../pages/Chat';
+import apiCall from '../../services/apiCall';
+import { apiUrl } from '../../config/apiUrl';
 
 const NavBar = () => {
 
@@ -28,7 +30,7 @@ const NavBar = () => {
 
     const dispatch = useDispatch()
 
-    const socket = io('https://serverapponline.cloud', {
+    const socket = io(apiUrl, {
         query: { userId: user?.userId }, reconnection: true,
         reconnectionDelay: 1000
     });

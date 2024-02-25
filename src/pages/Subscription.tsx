@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../features/auth/hooks/useAuth'
 import useUserData from '../hooks/useUserData'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
+import { apiUrl } from '../config/apiUrl'
 
 
 const Subscription = () => {
@@ -42,7 +43,7 @@ const Subscription = () => {
     }
 
     useEffect(() => {
-        fetch('https://serverapponline.cloud/payments/config').then(async (r) => {
+        fetch(`${apiUrl}/payments/config`).then(async (r) => {
             const { publishableKey } = await r.json()
 
             setStripePromise(loadStripe(publishableKey))
