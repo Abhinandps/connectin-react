@@ -75,7 +75,7 @@ const EmailConfirmation = () => {
                                     <p>Please login to access all the features of ConnectIn and connect with your friends and colleagues.</p>
                                 </div>
 
-                                <button onClick={() => navigate('/sign-in')}>Sign In</button>
+                                <button className='bg-blue-500 rounded-e-full text-white' onClick={() => navigate('/sign-in')}>Sign In</button>
                             </>
                         )}
 
