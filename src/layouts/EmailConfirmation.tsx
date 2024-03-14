@@ -45,12 +45,12 @@ const EmailConfirmation = () => {
                     //     setLoading(false);
                     // }
                 } else {
-                    setConfirmationError('Invalid token.');
-                    setLoading(false);
+                    // setConfirmationError('Invalid token.');
+                    // setLoading(false);
                 }
             } catch (error) {
-                setConfirmationError('An error occurred while confirming the email.');
-                setLoading(false);
+                // setConfirmationError('An error occurred while confirming the email.');
+                // setLoading(false);
             }
         };
 
