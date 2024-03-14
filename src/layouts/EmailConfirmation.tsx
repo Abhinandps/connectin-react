@@ -26,21 +26,24 @@ const EmailConfirmation = () => {
                     //     credentials: 'include'
                     // });
 
-                    const response = await apiCall({
+                    await apiCall({
                         url: `/auth/email-confirmation/confirm`,
                         method: 'POST',
                         data: { token: token }
                     })
 
-                    if (response.ok) {
-                        setTimeout(() => {
-                            setLoading(false);
-                        }, 2000)
-                    } else {
-                        // Email confirmation failed
-                        setConfirmationError('Email confirmation failed. Please try again.');
+                    setTimeout(() => {
                         setLoading(false);
-                    }
+                    }, 2000)
+
+                    // if (response.ok) {
+                       
+                    // }
+                    //  else {
+                    //     // Email confirmation failed
+                    //     setConfirmationError('Email confirmation failed. Please try again.');
+                    //     setLoading(false);
+                    // }
                 } else {
                     setConfirmationError('Invalid token.');
                     setLoading(false);
