@@ -45,7 +45,7 @@ const EmailConfirmation = () => {
                     //     setLoading(false);
                     // }
                 } else {
-                    // setConfirmationError('Invalid token.');
+                    setConfirmationError('');
                     // setLoading(false);
                 }
             } catch (error) {
