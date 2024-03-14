@@ -153,8 +153,10 @@ export const registerUser = createAsyncThunk(
             const data = await apiCall({
                 url: `/auth/register`,
                 method: 'POST',
-                data: JSON.stringify(registerData)
+                data: registerData
             })
+
+          
 
             if (data.error) {
                 throw new Error(data.message);
