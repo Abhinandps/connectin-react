@@ -29,7 +29,7 @@ const EmailConfirmation = () => {
                     const response = await apiCall({
                         url: `/auth/email-confirmation/confirm`,
                         method: 'POST',
-                        data: JSON.stringify({ token: token })
+                        data: { token: token }
                     })
 
                     if (response.ok) {
